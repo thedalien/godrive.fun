@@ -41,7 +41,7 @@ const Header = () => {
         <header className={classes.header}>
             <div className={classes.header__content}>
                 <div className={classes.header__content__logo}>
-                    <img onClick={() => navLinkClickHandler('logo')} src='/vite.svg' alt="logo" />
+                    <img onClick={() => navLinkClickHandler('logo')} src='/carRentalLogo.png' alt="logo" />
                 </div>
                 <nav
                     className={`${classes.header__content__nav} ${
