@@ -1,11 +1,15 @@
 //conn.js
 const { Sequelize } = require("sequelize");
+const dbConfig = require('../config/config.js');
 
-const sequelize = new Sequelize("BYB", "postgres", "postgres", {
-    host: "localhost",
-    dialect: "postgres",
+const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+    host: dbConfig.HOST,
+    dialect: dbConfig.dialect,
+    dialectOptions: {
+        connectTimeout: 1000 
+      },
     logging: false,
-});
+  });
 
 async function testConnection() {
     try {
