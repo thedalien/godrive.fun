@@ -55,10 +55,21 @@ const Header = () => {
                             </button>
                         </li>
                         <li>
+                            <button onClick={() => navLinkClickHandler("/")} className="link">
+                                Cars
+                            </button>
+                        </li>
+                        <li>
+                            <button onClick={() => navLinkClickHandler("/")} className="link">
+                                Contact
+                            </button>
+                        </li>
+                        <li>
                             <button onClick={() => navLinkClickHandler("/login")} className="login-btn">
                                 Login
                             </button>
                         </li>
+
                     </ul>
                 </nav>
                 <div className={classes.header__content__toggle}>

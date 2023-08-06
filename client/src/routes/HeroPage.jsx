@@ -1,9 +1,11 @@
-import React from 'react'
+import './css/Hero.css';
 
 export default function HeroPage() {
   return (
-    <div>
-        <h1>Hero Page</h1>
+    <div id="hero">
+        <h1>Are you looking for a Car to rent?
+            <br/>We're happy to help you with your needs!
+        </h1>
     </div>
   )
 }
