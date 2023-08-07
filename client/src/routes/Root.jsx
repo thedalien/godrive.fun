@@ -4,10 +4,10 @@ import { Outlet } from "react-router-dom";
 function Root() {
   return (
     <>
-        <Header />
+      <Header />
         <div id="detail">
             <Outlet />
-      </div>
+        </div>
     </>
   )
 }
