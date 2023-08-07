@@ -55,12 +55,12 @@ const Header = () => {
                             </button>
                         </li>
                         <li>
-                            <button onClick={() => navLinkClickHandler("/")} className="link">
+                            <button onClick={() => navLinkClickHandler("/cars")} className="link">
                                 Cars
                             </button>
                         </li>
                         <li>
-                            <button onClick={() => navLinkClickHandler("/")} className="link">
+                            <button onClick={() => navLinkClickHandler("/contact")} className="link">
                                 Contact
                             </button>
                         </li>
