@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 
@@ -10,6 +9,10 @@ import ErrorPage from './routes/ErrorPage.jsx'
 import Root from './routes/Root.jsx'
 import HeroPage from './routes/HeroPage'
 import LoginPage from './routes/LoginPage'
+import CarPage from './routes/CarPage'
+import ContactPage from './routes/ContactPage'
+
+
 
 const router = createBrowserRouter([
     {
@@ -23,6 +26,15 @@ const router = createBrowserRouter([
             {
                 path: '/login',
                 element: <LoginPage />
+            },
+            {
+                path: '/cars',
+                element: <CarPage />
+            }
+            ,
+            {
+                path: '/contact',
+                element: <ContactPage />
             }
 
         ],
