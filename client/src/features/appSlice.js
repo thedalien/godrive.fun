@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    serverURL: "http://localhost:5000",
+    serverURL: "http://localhost:8000",
+    user: null,
 };
 
 export const appSlice = createSlice({
@@ -10,10 +11,16 @@ export const appSlice = createSlice({
     reducers: {
         setServerURL: (state, action) => {
             state.serverURL = action.payload;
+        },
+        setUser: (state, action) => {
+            state.user = action.payload;
         }
     }
 });
 
-export const { setServerURL } = appSlice.actions;
+export const { 
+    setServerURL,
+    setUser 
+} = appSlice.actions;
 
 export default appSlice.reducer;

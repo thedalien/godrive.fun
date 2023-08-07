@@ -9,6 +9,8 @@ const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
+    
+
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 768);
@@ -64,6 +66,12 @@ const Header = () => {
                                 Contact
                             </button>
                         </li>
+                        <li>
+                            <button onClick={() => navLinkClickHandler("/register")} className="register-btn">
+                                Register
+                            </button>
+                        </li>
+
                         <li>
                             <button onClick={() => navLinkClickHandler("/login")} className="login-btn">
                                 Login

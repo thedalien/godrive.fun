@@ -11,7 +11,14 @@ import HeroPage from './routes/HeroPage'
 import LoginPage from './routes/LoginPage'
 import CarPage from './routes/CarPage'
 import ContactPage from './routes/ContactPage'
+import RegisterPage from './routes/RegisterPage'
+import Profile from './routes/Profile'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { faTwitter, faFontAwesome } from '@fortawesome/free-brands-svg-icons'
+
+library.add(fas, faTwitter, faFontAwesome)
 
 
 const router = createBrowserRouter([
@@ -28,6 +35,10 @@ const router = createBrowserRouter([
                 element: <LoginPage />
             },
             {
+                path: '/register',
+                element: <RegisterPage />
+            },
+            {
                 path: '/cars',
                 element: <CarPage />
             }
@@ -35,6 +46,10 @@ const router = createBrowserRouter([
             {
                 path: '/contact',
                 element: <ContactPage />
+            },
+            {
+                path: '/profile',
+                element: <Profile />
             }
         ],
         errorElement: <ErrorPage />

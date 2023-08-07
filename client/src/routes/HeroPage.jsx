@@ -1,14 +1,12 @@
-import './css/Hero.css';
+import Hero from "../components/hero/Hero";
+import Cars from "../components/cars/Cars";
+
 
 export default function HeroPage() {
   return (
-    <div id="hero">
-      <div id="heroBg">
-        <h1>Are you looking for a Car to rent?
-            <br/>We're happy to help you with your needs!
-        </h1>
-      </div>
-        
-    </div>
+    <>
+      <Hero />
+      <Cars />
+    </>
   )
 }

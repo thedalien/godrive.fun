@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const { testConnection } = require('./models/conn')
 
 const carsRoutes = require('./router/carsRoutes');
+const userRoutes = require('./router/userRoutes');
 
 const app = express();
 app.use(bodyParser.json());
@@ -18,7 +19,9 @@ testConnection();
 
 
 app.use(cors());
-app.use('/api/', carsRoutes);
+app.use('/api/cars', carsRoutes);
+app.use('/api/user', userRoutes);
+
 
 
 server.listen(port,'0.0.0.0', () => { 

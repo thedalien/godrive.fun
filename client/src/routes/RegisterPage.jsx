@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import './css/Login.css';
 import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setUser } from '../features/appSlice'
 
 
-const LoginPage = () => {
+const RegisterPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const serverURL = useSelector((state) => state.app.serverURL);
 
+    
     useEffect(() => {
         const isLogged = async () => {
           const token = localStorage.getItem('token');
@@ -24,11 +24,9 @@ const LoginPage = () => {
               });
       
               if (res.data.success) {
-                dispatch(setUser({ loggedIn: true, userData: res.data.user }));
-                navigate('/profile');
+                navigate('/login');
               }
             } catch (err) {
-              dispatch(setUser({ loggedIn: false, userData: {} }));
               console.error(err);
             }
           }
@@ -38,17 +36,20 @@ const LoginPage = () => {
       }, []);
       
       
+      
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post(`${serverURL}/api/user/login`, {
+        axios.post(`${serverURL}/api/user/register`, {
+            name,
             email,
             password
         }).then((res) => {
             console.log(res);
             if (res.data.success) {
-                navigate("/profile");
+                localStorage.setItem('token', res.data.token);
+                navigate("/login");
             } else {
                 alert(res.data.message);
             }
@@ -60,9 +61,13 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="login-page">
-            <h1>Login</h1>
+        <div className="registration-page">
+            <h1>Register</h1>
             <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label>Name</label>
+                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} required/>
+                </div>
                 <div className="form-group">
                     <label>Email</label>
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
@@ -77,4 +82,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default RegisterPage;
