@@ -1,15 +1,15 @@
 import Flickity from 'react-flickity-component';
+import CarCard from '../carcard/CarCard';
 import './Flickity.min.css';
 import './Carousel.css';
-import CarCard from '../carcard/CarCard';
 
 const flickityOptions = {
+    setGallerySize: false,
     initialIndex: 1,
+    groupCells: true,
     wrapAround: true,
-    draggable: '>3',
     pageDots: false,
     autoPlay: 5000,
-    pauseAutoPlayOnHover: true,
     imagesLoaded: true
 }
 
@@ -26,7 +26,8 @@ export default function Carousel() {
       static // default false
     >
       <CarCard />
-      
+      <CarCard />
+      <CarCard />
     </Flickity>
   )
 }
