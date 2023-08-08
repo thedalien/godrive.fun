@@ -8,9 +8,9 @@ export default function Hero() {
       <div id="heroBg">
         <h1>
           Are you looking for a Car to rent?
-          <br />We're happy to help you with your needs!
+          <br />We&apos;re happy to help you with your needs!
         </h1>
-        <Link to="#cars" id="goToCars">
+        <Link to="#cars" id="goToCars" reloadDocument >
           <p>
             Go to Cars
             <FontAwesomeIcon icon="fa-solid fa-chevron-down" />
