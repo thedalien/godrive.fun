@@ -4,9 +4,8 @@ import './Flickity.min.css';
 import './Carousel.css';
 
 const flickityOptions = {
-    setGallerySize: false,
     initialIndex: 1,
-    groupCells: true,
+    //groupCells: 2,
     wrapAround: true,
     pageDots: false,
     autoPlay: 5000,
@@ -25,6 +24,7 @@ export default function Carousel() {
       reloadOnUpdate // default false
       static // default false
     >
+      <CarCard />
       <CarCard />
       <CarCard />
       <CarCard />
