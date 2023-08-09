@@ -3,6 +3,8 @@ const http = require('http');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { testConnection } = require('./models/conn')
+const os = require('os');
+
 
 const carsRoutes = require('./router/carsRoutes');
 const userRoutes = require('./router/userRoutes');
@@ -27,3 +29,20 @@ app.use('/api/user', userRoutes);
 server.listen(port,'0.0.0.0', () => { 
     console.log(`Server is running on port ${port} and Local IP is ${server.address().address}`);
 }); 
+
+
+// setInterval(() => {
+//     const used = process.memoryUsage();
+//     const messages = [];
+    
+//     let totalMemoryUsedByProcess = 0;
+//     for (let key in used) {
+//       const memoryInMB = Math.round(used[key] / 1024 / 1024 * 100) / 100;
+//       totalMemoryUsedByProcess += memoryInMB;
+//       messages.push(`${key}: ${memoryInMB} MB`);
+//     }
+  
+//     messages.push(`Total memory used by process: ${Math.round(totalMemoryUsedByProcess * 100) / 100} MB`);
+  
+//     console.log(messages.join(', '));
+//   }, 1000); // Logging every second

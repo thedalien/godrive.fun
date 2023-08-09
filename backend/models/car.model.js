@@ -3,7 +3,15 @@ module.exports = (sequelize, Sequelize) => {
         Brand: {
             type: Sequelize.STRING
             },
-            
+        Model: {
+            type: Sequelize.STRING
+            },
+        Year: {
+            type: Sequelize.INTEGER
+            },
+        Color: {
+            type: Sequelize.STRING
+            }
     });
   
     return Car;

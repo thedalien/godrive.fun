@@ -14,28 +14,45 @@ const RegisterPage = () => {
 
     
     useEffect(() => {
-        const isLogged = async () => {
-          const token = localStorage.getItem('token');
-      
-          if (token && token !== "undefined") {
-            try {
-              const res = await axios.post(`${serverURL}/api/user/login/token`, token, {
-                headers: { 'Content-Type': 'application/json' }
-              });
-      
-              if (res.data.success) {
-                navigate('/login');
-              }
-            } catch (err) {
-              console.error(err);
-            }
+      const isLogged = async () => {
+        const token = localStorage.getItem('token');
+    
+        // Log the token and inspect it in your browser's console
+        console.log(`Raw token from localStorage: ${token}`);
+    
+        if (token && token !== "undefined") {
+          // Check the token format
+          const parts = token.split('.');
+          if (parts.length !== 3) {
+            console.error('Token does not appear to be a valid JWT:', token);
+            return; // Exit or handle the error as needed
           }
-        };
-      
-        isLogged();
-      }, []);
-      
-      
+    
+          console.log(`Getting user with token ${token}`);
+          try {
+            const res = await axios.post(
+              `${serverURL}/api/user/login/token`,
+              {}, 
+              {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`,
+                },
+              }
+            );
+    
+            if (res.data.success) {
+              navigate('/login');
+            }
+          } catch (err) {
+            console.error(err);
+          }
+        }
+      };
+    
+      isLogged();
+    }, []);
+    
       
 
 
@@ -49,6 +66,7 @@ const RegisterPage = () => {
             console.log(res);
             if (res.data.success) {
                 localStorage.setItem('token', res.data.token);
+                console.log(res.data.token);
                 navigate("/login");
             } else {
                 alert(res.data.message);
