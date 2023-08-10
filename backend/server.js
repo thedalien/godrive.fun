@@ -8,6 +8,7 @@ const os = require('os');
 
 const carsRoutes = require('./router/carsRoutes');
 const userRoutes = require('./router/userRoutes');
+const adminRoutes = require('./router/adminRoutes');
 
 const app = express();
 app.use(bodyParser.json());
@@ -21,9 +22,9 @@ testConnection();
 
 
 app.use(cors());
-app.use('/api/cars', carsRoutes);
+app.use('/api/car', carsRoutes);
 app.use('/api/user', userRoutes);
-
+// app.use('/api/admin', adminRoutes);
 
 
 server.listen(port,'0.0.0.0', () => { 

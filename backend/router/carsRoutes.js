@@ -4,8 +4,10 @@ const router = express.Router();
 // const middleware = require('../middleware');
 const carsController = require('../controllers/carsController');
 
-router.post('/add-car', carsController.addCar);
+router.post('/create-car', carsController.createCar);
 
-router.get('/list', carsController.list);
+router.post('/getList', carsController.getList);
+
+router.get('/get-all-cars', carsController.getAllCars);
 
 module.exports = router; 
