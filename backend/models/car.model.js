@@ -20,7 +20,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             required: true
             },
-        volume: {
+        trunkVolume: {
             type: Sequelize.FLOAT,
             required: true
             },
@@ -28,12 +28,20 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             required: true
             },
+        door: {
+            type: Sequelize.INTEGER,
+            required: true  
+            },
         dayPrice: {
             type: Sequelize.INTEGER,
             required: true
             },
         hourPrice: {
             type: Sequelize.INTEGER,
+            required: true
+            },
+        licensePlate: {
+            type: Sequelize.STRING,
             required: true
             },
     });

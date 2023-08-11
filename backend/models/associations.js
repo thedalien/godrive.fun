@@ -9,7 +9,7 @@ Images.belongsTo(Car);
 Car.hasMany(Features);
 Features.belongsTo(Car);
 
-
+//MAG: No need to set up foreign keys? also, are associations even working yet, since they have not been exported?
 
 
 // // Owner-Car relationship through owned_cars

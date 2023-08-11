@@ -12,9 +12,11 @@ module.exports = (sequelize, Sequelize) => {
         role: {
             type: Sequelize.STRING
             },
-        status: {
+        status: { //MAG: specify which specific status and roles exist, also validate for Email 
             type: Sequelize.STRING
             },
     });
     return User;
 }
+
+//MAG, I could be wrong but I think you want to define it as 'user' because sequelize will automatically try to pluralize it? Same goes for the car.model

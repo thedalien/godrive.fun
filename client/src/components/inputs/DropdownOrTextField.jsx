@@ -4,11 +4,13 @@ import axios from 'axios';
 
 const DropdownOrTextField = (props) => {
   const [items, setItems] = useState([]);
-  const [selectedItem, setSelectedItem] = useState(''); // Initialize with empty string
+  const [selectedItem, setSelectedItem] = useState(''); 
+  const [otherValue, setOtherValue] = useState(''); 
   const [isOtherSelected, setIsOtherSelected] = useState(false);
   const [loading, setLoading] = useState(true); // Loading state
+
   const serverURL = useSelector((state) => state.app.serverURL);
-  console.log(props);
+  // console.log(props);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,37 +32,44 @@ const DropdownOrTextField = (props) => {
 
   const handleChange = (event) => {
     const value = event.target.value;
-    setSelectedItem(value);
-
+    props.onChange(event);
+    
     if (value === 'other') {
       setIsOtherSelected(true);
     } else {
       setIsOtherSelected(false);
     }
+    setSelectedItem(value);
+  };
+  const handleOtherChange = (event) => {
+    const value = event.target.value;
+    setOtherValue(value);
+    props.onChange(event);
   };
 
   return (
-    <div>
+    <>
+      <label className="adminLabel" htmlFor={props.data} >{props.name}: </label>
       {loading ? (
         <div>Loading...</div>
-      ) : isOtherSelected ? (
+      ) : isOtherSelected && (
         <input
+          name={props.data}
+          className="adminInputOther"
           type="text"
           placeholder="Enter other option"
-          value={selectedItem === 'other' ? '' : selectedItem}
-          onChange={handleChange}
+          onChange={handleOtherChange}
         />
-      ) : (
-        <select value={selectedItem} onChange={handleChange}>
+      )}
+        <select className="adminInput" name={props.data} value={selectedItem} onChange={handleChange}>
         {items.map((item, index) => (
-            <option key={index} value={item.value}> {/* Use index as a key */}
+            <option key={index} value={item}>
             {item}
             </option>
         ))}
         <option value="other">Other</option>
         </select>
-      )}
-    </div>
+    </>
   );
 };
 

@@ -3,7 +3,7 @@ const Car = models.cars;
 
 const createCar = (req, res) => {
   // Validate request
-  if (!req.body.brand || !req.body.model || !req.body.year || !req.body.color || !req.body.seats || !req.body.volume || !req.body.poweredBy || !req.body.dayPrice || !req.body.hourPrice) {
+  if (!req.body.brand || !req.body.model || !req.body.year || !req.body.color || !req.body.seats || !req.body.trunkVolume || !req.body.poweredBy || !req.body.dayPrice || !req.body.hourPrice) {
     res.status(400).send({
       car: req.body,
       message: 'Content cannot be empty!'
@@ -19,7 +19,7 @@ const createCar = (req, res) => {
     year: req.body.year,
     color: req.body.color,
     seats: req.body.seats,
-    volume: req.body.volume,
+    trunkVolume: req.body.trunkVolume,
     poweredBy: req.body.powerdBy,
     dayPrice: req.body.dayPrice,
     hourPrice: req.body.hourPrice

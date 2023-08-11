@@ -18,7 +18,7 @@ const LoginPage = () => {
         const token = localStorage.getItem('token');
     
         // Log the token and inspect it in your browser's console
-        console.log(`Raw token from localStorage: ${token}`);
+        console.log(`Raw token from localStorage: ${token}`); //MAG, I know we were working on this on Wednesday, is the token resolved?
     
         if (token && token !== "undefined") {
           // Check the token format

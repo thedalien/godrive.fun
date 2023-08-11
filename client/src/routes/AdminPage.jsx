@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-// import TextField from '@mui/material/TextField'; 
-// import styled from '@mui/material/styles';
 import './css/Admin.css';
 import DropdownOrTextField from '../components/inputs/DropdownOrTextField';
 
@@ -15,31 +13,30 @@ export default function AdminPage() {
         });
     }
 
-    // const StyledTextField = styled(TextField)`
-    //     & .Mui-disabled .MuiOutlinedInput-notchedOutline {
-    //         border-color: white;
-    //     }
-
-    // `;
+    const submitCarData = (e) => {
+        e.preventDefault();
+        console.log(carData);
+    }
 
   return (
     <div id="admin">
-        <h1>AdminPage</h1>
+        <h1>Admin Page</h1>
         <fieldset id="addCar">
             <legend>Add Car</legend>
-            <form>
-                {/* <TextField
-                    name="brand"
-                    id="outlined-required"
-                    label="Required"
-                    variant="outlined"
-                    helperText="Enter the Brand of your Car"
-                    onChange={getCarData}
-                /> */}
-                <DropdownOrTextField data='brand'/> 
-                {/* {carData.brand ? <DropdownOrTextField getCarData={getCarData} brand={carData.brand} data="model"/> : null } */}
-                {/* <DropdownOrTextField type="year"/> */}
+            <form id="addCarForm">
+                <DropdownOrTextField data='brand' name='Car Brand' onChange={getCarData}/>
+                <DropdownOrTextField data='model' name='Car Model' onChange={getCarData}/>
+                <DropdownOrTextField data='year' name='Build Year' onChange={getCarData}/>
+                <DropdownOrTextField data='color' name='Car Color' onChange={getCarData}/>
+                <DropdownOrTextField data='seats' name='Car Seats' onChange={getCarData}/>
+                <DropdownOrTextField data='trunkVolume' name='Trunk Volume' onChange={getCarData}/>
+                <DropdownOrTextField data='poweredBy' name='Car powered by' onChange={getCarData}/>
+                <DropdownOrTextField data='door' name='Car Doors' onChange={getCarData}/>
+                <DropdownOrTextField data='dayPrice' name='Price per Day' onChange={getCarData}/>
+                <DropdownOrTextField data='hourPrice' name='Price per Hour' onChange={getCarData}/>
+                <button id="addCarButton" type='submit' name='submit' onClick={submitCarData}>Add Car to garage</button>
             </form>
+
         </fieldset>
     </div>
   )
