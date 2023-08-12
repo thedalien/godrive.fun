@@ -1,8 +1,41 @@
-#carCard {
+.carCard {
     width: 45%;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 20px 0 20px;
     background-color: rgb(168, 215, 215);
-    border-left: 1px solid white;
-    margin: 0 10px 0 10px;
+    border: 1px solid white;
     text-align: center;
-}
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .carCard h1 {
+    margin: 10px;
+  }
+  
+  .carCard img {
+    width: 100%;
+    height: auto;
+    max-height: 50%; /* Adjust this value as needed */
+    object-fit: cover;
+  }
+  
+  .carDetails {
+    width: 90%;
+    padding: 10px 0 10px 0;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: start;
+  }
+
+  .carDetails > p {
+    width: 90%;
+    margin: 2px;
+    padding-left: 5px;
+    justify-self: center;
+    border: 1px solid #fff;
+    text-align: left;
+  }
+  
