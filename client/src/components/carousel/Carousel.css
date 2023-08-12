@@ -1,4 +1,9 @@
 .carousel {
-    height: 500px;
+    height: 600px;
+    margin: 0;
     background-color: transparent;
+}
+
+.flickity-viewport {
+    height: auto;
 }
