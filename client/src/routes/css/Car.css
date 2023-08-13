@@ -1,0 +1,24 @@
+#car {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#carGrid {
+    width: 80%;
+    height: 100%;
+    margin-bottom: 50px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto;
+    gap: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+#carGrid > .carCard {
+    width: 100%;
+    margin: 0;
+}

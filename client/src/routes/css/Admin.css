@@ -9,17 +9,26 @@
 
 #addCar {
     width: 80%;
+    margin-bottom: 50px;
     padding: 20px;
-    border: 1px solid #fff;
-    border-radius: 5px;
-}
-
-#addCarForm {
-    padding: 0 20px 0 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border: 1px solid #fff;
+    border-radius: 5px;
+}
+
+#addCar > legend {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#addCarForm {
+    padding: 0 20px 0 20px;
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 20px;
 }
 
 .adminLabel {
@@ -41,10 +50,19 @@
     outline: none;
     width: 100%;
     border: 1px solid #fff;
+
+}
+.adminInputOther {
+    width: 80%;
+    margin-bottom: 3px;
+    padding: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
 }
 
 
 
 #addCarButton {
+    margin: 30px auto 0 auto;
     padding: 10px;
 }
