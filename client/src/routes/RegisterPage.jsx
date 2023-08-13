@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './css/Login.css';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
