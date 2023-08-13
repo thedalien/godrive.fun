@@ -4,19 +4,24 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING
             },
         email: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            unique: true,
+            allowNull: false,
+            typeof: 'email',
             },
         password: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allowNull: false,
             },
         role: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            defaultValue: 'user',
+            alowedValues: ['user', 'admin', 'moderator']
             },
-        status: { //MAG: specify which specific status and roles exist, also validate for Email 
-            type: Sequelize.STRING
+        verified: { //MAG: specify which specific status and roles exist, also validate for Email 
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
             },
     });
     return User;
 }
-
-//MAG, I could be wrong but I think you want to define it as 'user' because sequelize will automatically try to pluralize it? Same goes for the car.model

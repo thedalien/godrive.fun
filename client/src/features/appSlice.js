@@ -5,6 +5,8 @@ const initialState = {
     user: null,
 };
 
+// const token = localStorage.getItem("token");
+
 export const appSlice = createSlice({
     name: "app",
     initialState,
@@ -14,8 +16,11 @@ export const appSlice = createSlice({
         },
         setUser: (state, action) => {
             state.user = action.payload;
-        }
-    }
+        },
+    },
+    // extraReducers: {
+        // get token form local storage
+
 });
 
 export const { 

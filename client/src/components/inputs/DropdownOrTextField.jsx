@@ -55,7 +55,7 @@ const DropdownOrTextField = (props) => {
       ) : isOtherSelected && (
         <input
           name={props.data}
-          className="adminInputOther"
+          className="adminInput"
           type="text"
           placeholder="Enter other option"
           onChange={handleOtherChange}
@@ -69,6 +69,7 @@ const DropdownOrTextField = (props) => {
         ))}
         <option value="other">Other</option>
         </select>
+        
     </>
   );
 };

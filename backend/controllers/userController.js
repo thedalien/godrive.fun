@@ -18,12 +18,12 @@ const register = async (req, res) => {
   const user = await User.create({
     name,
     email,
-    password: hashedPassword,
-    role: 'user',
-    status: 'not verified'
+    password: hashedPassword
   });
 
-    res.status(201).send({ message: 'User created', user, success: true });
+  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1w' });
+
+    res.status(201).send({ message: 'User created', user, success: true, token: token });
 };
 
 const login = async (req, res) => {
@@ -39,7 +39,7 @@ const login = async (req, res) => {
     if (!validPassword) {
         return res.status(401).send({ message: 'Invalid Password' });
     } else {
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1w' });
         res.status(200).send({
             message: 'Login successful',
             user,
@@ -53,7 +53,7 @@ const login = async (req, res) => {
 };
 
 const loginToken = async (req, res) => {
-    console.log(req.headers);
+    // console.log(req.headers);
     console.log(req.headers.authorization);
     
     if (!req.headers.authorization) {

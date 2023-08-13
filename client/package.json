@@ -21,6 +21,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
     "cross-env": "^7.0.3",
+    "firebase": "^10.1.0",
     "flickity": "^2.3.0",
     "node-sass": "^9.0.0",
     "react": "^18.2.0",

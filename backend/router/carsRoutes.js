@@ -4,7 +4,7 @@ const router = express.Router();
 // const middleware = require('../middleware');
 const carsController = require('../controllers/carsController');
 
-router.post('/create-car', carsController.createCar);
+router.post('/addCar', carsController.createCar);
 
 router.post('/getList', carsController.getList);
 

@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
 import './css/Login.css';
 import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setUser } from '../features/appSlice'
 
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const serverURL = useSelector((state) => state.app.serverURL);
 
     useEffect(() => {

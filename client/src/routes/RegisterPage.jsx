@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import './css/Login.css';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setUser } from '../features/appSlice';
+import useAuthToken from '../functions/useAuthToken';
 
 
 const RegisterPage = () => {
@@ -11,49 +13,10 @@ const RegisterPage = () => {
     const [name, setName] = useState("");
     const navigate = useNavigate();
     const serverURL = useSelector((state) => state.app.serverURL);
+    const dispatch = useDispatch();
 
-    
-    useEffect(() => {
-      const isLogged = async () => {
-        const token = localStorage.getItem('token');
-    
-        // Log the token and inspect it in your browser's console
-        console.log(`Raw token from localStorage: ${token}`);
-    
-        if (token && token !== "undefined") {
-          // Check the token format
-          const parts = token.split('.');
-          if (parts.length !== 3) {
-            console.error('Token does not appear to be a valid JWT:', token);
-            return; // Exit or handle the error as needed
-          }
-    
-          console.log(`Getting user with token ${token}`);
-          try {
-            const res = await axios.post(
-              `${serverURL}/api/user/login/token`,
-              {}, 
-              {
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${token}`,
-                },
-              }
-            );
-    
-            if (res.data.success) {
-              navigate('/login');
-            }
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      };
-    
-      isLogged();
-    }, []);
-    
-      
+
+    useAuthToken("login");
 
 
     const handleSubmit = (e) => {
@@ -67,12 +30,21 @@ const RegisterPage = () => {
             if (res.data.success) {
                 localStorage.setItem('token', res.data.token);
                 console.log(res.data.token);
+                const user = {name:res.data.user.name, email:res.data.user.email, id:res.data.user._id, token:res.data.token, role: res.data.user.role, verified: res.data.user.verified}
+                dispatch(setUser(user));
                 navigate("/login");
             } else {
                 alert(res.data.message);
             }
         }
         ).catch((err) => {
+          // if error 409, user already exists
+          if (err.response.status === 409) {
+            alert(err.response.data.message);
+            navigate("/login");
+          } else {
+            alert("An error occurred. Please try again later.");
+          }
             console.log(err);
         }
         );
