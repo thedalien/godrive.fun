@@ -18,6 +18,8 @@ const RegisterPage = () => {
 
     useAuthToken("login");
 
+        
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
