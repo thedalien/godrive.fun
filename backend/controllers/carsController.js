@@ -1,6 +1,20 @@
 const models = require('../models/index');
 const Car = models.cars;
 
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+})
+
+const upload = multer({ storage: storage });
+
+
 const createCar = (req, res) => {
   // Validate request
   if (!req.body.brand || !req.body.model || !req.body.year || !req.body.color || !req.body.seats || !req.body.trunkVolume || !req.body.poweredBy || !req.body.dayPrice || !req.body.hourPrice) {
@@ -20,9 +34,12 @@ const createCar = (req, res) => {
     color: req.body.color,
     seats: req.body.seats,
     trunkVolume: req.body.trunkVolume,
-    poweredBy: req.body.powerdBy,
+    poweredBy: req.body.poweredBy,
     dayPrice: req.body.dayPrice,
-    hourPrice: req.body.hourPrice
+    hourPrice: req.body.hourPrice,
+    door: req.body.door,
+    licensePlate: req.body.licensePlate,
+
   };
 
   // Save Car in the database
@@ -42,7 +59,7 @@ const getAllCars = (req, res) => {
     .then(data => {
       res.send(data);
     })
-    .catch(err => {
+    .catch(err => { 
       res.status(500).send({
         message: err.message || 'Some error occurred while retrieving cars.'
       });

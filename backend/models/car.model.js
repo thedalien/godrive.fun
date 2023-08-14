@@ -42,9 +42,10 @@ module.exports = (sequelize, Sequelize) => {
             },
         licensePlate: {
             type: Sequelize.STRING,
-            required: true
+            required: true,
+            unique: true
             },
-    });
+    }); 
 
     return Car;
-  };  
+  };   
