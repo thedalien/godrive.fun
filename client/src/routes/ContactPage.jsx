@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './css/Contact.css'
 
 export default function ContactPage() {
@@ -27,9 +28,15 @@ export default function ContactPage() {
           Postalcode and Location
         </p>
         <div id="buttons">
-          <button >Phone</button>
-          <button >Mail</button>
-          <button >Page</button>
+          <button className="contactButton" title="Go to webpage">
+            <FontAwesomeIcon icon="fa-solid fa-globe" size="lg" />
+          </button>
+          <button className="contactButton" title="Call us">
+            <FontAwesomeIcon icon="fa-solid fa-phone" size="lg" />
+          </button>
+          <button className="contactButton" title="Write us an E-Mail">
+            <FontAwesomeIcon icon="fa-solid fa-envelope" size="lg" />
+          </button>
         </div>
       </div>
     </div>

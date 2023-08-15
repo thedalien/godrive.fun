@@ -12,7 +12,7 @@ import LoginPage from './routes/LoginPage'
 import CarPage from './routes/CarPage'
 import ContactPage from './routes/ContactPage'
 import RegisterPage from './routes/RegisterPage'
-import Profile from './routes/Profile'
+import UserPage from './routes/UserPage'
 import AdminPage from './routes/AdminPage'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/profile',
-                element: <Profile />
+                element: <UserPage />
             },
             {
                 path: '/admin',

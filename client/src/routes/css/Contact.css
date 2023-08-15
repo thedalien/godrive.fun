@@ -9,7 +9,7 @@
 #contactText {
     width: 100%;
     height: auto;
-    padding: 50px;
+    padding: 50px 0 50px 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -30,7 +30,7 @@
 #contactForm {
     width: 100%;
     height: auto;
-    padding: 50px;
+    padding: 50px 0 50px 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -57,12 +57,13 @@
 }
 
 #contactForm > button {
-    background-color: #dfdfdf;
+    background-color: rgb(223, 223, 223);
     color: rgb(72, 72, 72);
     border: none;
     margin-top: 50px;
     padding: 10px 20px;
     border-radius: 5px;
+    color: rgb(77, 77, 77);
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -74,21 +75,36 @@
 #contactInfo {
     width: 100%;
     height: auto;
-    padding: 50px;
+    padding: 50px 0 50px 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(202, 118, 118);
+    background-color: rgb(249, 249, 249);
 }
 
-#contactInfo #buttons {
+#contactInfo > p {
+    color: #242424;
+}
+
+#buttons {
     width: 100%;
     display: flex;
     justify-content: center;
 } 
 
-#buttons > button {
+.contactButton {
     width: 50px;
     height: 50px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #202020;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.contactButton:hover {
+    background-color: #7e7e7e;
 }
