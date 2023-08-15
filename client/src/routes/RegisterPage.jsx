@@ -112,7 +112,7 @@ const RegisterPage = () => {
                     <label>Password</label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                 </div>
-                <button onClick={handleSubmit} type="submit">Login</button>
+                <button onClick={handleSubmit}>Login</button>
             </form>
         </div>
     );
