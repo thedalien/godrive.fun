@@ -23,7 +23,7 @@ db.features = require('./features.model.js')(sequelize, Sequelize);
 db.cars.hasMany(db.images);
 db.images.belongsTo(db.cars);
 
-// db.cars.hasMany(db.features);
-// db.features.belongsTo(db.cars);
+db.cars.hasMany(db.features);
+db.features.belongsTo(db.cars);
 
 module.exports = db;

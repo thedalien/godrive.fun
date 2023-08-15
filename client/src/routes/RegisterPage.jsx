@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import {useEffect, useState } from 'react';
 import './css/Login.css';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setUser } from '../features/appSlice';
-import useAuthToken from '../functions/useAuthToken';
+// import useAuthToken from '../functions/useAuthToken';
 
 
 const RegisterPage = () => {
@@ -16,7 +16,51 @@ const RegisterPage = () => {
     const dispatch = useDispatch();
 
 
-    useAuthToken("login");
+    // useAuthToken("login");
+        useEffect(() => {
+      const isLogged = async () => {
+        const token = localStorage.getItem('token');
+    
+        // Log the token and inspect it in your browser's console
+        console.log(`Raw token from localStorage: ${token}`); //MAG, I know we were working on this on Wednesday, is the token resolved?
+    
+        if (token && token !== "undefined") { // if token exists
+          // Check the token format
+          const parts = token.split('.');
+          if (parts.length !== 3) {
+            console.error('Token does not appear to be a valid JWT:', token);
+            return; // Exit or handle the error as needed
+          }
+    
+          console.log(`Getting user with token ${token}`);
+          try {
+            const res = await axios.post(
+              `${serverURL}/api/user/login/token`,
+              {}, 
+              {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`,
+                },
+              }
+            );
+    
+            if (res.data.success) {
+              navigate('/profile');
+            } else {
+                navigate('/login');
+                console.error(res.data.message);
+            }
+
+
+          } catch (err) {
+            console.error(err);
+          }
+        }
+      };
+    
+      isLogged();
+    }, []);
 
         
 
