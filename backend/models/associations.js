@@ -1,20 +1,20 @@
-const Car = require('./car.model');
-const Images = require('./images.model');
-const Features = require('./features.model');
+// const Car = require('./car.model');
+// const Images = require('./images.model');
+// const Features = require('./features.model');
 
 
-Car.hasMany(Images);
-Images.belongsTo(Car);
+// Car.hasMany(Images);
+// Images.belongsTo(Car);
 
-Car.hasMany(Features);
-Features.belongsTo(Car);
+// Car.hasMany(Features);
+// Features.belongsTo(Car);
 
 
-module.exports = {
-    Car,
-    Images,
-    Features
-}
+// module.exports = {
+//     Car,
+//     Images,
+//     Features
+// }
 //MAG: No need to set up foreign keys? also, are associations even working yet, since they have not been exported?
 
 

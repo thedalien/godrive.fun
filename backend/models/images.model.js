@@ -6,4 +6,7 @@ module.exports = (sequelize, Sequelize) => {
         alt: {
             type: Sequelize.STRING
         },
-    })};
+    });
+    
+    return Images;
+};
