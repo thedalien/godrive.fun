@@ -1,3 +1,6 @@
+// MOVED to ./index.js
+
+
 // const Car = require('./car.model');
 // const Images = require('./images.model');
 // const Features = require('./features.model');

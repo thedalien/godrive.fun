@@ -46,12 +46,14 @@ const useAuthToken = async (redirect) => {
       } catch (err) {
         console.error(err);
         // refdirect to login page
-        navigate('/login');
+        // navigate('/login');
+        return;
       }
     } else {
       // refdirect to login page
       navigate('/login');
     }
+  return;
   };
 
 export default useAuthToken;
