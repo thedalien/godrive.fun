@@ -85,6 +85,16 @@ export default function AdminPage() {
             </form>
             <button id="addCarButton" type='submit' name='submit' onClick={submitCarData}>Add Car to garage</button>
         </fieldset>
+        <fieldset id="editCar">
+            <legend>Edit Car</legend>
+
+            <button id="showCars">Show Cars</button> {/* Show cars */}
+        </fieldset>
+
+        <fieldset id="deleteCar">
+            <legend>Delete Car</legend>
+
+        </fieldset>
     </div>
   )
 }
