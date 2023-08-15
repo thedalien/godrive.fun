@@ -5,8 +5,8 @@ export default function UserPage() {
     <div id="user">
       <div id="userEdit">
         <h1>Hello {/* Username */}</h1>
-        <fieldset >
-        <legend>Current Details</legend>
+        <h3>Current Details</h3>
+        <div id="detailContainer">
           <div className="currentDetail">
             Current E-Mail: {/* User E-Mail Adress */}
           </div>
@@ -19,7 +19,7 @@ export default function UserPage() {
           <div className="userDetail">
             Lorem ipsum dolor sit amet consectetur
           </div>
-        </fieldset>
+        </div>
 {/*         <form >
           <label>Current E-Mail</label>
           <input type="text" name="updateMail" disabled/>
