@@ -90,7 +90,7 @@ const getList = (req, res) => {
         });
 };
 
-const editCar = (req, res) => {
+const updateCar = (req, res) => {
   const id = req.params.id;
 
   Car.update(req.body, {
@@ -114,11 +114,37 @@ const editCar = (req, res) => {
     });
 };
 
+const deleteCar = (req, res) => {
+  const id = req.params.id;
+
+  Car.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: 'Car was deleted successfully!'
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Car with id=${id}. Maybe Car was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: `Could not delete Car with id=${id}`
+      });
+    });
+};
+
+
 
 
 module.exports = {
     createCar,
     getAllCars,
     getList,
-    editCar
+    updateCar,
+    deleteCar
 }
