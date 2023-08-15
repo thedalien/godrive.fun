@@ -9,6 +9,12 @@ Images.belongsTo(Car);
 Car.hasMany(Features);
 Features.belongsTo(Car);
 
+
+module.exports = {
+    Car,
+    Images,
+    Features
+}
 //MAG: No need to set up foreign keys? also, are associations even working yet, since they have not been exported?
 
 
@@ -19,4 +25,3 @@ Features.belongsTo(Car);
 // // Car-Parts relationship through cars_parts
 // Car.belongsToMany(Part, { through: CarsParts, foreignKey: 'car_id', allowNull: false });
 // Part.belongsToMany(Car, { through: CarsParts, foreignKey: 'part_id', allowNull: false });
- 
