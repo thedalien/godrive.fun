@@ -90,10 +90,35 @@ const getList = (req, res) => {
         });
 };
 
+const editCar = (req, res) => {
+  const id = req.params.id;
+
+  Car.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: 'Car was updated successfully.'
+        });
+      } else {
+        res.send({
+          message: `Cannot update Car with id=${id}. Maybe Car was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: `Error updating Car with id=${id}`
+      });
+    });
+};
+
 
 
 module.exports = {
     createCar,
     getAllCars,
-    getList
+    getList,
+    editCar
 }

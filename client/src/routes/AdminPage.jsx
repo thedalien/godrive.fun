@@ -3,11 +3,11 @@ import './css/Admin.css';
 import DropdownOrTextField from '../components/inputs/DropdownOrTextField';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import useAuthToken from '../functions/useAuthToken';
+// import useAuthToken from '../functions/useAuthToken';
 
 
 export default function AdminPage() {
-    useAuthToken();
+    // useAuthToken();
 
     const [carData, setCarData] = useState({
         "brand": "Toyota",
