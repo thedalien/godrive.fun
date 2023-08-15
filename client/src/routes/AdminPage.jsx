@@ -3,6 +3,7 @@ import './css/Admin.css';
 import DropdownOrTextField from '../components/inputs/DropdownOrTextField';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import CarCard from '../components/carcard/CarCard';
 // import useAuthToken from '../functions/useAuthToken';
 
 
@@ -21,9 +22,14 @@ export default function AdminPage() {
         "hourPrice": 10,
         "door": 4,
         "licensePlate": "XYZ-1234"
-      });
+    });
+    const [showEditCars, setShowEditCars] = useState(false);
+    const [showDeleteCars, setShowDeleteCars] = useState(false);
+
     const serverURL = useSelector((state) => state.app.serverURL);
 
+    const showEditable = () => setShowEditCars(true);
+    const showDeletable = () => setShowDeleteCars(true);
 
     const getCarData = (e) => {
         // if name is licensePlate, make it uppercase and add a space after 3 letters
@@ -87,13 +93,204 @@ export default function AdminPage() {
         </fieldset>
         <fieldset id="editCar">
             <legend>Edit Car</legend>
-
-            <button id="showCars">Show Cars</button> {/* Show cars */}
+            {showEditCars ? 
+                <div id="carGridEdit">
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div><div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
+                </div>
+            : "Please select the Show Car button"}
+            <button id="showCars" onClick={showEditable}>Show Cars</button> {/* Show cars */}
         </fieldset>
-
         <fieldset id="deleteCar">
             <legend>Delete Car</legend>
-
+            {showDeleteCars ? 
+                <div id="carGridDelete">
+                    <div className="deleteThisCar">
+                        <CarCard/>
+                        <button>
+                            Delete Car
+                        </button>
+                    </div>
+                    <div className="deleteThisCar">
+                        <CarCard/>
+                        <button>
+                            Delete Car
+                        </button>
+                    </div>
+                    <div className="deleteThisCar">
+                        <CarCard/>
+                        <button>
+                            Delete Car
+                        </button>
+                    </div>
+                    <div className="deleteThisCar">
+                        <CarCard/>
+                        <button>
+                            Delete Car
+                        </button>
+                    </div>
+                    <div className="deleteThisCar">
+                        <CarCard/>
+                        <button>
+                            Delete Car
+                        </button>
+                    </div>
+                    <div className="deleteThisCar">
+                        <CarCard/>
+                        <button>
+                            Delete Car
+                        </button>
+                    </div>
+                    <div className="deleteThisCar">
+                        <CarCard/>
+                        <button>
+                            Delete Car
+                        </button>
+                    </div>
+                    <div className="deleteThisCar">
+                        <CarCard/>
+                        <button>
+                            Delete Car
+                        </button>
+                    </div>
+                    <div className="deleteThisCar">
+                        <CarCard/>
+                        <button>
+                            Delete Car
+                        </button>
+                    </div>
+                </div>
+            : "Please select the Show Car button"}
+            <button id="showCars" onClick={showDeletable}>Show Cars</button> {/* Show cars */}
         </fieldset>
     </div>
   )
