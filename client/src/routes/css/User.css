@@ -1,0 +1,75 @@
+#user {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#userEdit {
+    width: 100%;
+    height: auto;
+    padding: 50px 0 50px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(130, 86, 86);
+}
+
+#userEdit > fieldset {
+    width: 50%;
+    padding: 0 20px 20px 20px;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    justify-content: center;
+    column-gap: 10px;
+    border: 1px solid rgb(249, 249, 249);
+    border-radius: 5px;
+}
+
+.currentDetail {
+    width: 100%;
+    height: 30px;
+    margin-top: 10px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgb(255, 255, 255);
+    border-right: 1px solid transparent;
+    border-radius: 3px 0 0 3px;
+}
+
+.userDetail {
+    width: 100%;
+    height: 30px;
+    margin-top: 10px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 0 3px 3px 0;
+}
+
+#userRes {
+    width: 100%;
+    height: auto;
+    padding: 50px 0 50px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(66, 66, 66);
+}
+
+#userPrevRes {
+    width: 100%;
+    height: auto;
+    padding: 50px 0 50px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(249, 249, 249);
+}
