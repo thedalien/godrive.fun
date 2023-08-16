@@ -1,6 +1,6 @@
 //MAG just curious what's going to go here? It would be nice to start practicing!
 
-function tokenAuth(req, res, next) {
+const tokenAuth = (req, res, next) => {
     if (!req.headers.authorization) {
         return res.status(401).send({ message: 'No token provided' });
       }

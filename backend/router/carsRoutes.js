@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const tokenAuth = require('../middleware/middleware');
+const {tokenAuth} = require('../middleware/middleware');
 
 // const middleware = require('../middleware');
 const carsController = require('../controllers/carsController');
