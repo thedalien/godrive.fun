@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import './css/Admin.css';
 import DropdownOrTextField from '../components/inputs/DropdownOrTextField';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
+// import axios from 'axios';
+// import { useSelector } from 'react-redux';
 import CarCard from '../components/carcard/CarCard';
+import api from '../api';
 // import useAuthToken from '../functions/useAuthToken';
 
 
@@ -26,7 +27,7 @@ export default function AdminPage() {
     const [showEditCars, setShowEditCars] = useState(false);
     const [showDeleteCars, setShowDeleteCars] = useState(false);
 
-    const serverURL = useSelector((state) => state.app.serverURL);
+    // const serverURL = useSelector((state) => state.app.serverURL);
 
     const showEditable = () => setShowEditCars(true);
     const showDeletable = () => setShowDeleteCars(true);
@@ -55,7 +56,7 @@ export default function AdminPage() {
 
     const submitCarData = async (e) => {
         e.preventDefault();
-        axios.post(`${serverURL}/api/car/addCar`, carData)
+        api.post(`/api/car/addCar`, carData)
         .then((res) => {
             console.log(res);
         }).catch((err) => {
@@ -85,8 +86,6 @@ export default function AdminPage() {
                 <DropdownOrTextField data='hourPrice' name='Price per Hour' onChange={getCarData}/>
                 <label className='adminLabel' htmlFor='licensePlate'>License Plate</label>
                 <input name='licensePlate' className='adminInput' maxLength="8" placeholder='License Plate' onChange={getCarData}/>
-
-                <button id="addCarButton" type='submit' name='submit' onClick={submitCarData}>Add Car to garage</button>
             </div>
             </form>
             <button id="addCarButton" type='submit' name='submit' onClick={submitCarData}>Add Car to garage</button>
