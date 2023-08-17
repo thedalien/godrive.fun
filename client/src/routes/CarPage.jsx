@@ -35,9 +35,6 @@ export default function CarPage() {
       <div id="carGrid">
         {carCards}
       </div>
-      <div>
-        {selectedCar && <CarDetailPage car={selectedCar} />}
-      </div>
     </div>
   )
 }

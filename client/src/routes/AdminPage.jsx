@@ -6,10 +6,51 @@ import DropdownOrTextField from '../components/inputs/DropdownOrTextField';
 import CarCard from '../components/carcard/CarCard';
 import api from '../api';
 // import useAuthToken from '../functions/useAuthToken';
+import { storage } from '../firebase/config';
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
+
+
 
 
 export default function AdminPage() {
     // useAuthToken();
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [downloadURL, setDownloadURL] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(null);
+
+    const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+    };
+    const uploadImageToFirebase = async () => {
+        if (!selectedFile) {
+          return;
+        }
+      
+        const storageRef = ref(storage, 'images/' + selectedFile.name);
+      
+        const uploadTask = uploadBytesResumable(storageRef, selectedFile, {
+          contentType: selectedFile.type,
+        });
+      
+        uploadTask.on('state_changed',
+          (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setUploadProgress(progress);
+          }, 
+          (error) => {
+            console.error(error);
+          }, 
+          async () => {
+            const url = await getDownloadURL(uploadTask.snapshot.ref);
+            setDownloadURL(url);
+            console.log('File available at', url);
+          }
+        );
+      };
+      
+
+
 
     const [carData, setCarData] = useState({
         "brand": "Toyota",
@@ -52,18 +93,26 @@ export default function AdminPage() {
             ...carData,
             [e.target.name]: e.target.value,
         });
+        console.log(carData);
     }
-
     const submitCarData = async (e) => {
         e.preventDefault();
-        api.post(`/api/car/addCar`, carData)
+      
+        await uploadImageToFirebase();
+      
+        const carInfo = {
+          ...carData,
+          carImage: downloadURL,
+        };
+      
+        api.post(`/api/car/addCar`, carInfo)
         .then((res) => {
             console.log(res);
         }).catch((err) => {
             console.log(err);
         });
-        console.log(carData);
-    }
+      };
+      
 
   return (
     <div id="admin">
@@ -86,6 +135,8 @@ export default function AdminPage() {
                 <DropdownOrTextField data='hourPrice' name='Price per Hour' onChange={getCarData}/>
                 <label className='adminLabel' htmlFor='licensePlate'>License Plate</label>
                 <input name='licensePlate' className='adminInput' maxLength="8" placeholder='License Plate' onChange={getCarData}/>
+                <label className='adminLabel' htmlFor='carImage'>Car Image</label>
+                <input type='file' name='carImage' className='adminInput' onChange={handleFileChange}/>
             </div>
             </form>
             <button id="addCarButton" type='submit' name='submit' onClick={submitCarData}>Add Car to garage</button>
