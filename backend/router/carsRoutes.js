@@ -12,4 +12,7 @@ router.post('/getList', carsController.getList);
 
 router.get('/get-all-cars', carsController.getAllCars);
 
+router.get('/get-car/:id', carsController.getCar);
+
+
 module.exports = router; 
