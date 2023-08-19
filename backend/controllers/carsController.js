@@ -4,7 +4,7 @@ const Images = models.images;
 
 const createCar = async (req, res) => {
   // Validate request
-  if (!req.body.brand || !req.body.model || !req.body.year || !req.body.color || !req.body.seats || !req.body.trunkVolume || !req.body.poweredBy || !req.body.dayPrice || !req.body.hourPrice || !req.body.carImage) {
+  if (!req.body.brand || !req.body.model || !req.body.year || !req.body.color || !req.body.seats || !req.body.trunkVolume || !req.body.poweredBy || !req.body.dayPrice || !req.body.hourPrice || !req.body.carImages || !req.body.door || !req.body.licensePlate) {
     res.status(400).send({
       car: req.body,
       message: 'Content cannot be empty!'
@@ -32,12 +32,14 @@ const createCar = async (req, res) => {
     // Save Car in the database
     const createdCar = await Car.create(car);
 
-    // Associate carImage with the created car
-    const image = await Images.create({
-      url: req.body.carImage,
-      alt: `${createdCar.brand} ${createdCar.model} Image`,
-      carId: createdCar.id
-    });
+    // Associate carImages with the created car
+    for (const carImage of req.body.carImages) {
+        const image = await Images.create({
+            url: carImage,
+            alt: `${createdCar.brand} ${createdCar.model} Image`,
+            carId: createdCar.id
+        });
+    }
 
     res.send(createdCar);
   } catch (err) {

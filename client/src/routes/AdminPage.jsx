@@ -17,47 +17,54 @@ export default function AdminPage() {
     // useAuthToken();
     const [uploadProgress, setUploadProgress] = useState(0);
     const [downloadURL, setDownloadURL] = useState(null);
-    const [selectedFile, setSelectedFile] = useState(null);
+    // const [selectedFile, setSelectedFile] = useState(null);
+    const [downloadURLs, setDownloadURLs] = useState(null);
+    const [selectedFiles, setSelectedFiles] = useState(null);
 
     const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
+        console.log(e.target.files);
+        setSelectedFiles(e.target.files);
     };
+
     const uploadImageToFirebase = async () => {
-        if (!selectedFile) {
+        if (!selectedFiles) {
           return;
         }
-      
-        const storageRef = ref(storage, 'images/' + selectedFile.name);
-      
-        const uploadTask = uploadBytesResumable(storageRef, selectedFile, {
-          contentType: selectedFile.type,
-        });
-      
-        uploadTask.on('state_changed',
-          (snapshot) => {
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            setUploadProgress(progress);
-          }, 
-          (error) => {
-            console.error(error);
-          }, 
-          async () => {
-            // Fetch the original image's URL
-            const originalURL = await getDownloadURL(uploadTask.snapshot.ref);
-            
-            // Extract the alt=media&token= part
-            const tokenPart = originalURL.split('?').slice(1).join('?');
-    
-            const baseName = selectedFile.name.split('.').slice(0, -1).join('.');
-            const newFileName = baseName + "_300x300.webp";
-    
-            // Construct the new URL
-            const transformedURL = `https://firebasestorage.googleapis.com/v0/b/carrental-38eea.appspot.com/o/images%2F${encodeURIComponent(newFileName)}?${tokenPart}`;
-    
-            setDownloadURL(transformedURL);
-            console.log('Transformed file available at', transformedURL);
-            }
-        );
+        for (const selectedFile of selectedFiles) {
+            const storageRef = ref(storage, 'images/' + selectedFile.name);
+        
+            const uploadTask = uploadBytesResumable(storageRef, selectedFile, {
+            contentType: selectedFile.type,
+            });
+        
+            uploadTask.on('state_changed',
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setUploadProgress(progress);
+            }, 
+            (error) => {
+                console.error(error);
+            }, 
+            async () => {
+                // Fetch the original image's URL
+                const originalURL = await getDownloadURL(uploadTask.snapshot.ref);
+                
+                // Extract the alt=media&token= part
+                const tokenPart = originalURL.split('?').slice(1).join('?');
+        
+                const baseName = selectedFile.name.split('.').slice(0, -1).join('.');
+                const newFileName = baseName + "_300x300.webp";
+        
+                // Construct the new URL
+                const transformedURL = `https://firebasestorage.googleapis.com/v0/b/carrental-38eea.appspot.com/o/images%2F${encodeURIComponent(newFileName)}?${tokenPart}`;
+        
+                setDownloadURL(transformedURL);
+                console.log('Transformed file available at', transformedURL);
+                }
+            );
+
+            setDownloadURLs(downloadURLs => [...downloadURLs, downloadURL]);
+        }
     };
       
 
@@ -104,16 +111,19 @@ export default function AdminPage() {
             ...carData,
             [e.target.name]: e.target.value,
         });
-        console.log(carData);
     }
     const submitCarData = async (e) => {
         e.preventDefault();
       
         await uploadImageToFirebase();
+        while (uploadProgress < 100) {
+            // Wait for upload to complete
+        }
+        
       
         const carInfo = {
           ...carData,
-          carImage: downloadURL,
+          carImages: downloadURLs,
         };
         console.log(carInfo); 
       
@@ -138,6 +148,8 @@ export default function AdminPage() {
                 <DropdownOrTextField data='year' name='Build Year' onChange={getCarData}/>
                 <DropdownOrTextField data='color' name='Car Color' onChange={getCarData}/>
                 <DropdownOrTextField data='seats' name='Car Seats' onChange={getCarData}/>
+                <label className='adminLabel' htmlFor='licensePlate'>License Plate</label>
+                <input name='licensePlate' className='adminInput' maxLength="8" placeholder='License Plate' onChange={getCarData}/>
             </div>
             <div>
                 <DropdownOrTextField data='trunkVolume' name='Trunk Volume' onChange={getCarData}/>
@@ -145,10 +157,8 @@ export default function AdminPage() {
                 <DropdownOrTextField data='door' name='Car Doors' onChange={getCarData}/>
                 <DropdownOrTextField data='dayPrice' name='Price per Day' onChange={getCarData}/>
                 <DropdownOrTextField data='hourPrice' name='Price per Hour' onChange={getCarData}/>
-                <label className='adminLabel' htmlFor='licensePlate'>License Plate</label>
-                <input name='licensePlate' className='adminInput' maxLength="8" placeholder='License Plate' onChange={getCarData}/>
                 <label className='adminLabel' htmlFor='carImage'>Car Image</label>
-                <input type='file' name='carImage' className='adminInput' onChange={handleFileChange}/>
+                <input type='file' name='carImage' className='adminInput'  onChange={handleFileChange}/>
             </div>
             </form>
             <button id="addCarButton" type='submit' name='submit' onClick={submitCarData}>Add Car to garage</button>
