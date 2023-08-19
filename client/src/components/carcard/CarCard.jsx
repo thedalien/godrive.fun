@@ -1,18 +1,25 @@
 import { useNavigate } from "react-router-dom";
+import ImageSlider from "../imageslider/ImageSlider";
 import './CarCard.css'
 //import CarSlider from '../carslider/CarSlider';
 
-export default function CarCard(props) {
+export default function CarCard({ car }) {
   const navigate = useNavigate();
+
+  const showDetails = () => {
+    navigate(`/cars/${car.id}`); 
+  }
+
   return (
-    <div className="carCard" onClick={() => navigate(`/cars/${props.car.id}`)}>
-      <h1>{props.car.brand} {props.car.model}</h1>
-{/*       <CarSlider />
-*/}      <div className="carDetails">
-        <p>{props.car.year}</p>
-        <p>{props.car.dayPrice}</p>
-        <p>{props.car.licensePlate}</p>
+    <div className="carCard">
+      <h1>{car.brand} {car.model}</h1>
+      <ImageSlider />
+      <div className="carDetails">
+        <p>{car.year}</p>
+        <p>{car.dayPrice}</p>
+        <p>{car.licensePlate}</p>
       </div>
+      <button onClick={showDetails} >Show more details</button>
     </div>
   )
 }
