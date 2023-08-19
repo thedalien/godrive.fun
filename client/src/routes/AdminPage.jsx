@@ -115,6 +115,7 @@ export default function AdminPage() {
           ...carData,
           carImage: downloadURL,
         };
+        console.log(carInfo); 
       
         api.post(`/api/car/addCar`, carInfo)
         .then((res) => {

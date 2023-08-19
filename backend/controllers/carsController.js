@@ -49,9 +49,9 @@ const createCar = async (req, res) => {
     // Associate carImage with the created car
     const image = await Images.create({
       url: req.body.carImage,
-      alt: `${createdCar.brand} ${createdCar.model} Image`
+      alt: `${createdCar.brand} ${createdCar.model} Image`,
+      carId: createdCar.id
     });
-    await createdCar.addImage(image);
 
     res.send(createdCar);
   } catch (err) {
