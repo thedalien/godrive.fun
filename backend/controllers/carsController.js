@@ -1,5 +1,6 @@
 const models = require('../models/index');
 const Car = models.cars;
+const Images = models.images;
 
 const multer = require('multer');
 
@@ -15,9 +16,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-const createCar = (req, res) => {
+const createCar = async (req, res) => {
   // Validate request
-  if (!req.body.brand || !req.body.model || !req.body.year || !req.body.color || !req.body.seats || !req.body.trunkVolume || !req.body.poweredBy || !req.body.dayPrice || !req.body.hourPrice) {
+  if (!req.body.brand || !req.body.model || !req.body.year || !req.body.color || !req.body.seats || !req.body.trunkVolume || !req.body.poweredBy || !req.body.dayPrice || !req.body.hourPrice || !req.body.carImage) {
     res.status(400).send({
       car: req.body,
       message: 'Content cannot be empty!'
@@ -26,35 +27,44 @@ const createCar = (req, res) => {
     return;
   }
 
-  // Create a Car
-  const car = {
-    brand: req.body.brand,
-    model: req.body.model,
-    year: req.body.year,
-    color: req.body.color,
-    seats: req.body.seats,
-    trunkVolume: req.body.trunkVolume,
-    poweredBy: req.body.poweredBy,
-    dayPrice: req.body.dayPrice,
-    hourPrice: req.body.hourPrice,
-    door: req.body.door,
-    licensePlate: req.body.licensePlate,
-  };
+  try {
+    // Create a Car
+    const car = {
+      brand: req.body.brand,
+      model: req.body.model,
+      year: req.body.year,
+      color: req.body.color,
+      seats: req.body.seats,
+      trunkVolume: req.body.trunkVolume,
+      poweredBy: req.body.poweredBy,
+      dayPrice: req.body.dayPrice,
+      hourPrice: req.body.hourPrice,
+      door: req.body.door,
+      licensePlate: req.body.licensePlate,
+    };
 
-  // Save Car in the database
-  Car.create(car)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Some error occurred while creating the Car.'
-      });
+    // Save Car in the database
+    const createdCar = await Car.create(car);
+
+    // Associate carImage with the created car
+    const image = await Images.create({
+      url: req.body.carImage,
+      alt: `${createdCar.brand} ${createdCar.model} Image`
     });
+    await createdCar.addImage(image);
+
+    res.send(createdCar);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || 'Some error occurred while creating the Car.'
+    });
+  }
 };
 
 const getAllCars = (req, res) => {
-  Car.findAll()
+  Car.findAll({
+    include: [Images]
+  })
     .then(data => {
       res.send(data);
     })
