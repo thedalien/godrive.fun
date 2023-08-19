@@ -42,12 +42,23 @@ export default function AdminPage() {
             console.error(error);
           }, 
           async () => {
-            const url = await getDownloadURL(uploadTask.snapshot.ref);
-            setDownloadURL(url);
-            console.log('File available at', url);
-          }
+            // Fetch the original image's URL
+            const originalURL = await getDownloadURL(uploadTask.snapshot.ref);
+            
+            // Extract the alt=media&token= part
+            const tokenPart = originalURL.split('?').slice(1).join('?');
+    
+            const baseName = selectedFile.name.split('.').slice(0, -1).join('.');
+            const newFileName = baseName + "_300x300.webp";
+    
+            // Construct the new URL
+            const transformedURL = `https://firebasestorage.googleapis.com/v0/b/carrental-38eea.appspot.com/o/images%2F${encodeURIComponent(newFileName)}?${tokenPart}`;
+    
+            setDownloadURL(transformedURL);
+            console.log('Transformed file available at', transformedURL);
+            }
         );
-      };
+    };
       
 
 
