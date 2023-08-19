@@ -19,13 +19,13 @@ export default function CarDetailPage() {
         console.log(err);
       })
   }, [id]);
-
+  console.log(carData);
   return (
     <div className="carCard">
       {carData && (
         <>
           <h1>{carData.brand} {carData.model}</h1>
-          <ImageSlider />
+          <ImageSlider images={carData.images} />
           <div className="carDetails">
             <p>{carData.year}</p>
             <p>{carData.dayPrice}</p>
