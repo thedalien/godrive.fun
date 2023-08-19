@@ -39,7 +39,6 @@ const createCar = (req, res) => {
     hourPrice: req.body.hourPrice,
     door: req.body.door,
     licensePlate: req.body.licensePlate,
-
   };
 
   // Save Car in the database
@@ -62,6 +61,25 @@ const getAllCars = (req, res) => {
     .catch(err => { 
       res.status(500).send({
         message: err.message || 'Some error occurred while retrieving cars.'
+      });
+    });
+};
+
+const getCar = (req, res) => {
+  const carId = req.params.id;
+
+  Car.findByPk(carId)
+    .then(car => {
+      if (!car) {
+        return res.status(404).send({
+          message: 'Car not found'
+        });
+      }
+      res.send(car);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || 'Some error occurred while retrieving the car.'
       });
     });
 };
@@ -114,11 +132,10 @@ const editCar = (req, res) => {
     });
 };
 
-
-
 module.exports = {
     createCar,
     getAllCars,
+    getCar,
     getList,
     editCar
 }
