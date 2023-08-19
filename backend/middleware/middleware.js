@@ -2,6 +2,7 @@
 
 const tokenAuth = (req, res, next) => {
   console.log('tokenAuth middleware');
+  console.log(req.headers.Authorization);
     if (!req.headers.Authorization) {
         return res.status(401).send({ message: 'No token provided' });
       }
