@@ -39,6 +39,12 @@ const Header = () => {
         navigate(path);
     };
 
+    const logoutHandler = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        navigate("/");
+    };
+
     return (
         <header className={classes.header}>
             <div className={classes.header__content}>
@@ -75,6 +81,11 @@ const Header = () => {
                         <li>
                             <button onClick={() => navLinkClickHandler("/login")} className="login-btn">
                                 Login
+                            </button>
+                        </li>
+                        <li>
+                            <button onClick={logoutHandler} className="logout-btn">
+                                Logout
                             </button>
                         </li>
 
