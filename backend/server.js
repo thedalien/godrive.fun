@@ -18,7 +18,8 @@ const server = http.createServer(app);
 const port = 8000;
 
 const db = require('./models');
-db.sequelize.sync({ force: true });
+// db.sequelize.sync({ force: true });
+db.sequelize.sync();
 testConnection();
 
 
