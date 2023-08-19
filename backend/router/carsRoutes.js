@@ -10,9 +10,9 @@ router.post('/addCar', tokenAuth, carsController.createCar);
 
 router.post('/getList', carsController.getList);
 
-router.update('/updateCar', carsController.updateCar);
+router.put('/updateCar', carsController.updateCar);
 
-router.delete('/deleteCar', carsController.deleteCar);
+// router.delete('/deleteCar', carsController.deleteCar);
 
 router.get('/get-all-cars', carsController.getAllCars);
 
