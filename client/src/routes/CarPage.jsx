@@ -12,7 +12,7 @@ export default function CarPage() {
   useEffect(() => {
     axios.get(`${serverURL}/api/car/get-all-cars`)
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setCarData(res.data);
       })
       .catch((err) => {

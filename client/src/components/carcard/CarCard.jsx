@@ -13,7 +13,7 @@ export default function CarCard({ car }) {
   return (
     <div className="carCard">
       <h1>{car.brand} {car.model}</h1>
-      <ImageSlider />
+      <ImageSlider images={car.images} />
       <div className="carDetails">
         <p>{car.year}</p>
         <p>{car.dayPrice}</p>
