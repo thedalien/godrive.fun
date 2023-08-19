@@ -15,8 +15,6 @@ const flickityOptions = {
     imagesLoaded: true
 }
 
-// Create map for CarCard to display Cars in the carousel
-
 export default function Carousel() {
   const serverURL = useSelector((state) => state.app.serverURL);
   const [carData, setCarData] = useState([]);
@@ -24,7 +22,6 @@ export default function Carousel() {
   useEffect(() => {
     axios.get(`${serverURL}/api/car/get-all-cars`)
       .then((res) => {
-        // console.log(res.data);
         setCarData(res.data);
       })
       .catch((err) => {
@@ -41,9 +38,6 @@ export default function Carousel() {
       className={'carousel'} // default ''
       elementType={'div'} // default 'div'
       options={flickityOptions} // takes flickity options {}
-      disableImagesLoaded={false} // default false
-      reloadOnUpdate // default false
-      static // default false
     >
       {carCards}
     </Flickity>
