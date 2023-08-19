@@ -148,5 +148,4 @@ module.exports = {
     getCar,
     getList,
     updateCar,
-    deleteCar
 }
