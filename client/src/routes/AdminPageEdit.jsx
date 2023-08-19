@@ -4,8 +4,6 @@ export default function AdminPageEdit() {
     const [showEditCars, setShowEditCars] = useState(false);
     const [showDeleteCars, setShowDeleteCars] = useState(false);
 
-    // const serverURL = useSelector((state) => state.app.serverURL);
-
     const showEditable = () => setShowEditCars(true);
     const showDeletable = () => setShowDeleteCars(true);
   return (

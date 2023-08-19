@@ -1,10 +1,7 @@
 import {useEffect, useState } from 'react';
 import './css/Login.css';
-import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setUser } from '../features/appSlice';
-// import useAuthToken from '../functions/useAuthToken';
+import api from '../api';
 
 
 const RegisterPage = () => {
@@ -12,11 +9,8 @@ const RegisterPage = () => {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const navigate = useNavigate();
-    const serverURL = useSelector((state) => state.app.serverURL);
-    const dispatch = useDispatch();
 
 
-    // useAuthToken("login");
         useEffect(() => {
       const isLogged = async () => {
         const token = localStorage.getItem('token');
@@ -34,8 +28,8 @@ const RegisterPage = () => {
     
           console.log(`Getting user with token ${token}`);
           try {
-            const res = await axios.post(
-              `${serverURL}/api/user/login/token`,
+            const res = await api.post(
+              `/api/user/login/token`,
               {}, 
               {
                 headers: {
@@ -67,7 +61,7 @@ const RegisterPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post(`${serverURL}/api/user/register`, {
+        api.post(`/api/user/register`, {
             name,
             email,
             password
@@ -77,7 +71,7 @@ const RegisterPage = () => {
                 localStorage.setItem('token', res.data.token);
                 console.log(res.data.token);
                 const user = {name:res.data.user.name, email:res.data.user.email, id:res.data.user._id, token:res.data.token, role: res.data.user.role, verified: res.data.user.verified}
-                dispatch(setUser(user));
+                localStorage.setItem('user', JSON.stringify(user));
                 navigate("/login");
             } else {
                 alert(res.data.message);
