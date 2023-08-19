@@ -1,6 +1,7 @@
 //MAG just curious what's going to go here? It would be nice to start practicing!
 
 const tokenAuth = (req, res, next) => {
+  console.log('tokenAuth middleware');
     if (!req.headers.Authorization) {
         return res.status(401).send({ message: 'No token provided' });
       }
