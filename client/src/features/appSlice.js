@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
+    // serverURL: "http://localhost:8000",
     serverURL: "http://89.221.220.112:8000",
     user: null,
 };

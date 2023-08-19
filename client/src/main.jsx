@@ -10,6 +10,7 @@ import Root from './routes/Root.jsx'
 import HeroPage from './routes/HeroPage'
 import LoginPage from './routes/LoginPage'
 import CarPage from './routes/CarPage'
+import CarDetailPage from './routes/CarDetailPage'
 import ContactPage from './routes/ContactPage'
 import RegisterPage from './routes/RegisterPage'
 import UserPage from './routes/UserPage'
@@ -41,6 +42,11 @@ const router = createBrowserRouter([
             {
                 path: '/cars',
                 element: <CarPage />
+            }
+            ,
+            {
+                path: '/cars/:id',
+                element: <CarDetailPage />
             }
             ,
             {

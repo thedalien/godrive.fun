@@ -1,13 +1,67 @@
 import { useState } from 'react';
 import './css/Admin.css';
 import DropdownOrTextField from '../components/inputs/DropdownOrTextField';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
+// import axios from 'axios';
+// import { useSelector } from 'react-redux';
+import CarCard from '../components/carcard/CarCard';
+import api from '../api';
 // import useAuthToken from '../functions/useAuthToken';
+import { storage } from '../firebase/config';
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
+
+
 
 
 export default function AdminPage() {
     // useAuthToken();
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [downloadURL, setDownloadURL] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(null);
+
+    const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+    };
+    const uploadImageToFirebase = async () => {
+        if (!selectedFile) {
+          return;
+        }
+      
+        const storageRef = ref(storage, 'images/' + selectedFile.name);
+      
+        const uploadTask = uploadBytesResumable(storageRef, selectedFile, {
+          contentType: selectedFile.type,
+        });
+      
+        uploadTask.on('state_changed',
+          (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setUploadProgress(progress);
+          }, 
+          (error) => {
+            console.error(error);
+          }, 
+          async () => {
+            // Fetch the original image's URL
+            const originalURL = await getDownloadURL(uploadTask.snapshot.ref);
+            
+            // Extract the alt=media&token= part
+            const tokenPart = originalURL.split('?').slice(1).join('?');
+    
+            const baseName = selectedFile.name.split('.').slice(0, -1).join('.');
+            const newFileName = baseName + "_300x300.webp";
+    
+            // Construct the new URL
+            const transformedURL = `https://firebasestorage.googleapis.com/v0/b/carrental-38eea.appspot.com/o/images%2F${encodeURIComponent(newFileName)}?${tokenPart}`;
+    
+            setDownloadURL(transformedURL);
+            console.log('Transformed file available at', transformedURL);
+            }
+        );
+    };
+      
+
+
 
     const [carData, setCarData] = useState({
         "brand": "Toyota",
@@ -21,9 +75,14 @@ export default function AdminPage() {
         "hourPrice": 10,
         "door": 4,
         "licensePlate": "XYZ-1234"
-      });
-    const serverURL = useSelector((state) => state.app.serverURL);
+    });
+    const [showEditCars, setShowEditCars] = useState(false);
+    const [showDeleteCars, setShowDeleteCars] = useState(false);
 
+    // const serverURL = useSelector((state) => state.app.serverURL);
+
+    const showEditable = () => setShowEditCars(true);
+    const showDeletable = () => setShowDeleteCars(true);
 
     const getCarData = (e) => {
         // if name is licensePlate, make it uppercase and add a space after 3 letters
@@ -45,18 +104,26 @@ export default function AdminPage() {
             ...carData,
             [e.target.name]: e.target.value,
         });
+        console.log(carData);
     }
-
     const submitCarData = async (e) => {
         e.preventDefault();
-        axios.post(`${serverURL}/api/car/addCar`, carData)
+      
+        await uploadImageToFirebase();
+      
+        const carInfo = {
+          ...carData,
+          carImage: downloadURL,
+        };
+      
+        api.post(`/api/car/addCar`, carInfo)
         .then((res) => {
             console.log(res);
         }).catch((err) => {
             console.log(err);
         });
-        console.log(carData);
-    }
+      };
+      
 
   return (
     <div id="admin">
@@ -79,21 +146,40 @@ export default function AdminPage() {
                 <DropdownOrTextField data='hourPrice' name='Price per Hour' onChange={getCarData}/>
                 <label className='adminLabel' htmlFor='licensePlate'>License Plate</label>
                 <input name='licensePlate' className='adminInput' maxLength="8" placeholder='License Plate' onChange={getCarData}/>
-
-                <button id="addCarButton" type='submit' name='submit' onClick={submitCarData}>Add Car to garage</button>
+                <label className='adminLabel' htmlFor='carImage'>Car Image</label>
+                <input type='file' name='carImage' className='adminInput' onChange={handleFileChange}/>
             </div>
             </form>
             <button id="addCarButton" type='submit' name='submit' onClick={submitCarData}>Add Car to garage</button>
         </fieldset>
         <fieldset id="editCar">
             <legend>Edit Car</legend>
+            {showEditCars ? 
+                <div id="carGridEdit">
+                    <div className="editThisCar">
+                        <CarCard/>
+                        <button>
+                            Edit Car
+                        </button>
+                    </div>
 
-            <button id="showCars">Show Cars</button> {/* Show cars */}
+                </div>
+            : "Please select the Show Car button"}
+            <button id="showCars" onClick={showEditable}>Show Cars</button> {/* Show cars */}
         </fieldset>
-
         <fieldset id="deleteCar">
             <legend>Delete Car</legend>
-
+            {showDeleteCars ? 
+                <div id="carGridDelete">
+                    <div className="deleteThisCar">
+                        <CarCard/>
+                        <button>
+                            Delete Car
+                        </button>
+                    </div>
+                </div>
+            : "Please select the Show Car button"}
+            <button id="showCars" onClick={showDeletable}>Show Cars</button> {/* Show cars */}
         </fieldset>
     </div>
   )
