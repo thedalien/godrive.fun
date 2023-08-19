@@ -2,20 +2,6 @@ const models = require('../models/index');
 const Car = models.cars;
 const Images = models.images;
 
-const multer = require('multer');
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/')
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-  }
-})
-
-const upload = multer({ storage: storage });
-
-
 const createCar = async (req, res) => {
   // Validate request
   if (!req.body.brand || !req.body.model || !req.body.year || !req.body.color || !req.body.seats || !req.body.trunkVolume || !req.body.poweredBy || !req.body.dayPrice || !req.body.hourPrice || !req.body.carImage) {
@@ -78,7 +64,9 @@ const getAllCars = (req, res) => {
 const getCar = (req, res) => {
   const carId = req.params.id;
 
-  Car.findByPk(carId)
+  Car.findByPk(carId, {
+    include: [Images]
+  })
     .then(car => {
       if (!car) {
         return res.status(404).send({
@@ -95,27 +83,28 @@ const getCar = (req, res) => {
 };
 
 const getList = (req, res) => {
-    const brand = req.body.brand;
+  const brand = req.body.brand;
 
-    let query = {};
+  let query = {};
 
-    if (brand) {
-        query.where = { brand: brand }; 
-    }
+  if (brand) {
+    query.where = { brand: brand };
+  }
 
-    query.attributes = [req.body.data]; 
+  query.attributes = [req.body.data];
+  query.include = [Images]; // Include Images in the query
 
-    Car.findAll(query)
-        .then(data => {
-            // remove duplicates
-            data = [...new Set(data.map(item => item.dataValues[req.body.data]))];
-            res.send(data);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: err.message || 'Some error occurred while retrieving cars.'
-            });
-        });
+  Car.findAll(query)
+    .then(data => {
+      // remove duplicates
+      data = [...new Set(data.map(item => item.dataValues[req.body.data]))];
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || 'Some error occurred while retrieving cars.'
+      });
+    });
 };
 
 const updateCar = (req, res) => {
