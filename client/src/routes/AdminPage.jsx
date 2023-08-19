@@ -11,7 +11,6 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 export default function AdminPage() {
     const [uploadProgress, setUploadProgress] = useState(0);
-    const [downloadURLs, setDownloadURLs] = useState([]);
     const [selectedFiles, setSelectedFiles] = useState(null);
 
     const handleFileChange = (e) => {
@@ -27,7 +26,7 @@ export default function AdminPage() {
         let localDownloadURLs = [];
     
         const uploadPromises = Array.from(selectedFiles).map(async selectedFile => {
-            const storageRef = ref(storage, 'images/' + selectedFile.name);
+            const storageRef = ref(storage, `carImages/${carData.licensePlate}/` + selectedFile.name);
             const uploadTask = uploadBytesResumable(storageRef, selectedFile, {
                 contentType: selectedFile.type,
             });
@@ -63,8 +62,7 @@ export default function AdminPage() {
         // Wait for all uploads to complete
         await Promise.all(uploadPromises);
     
-        // Now, update the state once with all the URLs
-        setDownloadURLs(localDownloadURLs);
+
         return localDownloadURLs;
     };
     
@@ -74,9 +72,9 @@ export default function AdminPage() {
 
 
     const [carData, setCarData] = useState({
-        "brand": "Toyota",
-        "model": "Camry",
-        "year": 2021,
+        "brand": "Skoda",
+        "model": "Fabia",
+        "year": 2017,
         "color": "Blue",
         "seats": 5,
         "trunkVolume": 15.1,
@@ -160,6 +158,7 @@ export default function AdminPage() {
             </div>
             </form>
             <button id="addCarButton" type='button' name='submit' onClick={submitCarData}>Add Car to garage</button>
+            {uploadProgress > 0 && uploadProgress < 100 && <progress value={uploadProgress} max="100" />}
         </fieldset>
     </div>
   )
