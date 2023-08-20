@@ -31,6 +31,8 @@ export default function CarDetailPage() {
             <p>{carData.dayPrice}</p>
             <p>{carData.licensePlate}</p>
           </div>
+          <div>Reservations</div>
+          <div>Previous Reservations</div>
         </>
       )}
     </div>
