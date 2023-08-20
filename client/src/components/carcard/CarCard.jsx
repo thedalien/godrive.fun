@@ -11,15 +11,13 @@ export default function CarCard({ car }) {
   }
   if (!car) {
     return null;
-  } else if (!car.images && !car.images.length > 0) {
-    return null;
   }
 
   return (
     <div className="carCard">
       <h1>{car.brand} {car.model}</h1>
       {/* <ImageSlider images={car.images} /> */}
-      <img src={car.images[0].url} alt="car" />
+      <img src={!car.images && !car.images.length > 0 ? car.images[0]?.url : "No pics found"} alt="car" />
       <div className="carDetails">
         <p>{car.year}</p>
         <p>{car.dayPrice}</p>
