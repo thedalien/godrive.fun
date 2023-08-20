@@ -3,8 +3,7 @@ import CarCard from '../carcard/CarCard';
 import './Flickity.min.css';
 import './Carousel.css';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
+import api from '../../api';
 
 const flickityOptions = {
     initialIndex: 1,
@@ -16,11 +15,10 @@ const flickityOptions = {
 }
 
 export default function Carousel() {
-  const serverURL = useSelector((state) => state.app.serverURL);
   const [carData, setCarData] = useState([]);
 
   useEffect(() => {
-    axios.get(`${serverURL}/api/car/get-all-cars`)
+    api.get(`/api/car/get-all-cars`)
       .then((res) => {
         setCarData(res.data);
       })

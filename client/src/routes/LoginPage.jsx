@@ -1,15 +1,13 @@
 import {useEffect, useState } from 'react';
 import './css/Login.css';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import api from '../api';
 
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-    const serverURL = useSelector((state) => state.app.serverURL);
 
 
     useEffect(() => {
@@ -29,8 +27,8 @@ const LoginPage = () => {
     
           console.log(`Getting user with token ${token}`);
           try {
-            const res = await axios.post(
-              `${serverURL}/api/user/login/token`,
+            const res = await api.post(
+              `/api/user/login/token`,
               {}, 
               {
                 headers: {
@@ -57,7 +55,7 @@ const LoginPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post(`${serverURL}/api/user/login`, {
+        api.post(`/api/user/login`, {
             email,
             password
         }).then((res) => {

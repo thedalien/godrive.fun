@@ -1,11 +1,7 @@
 import { useState } from 'react';
 import './css/Admin.css';
 import DropdownOrTextField from '../components/inputs/DropdownOrTextField';
-// import axios from 'axios';
-// import { useSelector } from 'react-redux';
-import CarCard from '../components/carcard/CarCard';
 import api from '../api';
-// import useAuthToken from '../functions/useAuthToken';
 import { storage } from '../firebase/config';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
@@ -14,48 +10,71 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 
 export default function AdminPage() {
-    // useAuthToken();
     const [uploadProgress, setUploadProgress] = useState(0);
-    const [downloadURL, setDownloadURL] = useState(null);
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFiles, setSelectedFiles] = useState(null);
 
     const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
+        console.log(e.target.files);
+        setSelectedFiles(e.target.files);
     };
+
     const uploadImageToFirebase = async () => {
-        if (!selectedFile) {
-          return;
+        if (!selectedFiles) {
+            return;
         }
-      
-        const storageRef = ref(storage, 'images/' + selectedFile.name);
-      
-        const uploadTask = uploadBytesResumable(storageRef, selectedFile, {
-          contentType: selectedFile.type,
+    
+        let localDownloadURLs = [];
+    
+        const uploadPromises = Array.from(selectedFiles).map(async selectedFile => {
+            const storageRef = ref(storage, `carImages/${carData.licensePlate}/` + selectedFile.name);
+            const uploadTask = uploadBytesResumable(storageRef, selectedFile, {
+                contentType: selectedFile.type,
+            });
+    
+            await new Promise((resolve, reject) => {
+                uploadTask.on('state_changed',
+                    (snapshot) => {
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        setUploadProgress(progress);
+                    }, 
+                    (error) => {
+                        console.error(error);
+                        reject(error);
+                    }, 
+                    async () => {
+                        try {
+                            const originalURL = await getDownloadURL(uploadTask.snapshot.ref);
+                            const tokenPart = originalURL.split('?').slice(1).join('?');
+                            const baseName = selectedFile.name.split('.').slice(0, -1).join('.');
+                            const newFileName = baseName + "_300x300.webp";
+                            const transformedURL = `https://firebasestorage.googleapis.com/v0/b/carrental-38eea.appspot.com/o/images%2F${encodeURIComponent(newFileName)}?${tokenPart}`;
+                            localDownloadURLs.push(transformedURL);
+                            resolve();
+                        } catch (error) {
+                            console.error(error);
+                            reject(error);
+                        }
+                    }
+                );
+            });
         });
-      
-        uploadTask.on('state_changed',
-          (snapshot) => {
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            setUploadProgress(progress);
-          }, 
-          (error) => {
-            console.error(error);
-          }, 
-          async () => {
-            const url = await getDownloadURL(uploadTask.snapshot.ref);
-            setDownloadURL(url);
-            console.log('File available at', url);
-          }
-        );
-      };
+    
+        // Wait for all uploads to complete
+        await Promise.all(uploadPromises);
+    
+
+        return localDownloadURLs;
+    };
+    
+    
       
 
 
 
     const [carData, setCarData] = useState({
-        "brand": "Toyota",
-        "model": "Camry",
-        "year": 2021,
+        "brand": "Skoda",
+        "model": "Fabia",
+        "year": 2017,
         "color": "Blue",
         "seats": 5,
         "trunkVolume": 15.1,
@@ -65,45 +84,44 @@ export default function AdminPage() {
         "door": 4,
         "licensePlate": "XYZ-1234"
     });
-    const [showEditCars, setShowEditCars] = useState(false);
-    const [showDeleteCars, setShowDeleteCars] = useState(false);
 
-    // const serverURL = useSelector((state) => state.app.serverURL);
 
-    const showEditable = () => setShowEditCars(true);
-    const showDeletable = () => setShowDeleteCars(true);
+    const formatLicensePlate = (value) => {
+        value = value.replace(/\s+/g, '').toUpperCase();
+
+        if (value.length > 3) {
+            value = value.slice(0, 3) + ' ' + value.slice(3);
+        }
+    
+        if (value.length > 8) {
+            value = value.slice(0, 8);
+        }
+    
+        return value;
+    }
 
     const getCarData = (e) => {
-        // if name is licensePlate, make it uppercase and add a space after 3 letters
         if (e.target.name === 'licensePlate') {
-            let value = event.target.value.replace(/\s+/g, '').toUpperCase();
-
-            if (value.length > 3) {
-              value = value.slice(0, 3) + ' ' + value.slice(3);
-            }
-        
-            if (value.length > 8) {
-              value = value.slice(0, 8);
-            }
-        
-            e.target.value = value;
+            e.target.value = formatLicensePlate(e.target.value);
         }
 
         setCarData({
             ...carData,
             [e.target.name]: e.target.value,
         });
-        console.log(carData);
     }
+
     const submitCarData = async (e) => {
         e.preventDefault();
       
-        await uploadImageToFirebase();
+        const uploadedURLs = await uploadImageToFirebase();
+        
       
         const carInfo = {
           ...carData,
-          carImage: downloadURL,
+          carImages: uploadedURLs,
         };
+        console.log(carInfo); 
       
         api.post(`/api/car/addCar`, carInfo)
         .then((res) => {
@@ -126,6 +144,8 @@ export default function AdminPage() {
                 <DropdownOrTextField data='year' name='Build Year' onChange={getCarData}/>
                 <DropdownOrTextField data='color' name='Car Color' onChange={getCarData}/>
                 <DropdownOrTextField data='seats' name='Car Seats' onChange={getCarData}/>
+                <label className='adminLabel' htmlFor='licensePlate'>License Plate</label>
+                <input name='licensePlate' className='adminInput' maxLength="8" placeholder='License Plate' onChange={getCarData}/>
             </div>
             <div>
                 <DropdownOrTextField data='trunkVolume' name='Trunk Volume' onChange={getCarData}/>
@@ -133,214 +153,12 @@ export default function AdminPage() {
                 <DropdownOrTextField data='door' name='Car Doors' onChange={getCarData}/>
                 <DropdownOrTextField data='dayPrice' name='Price per Day' onChange={getCarData}/>
                 <DropdownOrTextField data='hourPrice' name='Price per Hour' onChange={getCarData}/>
-                <label className='adminLabel' htmlFor='licensePlate'>License Plate</label>
-                <input name='licensePlate' className='adminInput' maxLength="8" placeholder='License Plate' onChange={getCarData}/>
                 <label className='adminLabel' htmlFor='carImage'>Car Image</label>
-                <input type='file' name='carImage' className='adminInput' onChange={handleFileChange}/>
+                <input type='file' name='carImage' className='adminInput' multiple onChange={handleFileChange}/>
             </div>
             </form>
-            <button id="addCarButton" type='submit' name='submit' onClick={submitCarData}>Add Car to garage</button>
-        </fieldset>
-        <fieldset id="editCar">
-            <legend>Edit Car</legend>
-            {showEditCars ? 
-                <div id="carGridEdit">
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div><div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                    <div className="editThisCar">
-                        <CarCard/>
-                        <button>
-                            Edit Car
-                        </button>
-                    </div>
-                </div>
-            : "Please select the Show Car button"}
-            <button id="showCars" onClick={showEditable}>Show Cars</button> {/* Show cars */}
-        </fieldset>
-        <fieldset id="deleteCar">
-            <legend>Delete Car</legend>
-            {showDeleteCars ? 
-                <div id="carGridDelete">
-                    <div className="deleteThisCar">
-                        <CarCard/>
-                        <button>
-                            Delete Car
-                        </button>
-                    </div>
-                    <div className="deleteThisCar">
-                        <CarCard/>
-                        <button>
-                            Delete Car
-                        </button>
-                    </div>
-                    <div className="deleteThisCar">
-                        <CarCard/>
-                        <button>
-                            Delete Car
-                        </button>
-                    </div>
-                    <div className="deleteThisCar">
-                        <CarCard/>
-                        <button>
-                            Delete Car
-                        </button>
-                    </div>
-                    <div className="deleteThisCar">
-                        <CarCard/>
-                        <button>
-                            Delete Car
-                        </button>
-                    </div>
-                    <div className="deleteThisCar">
-                        <CarCard/>
-                        <button>
-                            Delete Car
-                        </button>
-                    </div>
-                    <div className="deleteThisCar">
-                        <CarCard/>
-                        <button>
-                            Delete Car
-                        </button>
-                    </div>
-                    <div className="deleteThisCar">
-                        <CarCard/>
-                        <button>
-                            Delete Car
-                        </button>
-                    </div>
-                    <div className="deleteThisCar">
-                        <CarCard/>
-                        <button>
-                            Delete Car
-                        </button>
-                    </div>
-                </div>
-            : "Please select the Show Car button"}
-            <button id="showCars" onClick={showDeletable}>Show Cars</button> {/* Show cars */}
+            <button id="addCarButton" type='button' name='submit' onClick={submitCarData}>Add Car to garage</button>
+            {uploadProgress > 0 && uploadProgress < 100 && <progress value={uploadProgress} max="100" />}
         </fieldset>
     </div>
   )

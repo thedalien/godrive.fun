@@ -11,24 +11,11 @@ const flickityOptions = {
     pageDots: false,
 }
 
-export default function ImageSlider() {
-    /* const serverURL = useSelector((state) => state.app.serverURL);
-    const [carData, setCarData] = useState([]);
-    
-    useEffect(() => {
-      axios.get(`${serverURL}/api/car/get-all-cars`)
-        .then((res) => {
-          // console.log(res.data);
-          setCarData(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        const carCards = carData.map((car) => {
-            console.log(car);
-            return <CarCard key={car.id} car={car} />
-        })
-    }, []) */
+export default function ImageSlider({images}) {
+
+    if (!images) {
+        return null;
+    }
 
     return (
         <Flickity
@@ -37,12 +24,9 @@ export default function ImageSlider() {
             options={flickityOptions}
             disableImagesLoaded={false}
         >
-            <h1>Carousel</h1>
-            <h2>Nah</h2>
-            <h1>Carousel</h1>
-            <h2>Nah</h2>
-            <h1>Carousel</h1>
-            <h2>Nah</h2>
+            {images.map((image) => (
+                <img src={image.url} alt="car" key={image.id} />
+            ))}
         </Flickity>
     )
 }

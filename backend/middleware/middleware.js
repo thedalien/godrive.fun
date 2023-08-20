@@ -1,11 +1,13 @@
 //MAG just curious what's going to go here? It would be nice to start practicing!
 
 const tokenAuth = (req, res, next) => {
-    if (!req.headers.authorization) {
+  console.log('tokenAuth middleware');
+  console.log(req.headers.Authorization);
+    if (!req.headers.Authorization) {
         return res.status(401).send({ message: 'No token provided' });
       }
       
-      const parts = req.headers.authorization.split(' ');
+      const parts = req.headers.Authorization.split(' ');
       
       if (parts.length !== 2 || parts[0] !== 'Bearer') {
         return res.status(401).send({ message: 'Invalid authorization header format' });

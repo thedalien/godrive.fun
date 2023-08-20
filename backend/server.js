@@ -11,13 +11,15 @@ const userRoutes = require('./router/userRoutes');
 const adminRoutes = require('./router/adminRoutes');
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const server = http.createServer(app); 
 const port = 8000;
 
 const db = require('./models');
-db.sequelize.sync({ force: true });
+// db.sequelize.sync({ force: true });
+db.sequelize.sync();
 testConnection();
 
 

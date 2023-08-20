@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
+import api from '../../api';
 
 const DropdownOrTextField = (props) => {
   const [items, setItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(''); 
   const [otherValue, setOtherValue] = useState(''); 
   const [isOtherSelected, setIsOtherSelected] = useState(false);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true); 
 
-  const serverURL = useSelector((state) => state.app.serverURL);
-  // console.log(props);
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const result = await axios.post(`${serverURL}/api/car/getlist`, {
+        const result = await api.post(`/api/car/getlist`, {
           "data": `${props.data}`,
           ...(props.model && { "model": `${props.model}` })
         });
@@ -24,7 +21,6 @@ const DropdownOrTextField = (props) => {
       } catch (error) {
         console.error(error);
         setLoading(false);
-        // Optionally, set an error state here to handle it in the UI
       }
     };
     fetchData();
