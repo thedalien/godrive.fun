@@ -11,6 +11,8 @@ export default function CarCard({ car }) {
   }
   if (!car) {
     return null;
+  } else if (!car.images) {
+    return null;
   }
 
   return (
