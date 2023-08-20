@@ -12,49 +12,36 @@ const RegisterPage = () => {
 
 
         useEffect(() => {
-      const isLogged = async () => {
-        const token = localStorage.getItem('token');
+          const isLogged = async () => {
+            const token = localStorage.getItem('token');
     
-        // Log the token and inspect it in your browser's console
-        console.log(`Raw token from localStorage: ${token}`); //MAG, I know we were working on this on Wednesday, is the token resolved?
+            // Log the token and inspect it in your browser's console
+            console.log(`Raw token from localStorage: ${token}`); //MAG, I know we were working on this on Wednesday, is the token resolved?
     
-        if (token && token !== "undefined") { // if token exists
-          // Check the token format
-          const parts = token.split('.');
-          if (parts.length !== 3) {
-            console.error('Token does not appear to be a valid JWT:', token);
-            return; // Exit or handle the error as needed
-          }
+            if (token && token !== "undefined") { // if token exists
+              console.log(`Getting user with token ${token}`);
+              try {
+                const res = await api.post(
+                  `/api/user/login/token`,
+                  {}
+                );
     
-          console.log(`Getting user with token ${token}`);
-          try {
-            const res = await api.post(
-              `/api/user/login/token`,
-              {}, 
-              {
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${token}`,
-                },
+                if (res.data.success) {
+                  navigate('/profile');
+                } else {
+                    navigate('/login');
+                    console.error(res.data.message);
+                }
+
+
+              } catch (err) {
+                console.error(err);
               }
-            );
-    
-            if (res.data.success) {
-              navigate('/profile');
-            } else {
-                navigate('/login');
-                console.error(res.data.message);
             }
-
-
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      };
+          };
     
-      isLogged();
-    }, []);
+          isLogged();
+        }, []);
 
         
 

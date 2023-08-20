@@ -70,12 +70,14 @@ const loginToken = async (req, res) => {
     
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      return res.status(200).send({ message: 'Valid token', success: true });
+      console.log(decoded);
+      const user = await User.findOne({ where: { id: decoded.id } });
+      return res.status(200).send({ message: 'Valid token', success: true, user });
     } catch (error) {
       console.error('Token verification failed:', error);
       return res.status(401).send({ message: 'Invalid token' });
     }
-  };
+};
 
 
 module.exports = {

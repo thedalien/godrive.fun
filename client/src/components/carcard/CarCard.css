@@ -1,6 +1,6 @@
 .carCard {
     width: 45%;
-    height: 400px;
+    height: 500px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -14,6 +14,12 @@
   
   .carCard h1 {
     margin: 10px;
+  }
+
+  .carCard img {
+    width: 50%;
+    border-radius: 10px;
+    object-fit: cover;
   }
   
   .carDetails {
