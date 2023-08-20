@@ -11,13 +11,15 @@ export default function CarCard({ car }) {
   }
   console.log(car.images[0].url);
 
+  if (!car) {
+    return <div>Loading...</div>
+  }
+
   return (
     <div className="carCard">
       <h1>{car.brand} {car.model}</h1>
       {/* <ImageSlider images={car.images} /> */}
-      { car &&
-        <img src={car.images[0].url} alt="car" />}
-
+      <img src={car.images[0].url} alt="car" />
       <div className="carDetails">
         <p>{car.year}</p>
         <p>{car.dayPrice}</p>
