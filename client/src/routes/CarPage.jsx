@@ -18,6 +18,13 @@ export default function CarPage() {
       })
   }, [])
 
+  const checkAvailable = () => {
+    // check if the car is available at this Dat & Time
+
+  };
+
+  
+
   const carCards = carData.map((car) => (
     <CarCard key={car.id} car={car} />
   ));
@@ -25,6 +32,13 @@ export default function CarPage() {
   return (
     <div id="car">
       <h1>Car Page</h1>
+      <div className="carSearch">
+        <label className="">From</label>
+        <input type="datetime-local" onChange={checkAvailable}/>
+
+        <label className="">To</label>
+        <input type="datetime-local" />
+      </div>
       <div id="carGrid">
         {carCards}
       </div>
