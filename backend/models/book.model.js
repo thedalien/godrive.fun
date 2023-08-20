@@ -8,19 +8,24 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             required: true
             },
-        from: {
-            type: Sequelize.,
+        startDate: {
+            type: Sequelize.DATE,
             required: true
             },
-        to: {
-            type: Sequelize.STRING,
+        endDate: {
+            type: Sequelize.DATE,
             required: true
             },
         totalPrice: {
             type: Sequelize.INTEGER,
             required: true
             },
+        status: {
+            type: Sequelize.STRING,
+            required: true,
+            defaultValue: 'pending',
+            }, 
     }); 
 
-    return Car;
+    return Book;
   };   

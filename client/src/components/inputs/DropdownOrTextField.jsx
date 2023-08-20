@@ -17,6 +17,9 @@ const DropdownOrTextField = (props) => {
           ...(props.model && { "model": `${props.model}` })
         });
         setItems(result.data);
+        if (result.data.length === 0) {
+          setIsOtherSelected(true); // if data is empty, set isOtherSelected to true
+        }
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -25,6 +28,7 @@ const DropdownOrTextField = (props) => {
     };
     fetchData();
   }, []);
+
 
   const handleChange = (event) => {
     const value = event.target.value;
@@ -48,26 +52,31 @@ const DropdownOrTextField = (props) => {
       <label className="adminLabel" htmlFor={props.data} >{props.name}: </label>
       {loading ? (
         <div>Loading...</div>
-      ) : isOtherSelected && (
-        <input
-          name={props.data}
-          className="adminInput"
-          type="text"
-          placeholder="Enter other option"
-          onChange={handleOtherChange}
-        />
+      ) : (
+        <>
+          {isOtherSelected ? (
+            <input
+              name={props.data}
+              className="adminInput"
+              type="text"
+              placeholder="Enter other option"
+              onChange={handleOtherChange}
+            />
+          ) : (
+            <select className="adminInput" name={props.data} value={selectedItem} onChange={handleChange}>
+              {items.map((item, index) => (
+                <option key={index} value={item}>
+                  {item}
+                </option>
+              ))}
+              <option value="other">Other</option>
+            </select>
+          )}
+        </>
       )}
-        <select className="adminInput" name={props.data} value={selectedItem} onChange={handleChange}>
-        {items.map((item, index) => (
-            <option key={index} value={item}>
-            {item}
-            </option>
-        ))}
-        <option value="other">Other</option>
-        </select>
-        
     </>
   );
+  
 };
 
 export default DropdownOrTextField;

@@ -7,7 +7,6 @@ import api from '../../api';
 
 const flickityOptions = {
     initialIndex: 1,
-    //groupCells: 2,
     wrapAround: true,
     pageDots: false,
     autoPlay: 5000,
@@ -28,7 +27,6 @@ export default function Carousel() {
   }, [])
 
   const carCards = carData.map((car) => {
-    console.log(car);
     return <CarCard key={car.id} car={car} />
   })
   return (

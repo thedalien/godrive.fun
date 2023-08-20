@@ -1,6 +1,7 @@
 const models = require('../models/index');
 const Car = models.cars;
 const Images = models.images;
+const Book = models.bookings;
 
 const createCar = async (req, res) => {
   // Validate request
@@ -63,25 +64,26 @@ const getAllCars = (req, res) => {
     });
 };
 
-const getCar = (req, res) => {
+const getCar = async (req, res) => {
   const carId = req.params.id;
 
-  Car.findByPk(carId, {
-    include: [Images]
-  })
-    .then(car => {
-      if (!car) {
-        return res.status(404).send({
-          message: 'Car not found'
-        });
-      }
-      res.send(car);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving the car.'
-      });
+  try {
+    const car = await Car.findByPk(carId, {
+      include: [Images, Book] // Include Images and Book in the query
     });
+
+    if (!car) {
+      return res.status(404).send({
+        message: 'Car not found'
+      });
+    }
+
+    res.send(car);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || 'Some error occurred while retrieving the car.'
+    });
+  }
 };
 
 const getList = (req, res) => {

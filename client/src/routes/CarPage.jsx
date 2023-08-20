@@ -10,7 +10,6 @@ export default function CarPage() {
   useEffect(() => {
     api.get(`/api/car/get-all-cars`)
       .then((res) => {
-        console.log(res.data);
         setCarData(res.data);
       })
       .catch((err) => {
