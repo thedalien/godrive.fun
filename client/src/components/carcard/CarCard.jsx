@@ -9,12 +9,15 @@ export default function CarCard({ car }) {
   const showDetails = () => {
     navigate(`/cars/${car.id}`); 
   }
+  console.log(car.images[0].url);
 
   return (
     <div className="carCard">
       <h1>{car.brand} {car.model}</h1>
       {/* <ImageSlider images={car.images} /> */}
-      <img src={car.images[0].url} alt="car" />
+      { car &&
+        <img src={car.images[0].url} alt="car" />}
+
       <div className="carDetails">
         <p>{car.year}</p>
         <p>{car.dayPrice}</p>
