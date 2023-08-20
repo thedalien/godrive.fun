@@ -9,8 +9,6 @@ export default function CarCard({ car }) {
   const showDetails = () => {
     navigate(`/cars/${car.id}`); 
   }
-  console.log(car.images[0].url);
-
   if (!car) {
     return <div>Loading...</div>
   }
