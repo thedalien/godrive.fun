@@ -7,7 +7,7 @@ function Root() {
     <>
       <Header />
         <>
-            <Outlet />
+          <Outlet />
         </>
       <Footer />
     </>

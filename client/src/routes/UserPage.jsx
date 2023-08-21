@@ -54,6 +54,7 @@ export default function UserPage() {
         <div>
           <button onClick={logoutHandler}>Logout</button>
         </div>
+        {userData.role === "admin" && <button onClick={() => navigate('/admin')}>Admin Page</button>}
         
 {/*         <form >
           <label>Current E-Mail</label>

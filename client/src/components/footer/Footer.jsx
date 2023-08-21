@@ -2,8 +2,17 @@ import "./Footer.css";
 
 export default function Footer() {
   return (
-    <div id="footer">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas alias, molestiae modi odit debitis eius doloremque voluptatibus molestias, aspernatur temporibus non voluptatum doloribus nesciunt, accusamus praesentium veritatis iste consectetur obcaecati.
-    </div>
-  )
+    <footer className="footer-container">
+      <div className="footer-padding">
+        <div className="footer-links">
+          <a href="/contact">Contact</a>
+          <a href="/profile">Profile</a>
+          <a href="/cars">Cars</a>
+        </div>
+        <div className="footer-copyright">
+          <p>© 2022 Your Company Name</p>
+        </div>
+      </div>
+    </footer>
+    )
 }

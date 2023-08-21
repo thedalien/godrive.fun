@@ -1,16 +1,15 @@
 import { useState } from 'react';
-import './css/Admin.css';
-import DropdownOrTextField from '../components/inputs/DropdownOrTextField';
-import api from '../api';
-import { storage } from '../firebase/config';
+import '../../routes/css/Admin.css';
+import DropdownOrTextField from '../inputs/DropdownOrTextField';
+import api from '../../api';
+import { storage } from '../../firebase/config';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 
-import AddCar from '../components/admin/AddCar';
 
 
-export default function AdminPage() {
-    const [showAddCar, setShowAddCar] = useState(false);
+
+export default function AddCar({setShowAddCar}) {
     const [uploadProgress, setUploadProgress] = useState(0);
     const [selectedFiles, setSelectedFiles] = useState(null);
 
@@ -127,6 +126,9 @@ export default function AdminPage() {
         api.post(`/api/car/addCar`, carInfo)
         .then((res) => {
             console.log(res);
+            if (res.data.success) {
+                setShowAddCar(false);
+            }
         }).catch((err) => {
             console.log(err);
         });
@@ -134,9 +136,35 @@ export default function AdminPage() {
       
 
   return (
-    <div id="admin">
-        <h1>Admin Page</h1>
-        {showAddCar ? <AddCar setShowAddCar={setShowAddCar} /> : <button onClick={() => setShowAddCar(true)}>Add Car</button>}
-    </div>
+    <>
+        <fieldset id="addCar">
+            <legend>Add Car</legend>
+            <form id="addCarForm">
+            <div>
+                <DropdownOrTextField data='brand' name='Car Brand' onChange={getCarData}/>
+                <DropdownOrTextField data='model' name='Car Model' onChange={getCarData}/>
+                <DropdownOrTextField data='year' name='Build Year' onChange={getCarData}/>
+                <DropdownOrTextField data='color' name='Car Color' onChange={getCarData}/>
+                <DropdownOrTextField data='seats' name='Car Seats' onChange={getCarData}/>
+                <label className='adminLabel' htmlFor='licensePlate'>License Plate</label>
+                <input name='licensePlate' className='adminInput' maxLength="8" placeholder='License Plate' onChange={getCarData}/>
+            </div>
+            <div>
+                <DropdownOrTextField data='trunkVolume' name='Trunk Volume' onChange={getCarData}/>
+                <DropdownOrTextField data='poweredBy' name='Car powered by' onChange={getCarData}/>
+                <DropdownOrTextField data='door' name='Car Doors' onChange={getCarData}/>
+                <DropdownOrTextField data='dayPrice' name='Price per Day' onChange={getCarData}/>
+                <DropdownOrTextField data='hourPrice' name='Price per Hour' onChange={getCarData}/>
+                <label className='adminLabel' htmlFor='carImage'>Car Image</label>
+                <input type='file' name='carImage' className='adminInput' multiple onChange={handleFileChange}/>
+            </div>
+            </form>
+            <button id="addCarButton" type='button' name='submit' onClick={submitCarData}>Add Car to garage</button>
+            {uploadProgress > 0 && uploadProgress < 100 && <progress value={uploadProgress} max="100" />}
+            <br/>
+            <button type='button' onClick={() => setShowAddCar(false)} style={{backgroundColor: 'red'}}>Cancel</button>
+            
+        </fieldset>
+    </>
   )
 }
