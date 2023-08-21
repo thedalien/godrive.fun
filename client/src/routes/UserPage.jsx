@@ -49,12 +49,14 @@ export default function UserPage() {
           <div className="userDetail">
             {userData.email}
           </div>
+        </div>
+        <br />
           <button >Change Password</button>
-        </div>
-        <div>
-          <button onClick={logoutHandler}>Logout</button>
-        </div>
-        {userData.role === "admin" && <button onClick={() => navigate('/admin')}>Admin Page</button>}
+        <br />
+        
+        <button style={{backgroundColor: 'red'}} onClick={logoutHandler}>Logout</button>
+          
+        {userData.role === "admin" &&<div> <br/> <button onClick={() => navigate('/admin')}>Admin Page</button></div>}
         
 {/*         <form >
           <label>Current E-Mail</label>
