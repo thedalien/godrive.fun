@@ -2,6 +2,8 @@ import {useEffect, useState } from 'react';
 import './css/Login.css';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
+import { setUser } from '../features/appSlice';
+import { useDispatch } from 'react-redux';
 
 
 const RegisterPage = () => {
@@ -9,31 +11,25 @@ const RegisterPage = () => {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
 
         useEffect(() => {
           const isLogged = async () => {
             const token = localStorage.getItem('token');
-    
-            // Log the token and inspect it in your browser's console
-            console.log(`Raw token from localStorage: ${token}`); //MAG, I know we were working on this on Wednesday, is the token resolved?
-    
-            if (token && token !== "undefined") { // if token exists
+
+            if (token && token !== "undefined") { 
               console.log(`Getting user with token ${token}`);
               try {
-                const res = await api.post(
-                  `/api/user/login/token`,
-                  {}
-                );
+                const res = await api.post(`/api/user/login/token`,{});
     
                 if (res.data.success) {
+                  dispatch(setUser(res.data.user));
+                  localStorage.setItem('user', JSON.stringify(res.data.user));
                   navigate('/profile');
                 } else {
-                    navigate('/login');
                     console.error(res.data.message);
                 }
-
-
               } catch (err) {
                 console.error(err);
               }
@@ -56,10 +52,9 @@ const RegisterPage = () => {
             console.log(res);
             if (res.data.success) {
                 localStorage.setItem('token', res.data.token);
-                console.log(res.data.token);
-                const user = {name:res.data.user.name, email:res.data.user.email, id:res.data.user._id, token:res.data.token, role: res.data.user.role, verified: res.data.user.verified}
-                localStorage.setItem('user', JSON.stringify(user));
-                navigate("/login");
+                localStorage.setItem('user', JSON.stringify(res.data.user));
+                dispatch(setUser(res.data.user));
+                navigate("/profile");
             } else {
                 alert(res.data.message);
             }

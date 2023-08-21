@@ -1,9 +1,15 @@
 import "./css/User.css";
 import api from "../api";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { setUser, setLoggedOut } from "../features/appSlice";
+import { useDispatch } from "react-redux";
 
 export default function UserPage() {
   const [userData, setUserData] = useState([]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -13,12 +19,21 @@ export default function UserPage() {
         setUserData(response.data.user);
       } catch (error) {
         console.log(error);
+        navigate('/login');
       }
     };
 
     fetchUserData();
   }, []);
 
+  const logoutHandler = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.setItem("logout", "true");
+    dispatch(setLoggedOut(true));
+    dispatch(setUser(null));
+    navigate("/");
+  };
 
   return (
     <div id="user">
@@ -36,6 +51,10 @@ export default function UserPage() {
           </div>
           <button >Change Password</button>
         </div>
+        <div>
+          <button onClick={logoutHandler}>Logout</button>
+        </div>
+        
 {/*         <form >
           <label>Current E-Mail</label>
           <input type="text" name="updateMail" disabled/>

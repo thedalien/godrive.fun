@@ -4,6 +4,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import classes from "./Header.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
+import { setUser, setLoggedOut } from '../../features/appSlice';
 
 
 const Header = () => {
@@ -11,8 +12,16 @@ const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     const dispatch = useDispatch();
-
     
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            dispatch(setUser(user));
+        }
+    }, []);
+    
+    const user = useSelector((state) => state.app.user);
+    const loggedOut = useSelector((state) => state.app.loggedOut);
 
     useEffect(() => {
         const handleResize = () => {
@@ -42,12 +51,6 @@ const Header = () => {
         navigate(path);
     };
 
-    const logoutHandler = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        navigate("/");
-    };
-
     return (
         <header className={classes.header}>
             <div className={classes.header__content}>
@@ -75,22 +78,22 @@ const Header = () => {
                                 Contact
                             </button>
                         </li>
-                        <li>
+                        {!loggedOut && !user && <li>
                             <button onClick={() => navLinkClickHandler("/register")} className="register-btn">
                                 Register
                             </button>
-                        </li>
+                        </li>}
 
-                        <li>
+                        {loggedOut && <li>
                             <button onClick={() => navLinkClickHandler("/login")} className="login-btn">
                                 Login
                             </button>
-                        </li>
-                        <li>
-                            <button onClick={logoutHandler} className="logout-btn">
-                                Logout
+                        </li>}
+                        {user && <li>
+                            <button onClick={() => navLinkClickHandler("/profile")} className="logout-btn">
+                                Profile
                             </button>
-                        </li>
+                        </li>}
 
                     </ul>
                 </nav>

@@ -13,9 +13,9 @@ export default api;
 const token = localStorage.getItem('token');
 
 if (token) {
-    console.log('token', token);
+    // console.log('token', token);
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 } else {
-    console.log('no token');
+    // console.log('no token');
     delete api.defaults.headers.common['Authorization'];
 }
