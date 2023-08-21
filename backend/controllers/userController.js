@@ -79,9 +79,36 @@ const loginToken = async (req, res) => {
     }
 };
 
+const updateUser = async (req, res) => {
+    const { id } = req.params;
+    const { name, email, newPassword, currentPassword } = req.body;
+
+    const user = await User.findOne({ where: { id } });
+    // Check password
+    const validPassword = await bcrypt.compare(currentPassword, user.password);
+    if (!validPassword) {
+        return res.status(401).send({ message: 'Invalid Password' });
+    }
+    if (!user) {
+        return res.status(404).send({ message: 'User not found' });
+    }
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await User.update({ name, email, password: hashedPassword }, { where: { id } })
+    .then(num => {
+        if (num == 1) {
+            res.status(200).send({ message: 'User updated successfully' });
+        } else {
+            res.status(400).send({ message: 'Error updating user' });
+        }
+    })
+    .catch(err => {
+        res.status(500).send({ message: 'Error updating user' });
+    });
+};
 
 module.exports = {
     register, 
     login,
-    loginToken
+    loginToken,
+    updateUser,
 };

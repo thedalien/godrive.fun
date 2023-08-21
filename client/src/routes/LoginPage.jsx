@@ -32,11 +32,8 @@ const LoginPage = () => {
           }
         }
       };
-    
       isLogged();
     }, []);
-
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -74,6 +71,11 @@ const LoginPage = () => {
                 </div>
                 <button type="submit">Login</button>
             </form>
+
+            <div className="register">
+                <p>Don't have an account?</p>
+                <button onClick={() => navigate('/register')}>Register</button>
+            </div>
         </div>
     );
 };

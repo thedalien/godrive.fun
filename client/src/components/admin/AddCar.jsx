@@ -154,7 +154,7 @@ export default function AddCar({setShowAddCar}) {
                 <DropdownOrTextField data='dayPrice' name='Price per Day' onChange={getCarData}/>
                 <DropdownOrTextField data='hourPrice' name='Price per Hour' onChange={getCarData}/>
                 <label className='adminLabel' htmlFor='carImage'>Car Image</label>
-                <input type='file' name='carImage' className='adminInput' multiple onChange={handleFileChange}/>
+                <input type='file' name='carImage' className='adminInput' multiple onChange={handleFileChange} accept="image/*"/>
             </div>
             </form>
             <button id="addCarButton" type='button' name='submit' onClick={submitCarData}>Add Car to garage</button>
