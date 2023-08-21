@@ -15,6 +15,7 @@ import ContactPage from './routes/ContactPage'
 import RegisterPage from './routes/RegisterPage'
 import UserPage from './routes/UserPage'
 import AdminPage from './routes/AdminPage'
+import AdminPageEdit from './routes/AdminPageEdit'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
                 path: '/admin',
                 element: <AdminPage />
             },
+            {
+                path: '/admin/edit/:id',
+                element: <AdminPageEdit />
+            }
         ],
         errorElement: <ErrorPage />
     }

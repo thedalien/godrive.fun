@@ -126,9 +126,7 @@ export default function AddCar({setShowAddCar}) {
         api.post(`/api/car/addCar`, carInfo)
         .then((res) => {
             console.log(res);
-            if (res.data.success) {
-                setShowAddCar(false);
-            }
+            setShowAddCar(false);
         }).catch((err) => {
             console.log(err);
         });

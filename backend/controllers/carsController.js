@@ -135,10 +135,35 @@ const updateCar = (req, res) => {
     });
 };
 
+const deleteCar = (req, res) => {
+  const id = req.params.id;
+
+  Car.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: 'Car was deleted successfully!'
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Car with id=${id}. Maybe Car was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: `Could not delete Car with id=${id}`
+      });
+    });
+};
+
 module.exports = {
     createCar,
     getAllCars,
     getCar,
     getList,
     updateCar,
+    deleteCar
 }

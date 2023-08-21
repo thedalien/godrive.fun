@@ -17,7 +17,7 @@ export default function Carousel() {
   const [carData, setCarData] = useState([]);
 
   useEffect(() => {
-    api.get(`/api/car/get-all-cars`)
+    api.get(`/api/car/all`)
       .then((res) => {
         setCarData(res.data);
       })

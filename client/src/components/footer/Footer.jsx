@@ -10,7 +10,7 @@ export default function Footer() {
           <a href="/cars">Cars</a>
         </div>
         <div className="footer-copyright">
-          <p>© 2022 Your Company Name</p>
+          <p>© 2023 Best Car Rental</p>
         </div>
       </div>
     </footer>

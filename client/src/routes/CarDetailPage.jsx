@@ -9,7 +9,7 @@ export default function CarDetailPage() {
   const [carData, setCarData] = useState([]);
 
   useEffect(() => {
-    api.get(`/api/car/get-car/${id}`)
+    api.get(`/api/car/getcar/${id}`)
       .then((res) => {
         setCarData(res.data);
       })

@@ -11,13 +11,13 @@ router.post('/addCar', carsController.createCar);
 
 router.post('/getList', carsController.getList);
 
-router.put('/updateCar', carsController.updateCar);
+router.put('/update/:id', carsController.updateCar);
 
-// router.delete('/deleteCar', carsController.deleteCar);
+router.delete('/delete/:id', carsController.deleteCar);
 
-router.get('/get-all-cars', carsController.getAllCars);
+router.get('/all', carsController.getAllCars);
 
-router.get('/get-car/:id', carsController.getCar);
+router.get('/getcar/:id', carsController.getCar);
 
 
 module.exports = router; 
