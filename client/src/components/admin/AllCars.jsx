@@ -47,17 +47,18 @@ export default function AllCars({setShowAllCars}) {
                     <th>Brand</th>
                     <th>Model</th>
                     <th>Year</th>
-                    <th>Color</th>
+                    <th>License Plate</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {cars.map((car) => (
+                    console.log(car),
                     <tr key={car.id}>
                         <td>{car.brand}</td>
                         <td>{car.model}</td>
                         <td>{car.year}</td>
-                        <td>{car.color}</td>
+                        <td>{car.licensePlate}</td>
                         <td><button onClick={() => handleEdit(car.id)}>Edit</button></td>
                         <td><button onClick={() => handleDelete(car.id)}>Delete</button></td>
                     </tr>

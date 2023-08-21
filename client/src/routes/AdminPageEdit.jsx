@@ -94,6 +94,7 @@ export default function AdminPageEdit() {
               <td>License Plate</td>
               <td><input type="text" value={car.licensePlate} onChange={(e) => setCar({...car, licensePlate: e.target.value})} /></td>
             </tr>
+            
           </tbody>
         </table>
         <button onClick={handleSubmit}>Save</button>

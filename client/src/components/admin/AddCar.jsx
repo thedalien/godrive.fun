@@ -4,6 +4,8 @@ import DropdownOrTextField from '../inputs/DropdownOrTextField';
 import api from '../../api';
 import { storage } from '../../firebase/config';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+const db = getFirestore();
 
 
 
@@ -43,11 +45,8 @@ export default function AddCar({setShowAddCar}) {
                     }, 
                     async () => {
                         try {
-                            const originalURL = await getDownloadURL(uploadTask.snapshot.ref);
-                            const tokenPart = originalURL.split('?').slice(1).join('?');
-                            const baseName = selectedFile.name.split('.').slice(0, -1).join('.');
-                            const newFileName = baseName + "_300x300.webp";
-                            const transformedURL = `https://firebasestorage.googleapis.com/v0/b/carrental-38eea.appspot.com/o/images%2F${encodeURIComponent(newFileName)}?${tokenPart}`;
+                            // Fetch the transformed image URL from Firestore
+                            const transformedURL = await getTransformedImageURL(selectedFile.name);
                             localDownloadURLs.push(transformedURL);
                             resolve();
                         } catch (error) {
@@ -62,12 +61,22 @@ export default function AddCar({setShowAddCar}) {
         // Wait for all uploads to complete
         await Promise.all(uploadPromises);
     
-
         return localDownloadURLs;
     };
     
     
-      
+    
+    async function getTransformedImageURL(originalName) {
+        const q = query(collection(db, 'transformedImages'), where('originalName', '==', originalName));
+        const querySnapshot = await getDocs(q);
+        if (!querySnapshot.empty) {
+            const doc = querySnapshot.docs[0];
+            return doc.data().transformedURL;
+        } else {
+            throw new Error('Transformed image not found');
+        }
+    }
+    
 
 
 

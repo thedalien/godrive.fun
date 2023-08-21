@@ -9,6 +9,7 @@ const os = require('os');
 const carsRoutes = require('./router/carsRoutes');
 const userRoutes = require('./router/userRoutes');
 const adminRoutes = require('./router/adminRoutes');
+const bookRoutes = require('./router/bookRoutes');
 
 const app = express();
 app.use(cors());
@@ -26,8 +27,8 @@ testConnection();
 app.use(cors());
 app.use('/api/car', carsRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/book', bookRoutes);
 // app.use('/api/admin', adminRoutes);
-
 
 server.listen(port,'0.0.0.0', () => { 
     console.log(`Server is running on port ${port} and Local IP is ${server.address().address}`);

@@ -1,24 +1,40 @@
 const models = require('../models/index');
 const Book = models.bookings;
+const Car = models.cars;
 
 
 const createBooking = async (req, res) => {
+  const { carId, startDate, endDate } = req.body;
+
+  if (!carId || !startDate || !endDate) {
+    return res.status(400).json({ message: 'Missing required information' });
+  }
+
   try {
-    const { carId, userId, startDate, endDate } = req.body;
+    const car = await Car.findOne({ where: { id: carId } });
+    if (!car) {
+      return res.status(404).json({ message: 'Car not found' });
+    }
+
+    const days = Math.ceil((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24));
+    if (days <= 0) {
+      return res.status(400).json({ message: 'Invalid date range' });
+    }
+    
+    const totalPrice = days * car.dayPrice;
 
     const booking = await Book.create({
       carId,
-      userId,
+      userId: req.userId,
       startDate,
       endDate,
       totalPrice,
-      status,
     });
 
-    res.status(201).json(booking);
+    return res.status(201).json(booking);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -31,8 +47,79 @@ const getBookingByUser = async (req, res) => {
         userId: userId,
       },
     });
-
     res.status(200).json(userBookings);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const getBookingByCar = async (req, res) => {
+  const { carId } = req.params;
+  
+  try {
+    const carBookings = await Book.findAll({
+      where: {
+        carId: carId,
+      },
+    });
+    res.status(200).json(carBookings);
+  }
+  catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const getAvailableCars = async (req, res) => {
+  const { startDate, endDate } = req.body;
+
+  try {
+    const bookedCars = await Book.findAll({
+      where: {
+        startDate: {
+          [Op.lte]: endDate,
+        },
+        endDate: {
+          [Op.gte]: startDate,
+        },
+      },
+      attributes: ['carId'],
+      raw: true
+    });
+
+    const bookedCarIds = bookedCars.map(car => car.carId);
+
+    const availableCars = await Car.findAll({
+      where: {
+        id: {
+          [Op.notIn]: bookedCarIds
+        }
+      }
+    });
+
+    res.status(200).json(availableCars);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const deleteBooking = async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const booking = await Book.destroy({
+      where: {
+        id: id,
+      },
+    });
+
+    if (booking) {
+      res.status(200).json({ message: 'Booking deleted successfully' });
+    } else {
+      res.status(404).json({ message: 'Booking not found' });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
@@ -43,4 +130,7 @@ const getBookingByUser = async (req, res) => {
 module.exports = {
     createBooking,
     getBookingByUser,
+    getBookingByCar,
+    getAvailableCars,
+    deleteBooking
 }

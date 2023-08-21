@@ -1,29 +1,33 @@
-//MAG just curious what's going to go here? It would be nice to start practicing!
+const jwt = require('jsonwebtoken');
+const models = require('../models/index');
+const User = models.users;
 
-const tokenAuth = (req, res, next) => {
+const tokenAuth = async (req, res, next) => {
   console.log('tokenAuth middleware');
-  console.log(req.headers.Authorization);
-    if (!req.headers.Authorization) {
-        return res.status(401).send({ message: 'No token provided' });
-      }
-      
-      const parts = req.headers.Authorization.split(' ');
-      
-      if (parts.length !== 2 || parts[0] !== 'Bearer') {
-        return res.status(401).send({ message: 'Invalid authorization header format' });
-      }
-      
-      const token = parts[1];
-      let decodedToken;
-      try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        decodedToken = decoded;
-      } catch (error) {
-        console.error('Token verification failed:', error);
-        return res.status(401).send({ message: 'Invalid token' });
-      }
-    req.userId = decodedToken.payload.id;
-    req.token = decodedToken;
+
+  const token = req.headers.authorization;
+  const bearerToken = token.split(' ')[1];
+  let decodedToken;
+  try {
+    decodedToken = jwt.verify(bearerToken, process.env.JWT_SECRET);
+    console.log('decodedToken', decodedToken);
+  } catch (error) {
+    console.error('Token verification failed:', error);
+    return res.status(401).send({ message: 'Invalid token' });
+  }
+  const id = decodedToken.id;
+  
+  if (!id) {
+    return res.status(401).send({ message: 'No user id provided' });
+  }
+
+  const user = await User.findOne({ where: { id: id } });
+  if (!user) {
+    return res.status(404).send({ message: 'User not found' });
+  }
+
+  req.userId = id;
+  req.token = decodedToken;
   next();
 }
 

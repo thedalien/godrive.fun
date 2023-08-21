@@ -5,10 +5,11 @@ const User = models.users;
 const adminAuth = async (req, res, next) => {
   console.log('adminAuth middleware');
 
-  const token = req.headers.authorization.split(' ')[1];
+  const token = req.headers.authorization;
+  const bearerToken = token.split(' ')[1];
   let decodedToken;
   try {
-    decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    decodedToken = jwt.verify(bearerToken, process.env.JWT_SECRET);
     console.log('decodedToken', decodedToken);
   } catch (error) {
     console.error('Token verification failed:', error);
