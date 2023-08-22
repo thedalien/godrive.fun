@@ -11,12 +11,10 @@ export default function UserPage() {
   const dispatch = useDispatch();
   const [showChangePw, setShowChangePw] = useState(false);
 
-  const [name, setName] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [newEmail, setNewEmail] = useState("");
-
+  const [bookins, setBookings] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -29,9 +27,23 @@ export default function UserPage() {
         navigate('/login');
       }
     };
-
     fetchUserData();
+
   }, []);
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        if (!userData.id) return;
+        const response = await api.get('/api/book/getBookingByUser/' + userData.id);
+        console.log(response.data);
+        setBookings(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchBookings();
+  }, [userData]);
 
   const logoutHandler = () => {
     localStorage.removeItem("token");
@@ -70,6 +82,38 @@ export default function UserPage() {
     }
   };
 
+  const bookingsList = bookins.map((booking) => {
+    return (
+      <div className="booking" key={booking.id}>
+        <div className="bookingDetail">
+          <div className="bookingDetailTitle">
+            {booking.car.brand} {booking.car.model}
+          </div>
+          <div className="bookingDetail">
+            <div className="bookingDetailTitle">
+              Booking ID: {booking.id}
+            </div>
+            <div className="bookingDetail">
+              <div className="bookingDetail">
+                <div className="bookingDetailTitle">
+                  Start Date: {new Date(booking.startDate).toLocaleDateString()}
+                </div>
+                <div className="bookingDetailTitle">
+                  End Date: {new Date(booking.endDate).toLocaleDateString()}
+                </div>
+                <div className="bookingDetailTitle">
+                  Price: {booking.totalPrice} EUR
+                </div>
+                <div className="bookingDetailTitle">
+                  Status: {booking.status}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  });
 
 
   return (
@@ -126,6 +170,9 @@ export default function UserPage() {
           </div>
           <div id="userRes">
             Your current reservations
+          </div>
+          <div id="userResList">
+            {bookingsList}
           </div>
           <div id="userPrevRes">
             Your previous reservations

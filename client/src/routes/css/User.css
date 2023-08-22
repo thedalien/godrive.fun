@@ -1,79 +1,60 @@
+/* Dark mode styles for UserPage */
+
 #user {
-    width: 100%;
-    height: 100%;
-    display: flex;
+  background-color: #333;
+  color: #fff;
+  display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 #userEdit {
-    width: 100%;
-    height: auto;
-    padding: 50px 0 50px 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(130, 86, 86);
-}
-
-#userEdit > h1 {
-    margin-bottom: 50px;
-    padding: 0;
-}
-
-#userEdit > h3 {
-    width: 50%;
-    margin: 0;
-    padding: 0;
-}
-
-#detailContainer {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: auto auto;
-    justify-content: center;
+  padding: 20px;
 }
 
 .currentDetail {
-    height: 30px;
-    margin-top: 10px;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    border: 1px solid rgb(255, 255, 255);
-    border-right: none;
-    border-radius: 3px 0 0 3px;
+  font-weight: bold;
 }
 
 .userDetail {
-    height: 30px;
-    margin-top: 10px;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    border: 1px solid rgb(255, 255, 255);
-    border-radius: 0 3px 3px 0;
+  margin-bottom: 10px;
+}
+
+#userEdit button {
+  background-color: #555;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+#userEdit button:hover {
+  background-color: #777;
 }
 
 #userRes {
-    width: 100%;
-    height: auto;
-    padding: 50px 0 50px 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(66, 66, 66);
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.booking {
+  background-color: #444;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.bookingDetail {
+  margin-top: 10px;
+}
+
+.bookingDetailTitle {
+  font-weight: bold;
 }
 
 #userPrevRes {
-    width: 100%;
-    height: auto;
-    padding: 50px 0 50px 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(249, 249, 249);
+  margin-top: 20px;
+  font-weight: bold;
 }
+

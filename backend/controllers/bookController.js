@@ -46,6 +46,7 @@ const getBookingByUser = async (req, res) => {
       where: {
         userId: userId,
       },
+      include: [Car],
     });
     res.status(200).json(userBookings);
   } catch (error) {
