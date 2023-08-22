@@ -4,7 +4,8 @@ import { AiOutlineClose } from "react-icons/ai";
 import classes from "./Header.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
-import { setUser, setLoggedOut } from '../../features/appSlice';
+import { setUser } from '../../features/appSlice';
+import { setToken } from '../../features/appSlice';
 
 
 const Header = () => {
@@ -15,9 +16,11 @@ const Header = () => {
     
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
+        const token = localStorage.getItem('token');
         if (user) {
             dispatch(setUser(user));
-        }
+            dispatch(setToken(token));
+        }            
     }, []);
     
     const user = useSelector((state) => state.app.user);
