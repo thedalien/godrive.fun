@@ -22,6 +22,8 @@ export default function UserPage() {
         const token = localStorage.getItem('token');
         const response = await api.post('/api/user/login/token', { token });
         setUserData(response.data.user);
+        dispatch(setUser(response.data.user));
+        localStorage.setItem("user", JSON.stringify(response.data.user));
       } catch (error) {
         console.log(error);
         navigate('/login');
