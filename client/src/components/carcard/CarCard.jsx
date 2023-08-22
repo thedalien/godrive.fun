@@ -17,7 +17,7 @@ export default function CarCard({ car }) {
     <div className="carCard">
       <h1>{car.brand} {car.model}</h1>
       {/* <ImageSlider images={car.images} /> */}
-      <img src={car.images && car.images.length > 0 ? car.images[0].url : "https://tdc-prod.ams3.digitaloceanspaces.com/21f8e4e1-c95d-447a-b147-18aa41725aab.jpg"} alt="car" />
+      <img src={car.images && car.images.length > 0 ? car.images[0].url : "No image found"} alt={car.brand && car.images != null ? car.brand+" "+car.model : "No image found"} />
       <div className="carDetails">
         <p>{car.year}</p>
         <p>{car.dayPrice}</p>

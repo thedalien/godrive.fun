@@ -16,7 +16,7 @@ export default function AdminPage() {
     useEffect(() => {
         if (!user || user.role !== 'admin') {
             navigate('/');
-            return null;
+            // return null;
         }
     }, []);
 
