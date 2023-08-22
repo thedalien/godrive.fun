@@ -3,13 +3,15 @@ import api from "../api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setUser, setLoggedOut } from "../features/appSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function UserPage() {
   const [userData, setUserData] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showChangePw, setShowChangePw] = useState(false);
+  const tokenFromRedux = useSelector((state) => state.app.token);
+  console.log(tokenFromRedux);
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -22,6 +24,8 @@ export default function UserPage() {
         const token = localStorage.getItem('token');
         const response = await api.post('/api/user/login/token', { token });
         setUserData(response.data.user);
+        dispatch(setUser(response.data.user));
+        localStorage.setItem("user", JSON.stringify(response.data.user));
       } catch (error) {
         console.log(error);
         navigate('/login');

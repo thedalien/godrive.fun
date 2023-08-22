@@ -5,7 +5,8 @@ const initialState = {
     // serverURL: "http://localhost:8000",
     serverURL: "http://89.221.220.112:8000",
     user: null,
-    loggedOut: true, 
+    loggedOut: true,
+    token: localStorage.getItem("token"),
 };
 
 // const token = localStorage.getItem("token");
@@ -25,7 +26,11 @@ export const appSlice = createSlice({
         },
         setLoggedOut: (state, action) => {
             state.loggedOut = action.payload;
+        },
+        setToken: (state, action) => {
+            state.token = action.payload;
         }
+
     },
     // extraReducers: {
         // get token form local storage
@@ -35,7 +40,8 @@ export const appSlice = createSlice({
 export const { 
     setServerURL,
     setUser,
-    setLoggedOut
+    setLoggedOut,
+    setToken
 } = appSlice.actions;
 
 export default appSlice.reducer;

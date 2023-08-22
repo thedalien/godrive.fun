@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import { setUser } from '../features/appSlice';
 import { useDispatch } from 'react-redux';
+import { setToken } from '../features/appSlice';
 
 
 const RegisterPage = () => {
@@ -12,6 +13,7 @@ const RegisterPage = () => {
     const [name, setName] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
 
 
         useEffect(() => {
@@ -54,6 +56,8 @@ const RegisterPage = () => {
                 localStorage.setItem('token', res.data.token);
                 localStorage.setItem('user', JSON.stringify(res.data.user));
                 dispatch(setUser(res.data.user));
+                dispatch(setToken(res.data.token));
+
                 navigate("/profile");
             } else {
                 alert(res.data.message);
