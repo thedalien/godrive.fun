@@ -41,7 +41,7 @@
 
 .booking {
   background-color: #444;
-  padding: 10px;
+  padding: 30px;
   margin-bottom: 10px;
 }
 
@@ -51,6 +51,7 @@
 
 .bookingDetailTitle {
   font-weight: bold;
+  margin: 10px 0;
 }
 
 #userPrevRes {

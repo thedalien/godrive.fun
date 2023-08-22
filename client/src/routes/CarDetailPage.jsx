@@ -36,7 +36,7 @@ export default function CarDetailPage() {
 
   const handleBooking = (e) => {
     e.preventDefault();
-    api.post(`/api/book/createBooking`, { ...booking, userId: user.id, carId: id })
+    api.post(`/api/book/create`, { ...booking, userId: user.id, carId: id })
       .then((res) => {
         console.log('Booking successful:', res.data);
       })

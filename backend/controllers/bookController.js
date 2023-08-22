@@ -3,7 +3,7 @@ const Book = models.bookings;
 const Car = models.cars;
 
 
-const createBooking = async (req, res) => {
+const create = async (req, res) => {
   const { carId, startDate, endDate } = req.body;
 
   if (!carId || !startDate || !endDate) {
@@ -62,6 +62,9 @@ const getBookingByCar = async (req, res) => {
     const carBookings = await Book.findAll({
       where: {
         carId: carId,
+        status: {
+          [Op.notIn]: ['cancelled', 'returned'],
+        },
       },
     });
     res.status(200).json(carBookings);
@@ -83,6 +86,9 @@ const getAvailableCars = async (req, res) => {
         },
         endDate: {
           [Op.gte]: startDate,
+        },
+        status: {
+          [Op.notIn]: ['cancelled', 'returned'],
         },
       },
       attributes: ['carId'],
@@ -127,11 +133,36 @@ const deleteBooking = async (req, res) => {
   }
 };
 
+const cancelBooking = async (req, res) => {
+  const id = req.params.bookId;
+
+
+  try {
+    const booking = await Book.update({
+      status: 'cancelled',
+    }, {
+      where: {
+        id: id,
+      },
+    });
+
+    if (booking) {
+      res.status(200).json({ message: 'Booking cancelled successfully' });
+    } else {
+      res.status(404).json({ message: 'Booking not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 
 module.exports = {
-    createBooking,
+    create,
     getBookingByUser,
     getBookingByCar,
     getAvailableCars,
-    deleteBooking
+    deleteBooking,
+    cancelBooking,
 }

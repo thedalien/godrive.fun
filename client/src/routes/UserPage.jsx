@@ -31,17 +31,17 @@ export default function UserPage() {
 
   }, []);
 
-  useEffect(() => {
-    const fetchBookings = async () => {
-      try {
-        if (!userData.id) return;
-        const response = await api.get('/api/book/getBookingByUser/' + userData.id);
-        console.log(response.data);
-        setBookings(response.data);
-      } catch (error) {
-        console.log(error);
-      }
+  const fetchBookings = async () => {
+    try {
+      if (!userData.id) return;
+      const response = await api.get('/api/book/getBookingByUser/' + userData.id);
+      console.log(response.data);
+      setBookings(response.data);
+    } catch (error) {
+      console.log(error);
     }
+  }
+  useEffect(() => {
     fetchBookings();
   }, [userData]);
 
@@ -82,7 +82,28 @@ export default function UserPage() {
     }
   };
 
-  const bookingsList = bookins.map((booking) => {
+  const handleBookingCancel = async (bookingId) => {
+    const confirm = window.confirm("Are you sure you want to cancel this booking?");
+    if (!confirm) return;
+    try {
+      const response = await api.put(`/api/book/cancel/${bookingId}`);
+      console.log(response.data);
+      if (response.data.success) {
+        alert("Booking cancelled successfully");
+        fetchBookings();
+      } else {
+        alert(response.data.message);
+      }
+      // refresh page
+      window.location.reload(); // fix this later to not reload the page but to update the state
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const upcommingbookingsList = bookins.map((booking) => {
+    if (booking.status === "cancelled") return;
+    if (new Date(booking.endDate) < new Date()) return;
     return (
       <div className="booking" key={booking.id}>
         <div className="bookingDetail">
@@ -107,11 +128,58 @@ export default function UserPage() {
                 <div className="bookingDetailTitle">
                   Status: {booking.status}
                 </div>
+                <button style={{backgroundColor: "red"}} onClick={() => handleBookingCancel(booking.id)}>Cancel</button>
+                {booking.status === "active" && (
+                  <div className="bookingWarning">
+                    <span style={{ color: "red" }}>WARNING:</span> This booking is still active.
+                  </div>
+                )}                
               </div>
             </div>
           </div>
         </div>
       </div>
+    )
+  });
+
+  const previousBookingsList = bookins.map((booking) => {
+    // show only previous bookings and cancelled bookings
+    if (booking.status !== "cancelled" && new Date(booking.endDate) > new Date()) return;
+    return (
+      <div className="booking" key={booking.id}>
+      <div className="bookingDetail">
+        <div className="bookingDetailTitle">
+          {booking.car.brand} {booking.car.model}
+        </div>
+        <div className="bookingDetail">
+          <div className="bookingDetailTitle">
+            Booking ID: {booking.id}
+          </div>
+          <div className="bookingDetail">
+            <div className="bookingDetail">
+              <div className="bookingDetailTitle">
+                Start Date: {new Date(booking.startDate).toLocaleDateString()}
+              </div>
+              <div className="bookingDetailTitle">
+                End Date: {new Date(booking.endDate).toLocaleDateString()}
+              </div>
+              <div className="bookingDetailTitle">
+                Price: {booking.totalPrice} EUR
+              </div>
+              <div className="bookingDetailTitle">
+                Status: {booking.status}
+              </div>
+              <button style={{backgroundColor: "red"}} onClick={() => handleBookingCancel(booking.id)}>Cancel</button>
+              {booking.status === "active" && (
+                <div className="bookingWarning">
+                  <span style={{ color: "red" }}>WARNING:</span> This booking is still active.
+                </div>
+              )}                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     )
   });
 
@@ -172,10 +240,11 @@ export default function UserPage() {
             Your current reservations
           </div>
           <div id="userResList">
-            {bookingsList}
+            {upcommingbookingsList}
           </div>
           <div id="userPrevRes">
             Your previous reservations
+            {previousBookingsList}
           </div>
         </>
       )}
