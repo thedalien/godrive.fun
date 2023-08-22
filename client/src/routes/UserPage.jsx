@@ -24,6 +24,11 @@ export default function UserPage() {
         dispatch(setUser(response.data.user));
         localStorage.setItem("user", JSON.stringify(response.data.user));
       } catch (error) {
+        setUserData(null);
+        dispatch(setUser(null));
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        localStorage.setItem("logout", "true");
         navigate('/login');
       }
     };
