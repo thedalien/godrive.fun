@@ -4,12 +4,22 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const { testConnection } = require('./models/conn')
 const os = require('os');
+const https = require('https');
+const fs = require('fs');
+
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/dalien.online/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/dalien.online/fullchain.pem', 'utf8');
+
+// Certificate is saved at: /etc/letsencrypt/live/dalien.online/fullchain.pem
+// Key is saved at:         /etc/letsencrypt/live/dalien.online/privkey.pem
 
 
 const carsRoutes = require('./router/carsRoutes');
 const userRoutes = require('./router/userRoutes');
 const adminRoutes = require('./router/adminRoutes');
 const bookRoutes = require('./router/bookRoutes');
+
+const credentials = { key: privateKey, cert: certificate };
 
 const app = express();
 app.use(cors());
@@ -33,6 +43,14 @@ app.use('/api/book', bookRoutes);
 server.listen(port,'0.0.0.0', () => { 
     console.log(`Server is running on port ${port} and Local IP is ${server.address().address}`);
 }); 
+
+
+const httpsServer = https.createServer(credentials, app);
+
+httpsServer.listen(443, () => {
+  console.log('HTTPS Server running on port 443');
+});
+
 
 
 // setInterval(() => {
