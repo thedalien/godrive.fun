@@ -232,7 +232,7 @@ export default function UserPage() {
             )}
             <br />
             <br />
-            <button style={{backgroundColor: 'red'}} onClick={logoutHandler}>Logout</button>
+            <button className="loginButtons" style={{backgroundColor: 'red'}} onClick={logoutHandler}>Logout</button>
             {userData.role === "admin" && (
               <div>
                 <br/>

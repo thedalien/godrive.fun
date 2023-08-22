@@ -24,7 +24,7 @@ export default function CarCard({ car }) {
             <p>Price per hour{car.hourPrice}</p>
             <p>Price per day: {car.dayPrice}</p>
           </div>
-          <button onClick={showDetails} >Show more details</button>
+          <button onClick={showDetails} className="showDetails">Show more details</button>
         </>
       )}
     </div>
