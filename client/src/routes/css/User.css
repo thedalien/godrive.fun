@@ -15,34 +15,55 @@
   column-gap: 50px;
 }
 
-.userHeader > button {
+.userHeader > button:last-child {
   width: auto;
   margin-right: 25px;
   background-color: rgb(216, 25, 25);
   cursor: pointer;
 }
-.userHeader > button:hover {
+.userHeader > button:last-child:hover {
   background-color: rgb(168, 5, 5);
+}
+
+.userHeader > button {
+  width: auto;
+  background-color: var(--main-blue);
+  cursor: pointer;
+}
+.userHeader > button:hover {
+  background-color: var(--main-dark);
 }
 
 .userData {
   width: 100%;
-  display: grid;
-  grid-template-columns: auto auto auto;
+  display: flex;
+  justify-content: space-evenly;
   background-color: var(--main-blue);
 }
 
 .userDetails {
   width: 500px;
+  height: 0;
   margin: 30px;
-  padding: 10px 20px 0px 20px;
+  padding: 10px 20px 0 20px;
   display: flex;
-  column-gap: 20px;
+  column-gap: 10px;
   border: 1px solid var(--main-light);
   border-radius: 5px;
 }
 
-.userDetails > legend {
+.userResList, .userPrevRes {
+  width: 500px;
+  margin: 30px;
+  padding: 10px 20px 0px 20px;
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 10px;
+  border: 1px solid var(--main-light);
+  border-radius: 5px;
+}
+
+.userDetails, .userResList, .userPrevRes > legend {
   padding: 0 10px 0 10px;
   font-size: 16px;
   font-weight: 600;
@@ -51,14 +72,14 @@
 
 .detailContainer {
   width: 50%;
-  height: auto;
   padding: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background-color: var(--main-cream);
   border-radius: 5px;
+  color: var(--main-dark);
 }
 
 .detailContainer > form {
@@ -71,6 +92,7 @@
 
 .changeContainer {
   width: 100%;
+  display: none;
 }
 
 .changeContainer:last-child {
@@ -122,12 +144,6 @@
 
 .changePw:hover {
   background-color: var(--main-dark);
-}
-
-
-#userRes {
-  margin-top: 20px;
-  font-weight: bold;
 }
 
 .booking {

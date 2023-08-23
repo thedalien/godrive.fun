@@ -18,6 +18,8 @@ export default function UserPage() {
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [bookins, setBookings] = useState([]);
 
+  const [detailHeight, setDetailHeight] = useState("180px");
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -195,15 +197,12 @@ export default function UserPage() {
           <div className="userHeader">
             <h1>Hello {userData.name}</h1>
             {userData.role === "admin" && (
-              <div>
-                  <br/>
-                  <button onClick={() => navigate('/admin')}>Admin Page</button>
-              </div>
+              <button className="mainButtons" onClick={() => navigate('/admin')}>Admin Page</button>
             )}
             <button className="mainButtons" onClick={logoutHandler}>Logout</button>
           </div>
           <div className="userData">
-            <fieldset className="userDetails">
+            <fieldset className="userDetails" style={{height: detailHeight}}>
               <legend>Your current Details</legend>
               <div className="detailContainer">
                 <div>
@@ -214,7 +213,7 @@ export default function UserPage() {
                     {userData.email}
                   </div>
                 </div>
-                <button className="mainButtons changePw" onClick={() => setShowChangePw(!showChangePw)}>Change E-Mail</button>
+                <button className="mainButtons changePw" onClick={() => {setShowChangePw(!showChangePw); setDetailHeight("500px")}}>Change E-Mail</button>
               </div>
               {!showChangePw ? (
                 <div className="detailContainer">
@@ -251,14 +250,14 @@ export default function UserPage() {
                 </div>
               )}
             </fieldset>
-          <div id="userResList">
-            Your current reservations
-            {upcommingbookingsList}
-          </div>
-          <div id="userPrevRes">
-            Your previous reservations
-            {previousBookingsList}
-          </div>
+            <fieldset className="userResList">
+              <legend>Your current reservations</legend>
+              {upcommingbookingsList}
+            </fieldset>
+            <fieldset clas="userPrevRes">
+              <legend>Your previous reservations</legend>
+              {previousBookingsList}
+            </fieldset>
           </div>
         </>
       )}
