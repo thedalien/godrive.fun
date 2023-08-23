@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { setUser } from '../../features/appSlice';
 import { setToken } from '../../features/appSlice';
+import { setUser, setLoggedOut } from '../../features/appSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 const Header = () => {
@@ -94,7 +96,10 @@ const Header = () => {
                         </li>}
                         {user && <li>
                             <button onClick={() => navLinkClickHandler("/profile")} className="logout-btn">
-                                Profile
+                                <div className="user-btn">
+                                    {user.name}
+                                    <FontAwesomeIcon icon="fa-solid fa-user" />
+                                </div>
                             </button>
                         </li>}
 

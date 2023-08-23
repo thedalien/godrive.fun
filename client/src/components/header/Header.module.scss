@@ -30,7 +30,15 @@
             color: $light;
             width: 50px;
             height: 50px;
+            padding: 5px;
             cursor: pointer;
+            border: 1px solid transparent;
+            border-radius: 50%;
+            transition: 0.2s ease-in;
+
+        }
+        &__logo:hover{
+            border: 1px solid $light;
         }
         &__logo img {
             width: 100%;
@@ -64,6 +72,7 @@
                 position: static;
             }
             ul {
+                height: 100%;
                 list-style: none;
                 padding: 0;
                 display: flex;
@@ -76,54 +85,44 @@
                     margin-right: calc(0.5rem + #{$spacing-md});
                 }
                 li {
-                    &:not(:last-child) {
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
                         margin-bottom: $spacing-lg;
+                        align-self: right;
                         @include breakpoint(md) {
                             margin-bottom: 0;
-                            margin-right: $spacing-md;
                         }
-                    }
-                    &:last-child {
-                        align-self: right;
-                    }
-                    a {
-                        text-decoration: none;
-                        color: inherit;
-                        padding: 0.75rem 1.25rem;
-                        border-radius: $borderRadius;
-                        transition: 0.3s ease all;
+                    
+                }
+                button {
+                    width: 100px;
+                    height: 60%;
+                    cursor: pointer;
+                    outline: none;
+                    font-size: 1.1rem;
+                    font-family: inherit;
+                    background: $primary;
+                    border: 1px solid transparent;
+                    border-radius: 3px;
+                    transition: 0.2s ease-in;
+                    color: $light;
 
-                        &:hover {
-                            background: rgba($light, 0.1);
-                        }
-                        &:active {
-                            border-radius: calc(#{$borderRadius} + 6px);
-                            background: linear-gradient(rgba($light, 0.1), rgba($light, 0.2));
-                        }
+                    &:hover {
+                        border: 1px solid $light;
+                    }
+                    &:active {
+                        border: 1px solid $light;
                     }
                 }
-            }
-            button {
-                cursor: pointer;
-                outline: none;
-                padding: 0.75rem 1.25rem;
-                border-radius: $borderRadius;
-                font-size: 1rem;
-                font-family: inherit;
-                background: $primary;
-                color: $dark;
-                border: 1px solid transparent;
-                transition: 0.3s ease all;
-
-                &:hover {
-                    border-color: $primary;
-                    background: rgba($primary, 0.1);
-                    color: $primary;
+                div {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-evenly;
                 }
-                &:active {
-                    border-color: $primary;
-                    background: linear-gradient(rgba($primary, 0.2), rgba($primary, 0.3));
-                    color: $primary;
+                svg {
+                    margin-top: 4px;
                 }
             }
 

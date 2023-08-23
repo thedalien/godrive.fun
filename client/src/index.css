@@ -1,3 +1,16 @@
+/* Variables */
+:root {
+  --main-light: rgb(255, 255, 255);
+  --main-dark: rgb(48, 56, 65);
+  --main-blue: rgb(122, 165, 210);
+  --main-cream: rgb(238, 238, 238);
+  
+  --half-dark: rgba(48, 56, 65,0.5);
+  --hero-BgColor: rgba(48, 56, 65, 0.3);
+  --footer-BgColor: rgb(29, 29, 29);
+}
+/* Variables */
+
 html {
   scroll-behavior: smooth;
 }
@@ -9,10 +22,9 @@ html {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+
+  color: var(--main-dark);
+  background-color: var(--main-cream);
   
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -26,7 +38,6 @@ body {
   margin: 0;
   padding: 0;
 }
-
 
 .loader {
   border: 10px solid var(--color-bg); 

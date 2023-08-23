@@ -31,7 +31,7 @@
     font-size: 16px;
 }
 
-button {
+.loginButtons {
     padding: 10px 20px;
     font-size: 16px;
     border-radius: 5px;
@@ -44,7 +44,7 @@ button {
 
 /* Media queries for screens larger than 768px */
 @media (min-width: 768px) {
-    .form-group, button {
+    .form-group, .loginButtons {
         max-width: 400px;
     }
 }

@@ -1,8 +1,10 @@
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { useEffect, useState } from 'react';
 import api from '../api';
-import { DatePicker, Space } from 'antd';
+
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { ConfigProvider, DatePicker, Space } from 'antd';
+dayjs.extend(customParseFormat);
 const { RangePicker } = DatePicker;
 
 import CarCard from '../components/carcard/CarCard';
@@ -40,16 +42,55 @@ export default function CarPage() {
       })
   };
 
+  const disabledDate = (current) => {
+    return current && current < dayjs().startOf('minute');
+  };
+
   return (
   <div id="car">
     <h1>Car Page</h1>
     <div className="carSearch">
-      <Space direction="vertical" size={10}>
-        <RangePicker
-          showTime={{ format: 'HH:mm' }}
-          format="DD-MM-YYYY HH:mm"
-        />
-      </Space>
+      <ConfigProvider
+        theme={{
+          components: {
+            DatePicker: {
+              colorPrimary: 'rgb(122, 165, 210);',
+              colorSecondary: 'rgb(122, 165, 210);',
+              borderRadius: '5px;',
+              colorText: 'rgb(48, 56, 65);',
+            },
+            TimePicker: {
+              colorPrimary: 'rgb(122, 165, 210);',
+              colorText: 'rgb(48, 56, 65);',
+              colorPrimaryBg: 'rgb(122, 165, 210);',
+              algorithm: true,
+
+            },
+            Input: {
+              colorPrimaryText: 'rgb(48, 56, 65);',
+              colorSecondaryText: 'rgb(48, 56, 65);',
+
+              algorithm: true,
+
+            },
+            Button: {
+              colorPrimary: 'rgb(122, 165, 210);',
+              algorithm: true,
+
+            },
+          },
+        }}
+      >
+        <Space direction="vertical" size={10}>
+          <RangePicker
+            showTime={{ format: 'HH:mm' }}
+            format="DD.MM.YYYY / HH:mm"
+            disabledDate={disabledDate}
+            size='large'
+            changeOnBlur
+          />
+        </Space>
+      </ConfigProvider>
     </div>
     <div id="carGrid">
       {carCards}
