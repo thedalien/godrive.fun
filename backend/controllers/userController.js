@@ -53,31 +53,38 @@ const login = async (req, res) => {
 };
 
 const loginToken = async (req, res) => {
-    // console.log(req.headers);
-    console.log(req.headers.authorization);
-    
-    if (!req.headers.authorization) {
+    console.log('loginToken userController');
+  
+    const authorizationHeader = req.headers.authorization || '';
+    const tokenArray = authorizationHeader.split(' ');
+    const tokenFromBody = req.body.token;
+    const token = tokenFromBody || (tokenArray.length === 2 && tokenArray[0] === 'Bearer' ? tokenArray[1] : null);
+  
+    if (!token) {
       return res.status(401).send({ message: 'No token provided' });
     }
-    
-    const parts = req.headers.authorization.split(' ');
-    
-    if (parts.length !== 2 || parts[0] !== 'Bearer') {
-      return res.status(401).send({ message: 'Invalid authorization header format' });
-    }
-    
-    const token = parts[1];
-    
+  
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       console.log(decoded);
+  
+      if (!decoded || !decoded.id) {
+        throw new Error('Invalid token structure');
+      }
+  
       const user = await User.findOne({ where: { id: decoded.id } });
+  
+      if (!user) {
+        throw new Error('User not found');
+      }
+  
       return res.status(200).send({ message: 'Valid token', success: true, user });
     } catch (error) {
-      console.error('Token verification failed:', error);
+      console.error('Token verification failed:', error.message);
       return res.status(401).send({ message: 'Invalid token' });
     }
-};
+  };
+  
 
 const updateUser = async (req, res) => {
     const { id } = req.params;
