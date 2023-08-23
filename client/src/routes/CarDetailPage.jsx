@@ -22,6 +22,7 @@ export default function CarDetailPage() {
       })
       .catch((err) => {
         console.log(err);
+        navigate('/cars');
       })
   }, [id]);
   console.log(carData);
