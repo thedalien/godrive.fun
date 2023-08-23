@@ -6,7 +6,7 @@ import { setUser, setLoggedOut } from "../features/appSlice";
 import { useDispatch } from "react-redux";
 
 export default function UserPage() {
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState(false);
   const [showChangePw, setShowChangePw] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -18,18 +18,26 @@ export default function UserPage() {
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem('token');
-      try {
-        const response = await api.post('/api/user/login/token', { token });
-        setUserData(response.data.user);
-        dispatch(setUser(response.data.user));
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-      } catch (error) {
-        setUserData(null);
-        dispatch(setUser(null));
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        localStorage.setItem("logout", "true");
-        navigate('/login');
+      console.log('profile', token);
+      console.log('profile', userData);
+      if (!userData && token && token !== "undefined") {
+        try {
+          console.log('profile try', token);
+          const response = await api.post(`/api/user/login/token`, {token: token});
+          console.log('profile response', response);
+          setUserData(response.data.user);
+          dispatch(setUser(response.data.user));
+          localStorage.setItem("user", JSON.stringify(response.data.user));
+        } catch (error) {
+          setUserData(null);
+          dispatch(setUser(null));
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          console.log('profile error', error);
+          console.log("logout");
+          localStorage.setItem("logout", "true");
+          navigate('/login');
+        }
       }
     };
     fetchUserData();

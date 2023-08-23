@@ -21,7 +21,7 @@ const LoginPage = () => {
       
         if (token && token !== "undefined") {
           try {
-            const res = await api.post(`/api/user/login/token`, {});
+            const res = await api.post(`/api/user/login/token`, {token: token});
             if (res.data.success) {
               dispatch(setUser(res.data.user));
               localStorage.setItem('user', JSON.stringify(res.data.user));
@@ -29,7 +29,6 @@ const LoginPage = () => {
               navigate('/profile');
             }
           } catch (err) {
-            console.error(err);
           }
         }
       };
@@ -44,7 +43,7 @@ const LoginPage = () => {
         }).then((res) => {
             console.log(res);
             if (res.data.success) {
-                localStorage.setItem("token", res.data.token);
+                localStorage.setItem('token', res.data.token);
                 localStorage.setItem("user", JSON.stringify(res.data.user));
                 dispatch(setUser(res.data.user));
                 dispatch(setToken(res.data.token));

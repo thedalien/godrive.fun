@@ -6,9 +6,12 @@ const { testConnection } = require('./models/conn')
 const os = require('os');
 const https = require('https');
 const fs = require('fs');
+require('dotenv').config();
 
-const privateKey = fs.readFileSync('/etc/letsencrypt/live/dalien.online/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/etc/letsencrypt/live/dalien.online/fullchain.pem', 'utf8');
+const enviroment = process.env.ENV || 'development';
+console.log(enviroment);
+
+
 
 // Certificate is saved at: /etc/letsencrypt/live/dalien.online/fullchain.pem
 // Key is saved at:         /etc/letsencrypt/live/dalien.online/privkey.pem
@@ -19,7 +22,6 @@ const userRoutes = require('./router/userRoutes');
 const adminRoutes = require('./router/adminRoutes');
 const bookRoutes = require('./router/bookRoutes');
 
-const credentials = { key: privateKey, cert: certificate };
 
 const app = express();
 app.use(cors());
@@ -44,12 +46,19 @@ server.listen(port,'0.0.0.0', () => {
     console.log(`Server is running on port ${port} and Local IP is ${server.address().address}`);
 }); 
 
+if (enviroment == 'development') {
 
-const httpsServer = https.createServer(credentials, app);
+    const privateKey = fs.readFileSync('/etc/letsencrypt/live/dalien.online/privkey.pem', 'utf8');
+    const certificate = fs.readFileSync('/etc/letsencrypt/live/dalien.online/fullchain.pem', 'utf8');
 
-httpsServer.listen(443, () => {
-  console.log('HTTPS Server running on port 443');
-});
+    const credentials = { key: privateKey, cert: certificate };
+
+    const httpsServer = https.createServer(credentials, app);
+
+    httpsServer.listen(443, () => {
+        console.log('HTTPS Server running on port 443');
+    });
+}
 
 
 

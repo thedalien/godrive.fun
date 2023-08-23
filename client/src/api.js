@@ -11,11 +11,11 @@ const api = axios.create({
 export default api;
 
 const token = localStorage.getItem('token');
+console.log('token', token);
 
 if (token) {
-    // console.log('token', token);
+    console.log('token', token);
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 } else {
-    // console.log('no token');
-    delete api.defaults.headers.common['Authorization'];
+    console.log('no token');
 }
