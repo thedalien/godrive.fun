@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import ImageSlider from "../imageslider/ImageSlider";
 import './CarCard.css'
-//import CarSlider from '../carslider/CarSlider';
 
 export default function CarCard({ car }) {
   const navigate = useNavigate();
@@ -9,21 +7,26 @@ export default function CarCard({ car }) {
   const showDetails = () => {
     navigate(`/cars/${car.id}`); 
   }
-  if (!car) {
-    return null;
-  }
 
   return (
     <div className="carCard">
-      <h1>{car.brand} {car.model}</h1>
-      {/* <ImageSlider images={car.images} /> */}
-      <img src={car.images && car.images.length > 0 ? car.images[0].url : "No source found"} alt={car.brand+" "+car.model} />
-      <div className="carDetails">
-        <p>{car.year}</p>
-        <p>{car.dayPrice}</p>
-        <p>{car.licensePlate}</p>
-      </div>
-      <button onClick={showDetails} >Show more details</button>
+      {car && (
+        <>
+          <img src={car.images && car.images.length > 0 ? car.images[0].url : "No source found"} alt={car.brand+" "+car.model} />
+          <div className="carDetails">
+            <p>Brand/Model: {car.brand} {car.model}</p>
+            <p>Color: {car.color}</p>
+            <p>Car seats: {car.seats}</p>
+            <p>Car doors: {car.door}</p>
+            <p>Trunk volume: {car.trunkVolume}</p>
+            <p>Powered by: {car.poweredBy}</p>
+            <p>Year: {car.year}</p>
+            <p>Price per hour{car.hourPrice}</p>
+            <p>Price per day: {car.dayPrice}</p>
+          </div>
+          <button onClick={showDetails} >Show more details</button>
+        </>
+      )}
     </div>
   )
 }
