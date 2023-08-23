@@ -14,17 +14,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(249, 249, 249);
 }
 
 #contactText > h1 {
     text-align: center;
-    color: #242424;
 }
 
 #contactText > p {
     width: 60%;
-    color: #242424;
 }
 
 #contactForm {
@@ -35,41 +32,62 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(66, 66, 66);
+    background-color: var(--main-blue);
 }
 
 #contactForm > form {
-    width: 80%;
+    width: 50%;
     display: grid;
-    grid-template-columns: auto auto;
-    gap: 10px;
+    grid-template-columns: 50% 50%;
+
+}
+
+#contactForm div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
   
-#contactForm input[type="text"],
-#contactForm input[type="email"],
-#contactForm input[type="tel"],
-#contactForm textarea {
-    width: 90%;
+#contactForm div > input[type="text"],
+#contactForm div > input[type="email"],
+#contactForm div > input[type="tel"] {
+    width: 80%;
     height: 20px;
+    margin-bottom: 5px;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-#contactForm > button {
-    background-color: rgb(223, 223, 223);
-    color: rgb(72, 72, 72);
     border: none;
-    margin-top: 50px;
-    padding: 10px 20px;
     border-radius: 5px;
-    color: rgb(77, 77, 77);
-    cursor: pointer;
-    transition: background-color 0.3s;
 }
 
-#contactForm > button:hover {
-    background-color: #7e7e7e;
+#contactForm textarea {
+    width: 80%;
+    height: 110px;
+    margin-bottom: 5px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+#contactForm div > button {
+    width: 50%;
+    height: 20px;
+    margin-top: 20px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-light);;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: normal;
+    cursor: pointer;
+    transition: 0.2s ease-in;
+}
+
+#contactForm div > button:hover {
+    background-color: var(--main-dark);
+    color: var(--main-light);
 }
 
 #contactInfo {
@@ -80,11 +98,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(249, 249, 249);
-}
-
-#contactInfo > p {
-    color: #242424;
 }
 
 #buttons {
@@ -100,11 +113,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #202020;
+    background-color: var(--half-dark);
+    border: none;
+    border-radius: 5px;
+    color: var(--main-light);
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 .contactButton:hover {
-    background-color: #7e7e7e;
+    background-color: var(--main-blue);
 }

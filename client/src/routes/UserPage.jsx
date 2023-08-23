@@ -60,8 +60,8 @@ export default function UserPage() {
 
   const handleUserChange = async (e) => {
     e.preventDefault();
-    if (newPassword !== confirmNewPassword) {
-      alert("Passwords do not match");
+    if (newPassword !== confirmNewPassword || !newPassword || !confirmNewPassword) {
+      alert("Please enter your new password / Confirm your new password");
       return;
     }
     try {
@@ -192,63 +192,57 @@ export default function UserPage() {
     <div id="user">
       {userData && (
         <>
-          <div id="userEdit">
+          <div className="userHeader">
             <h1>Hello {userData.name}</h1>
-            <h3>Current Details</h3>
-            <div id="detailContainer">
-              <div className="currentDetail">
-                Current E-Mail:
-              </div>
-              <div className="userDetail">
-                {userData.email}
-              </div>
-            </div>
-            <br />
-            <button onClick={() => setShowChangePw(!showChangePw)}>Change Password</button>
-            {showChangePw && (
-              <form>
-                {/* <div className="form-group">
-                  <label>Name</label>
-                  <input type="text" name="name" onChange={e => setName(e.target.value)} />
-                </div>
-                <div className="form-group">
-                  <label>E-Mail</label>
-                  <input type="text" name="email" onChange={e => setNewEmail(e.target.value)} />
-                </div> */}
-                <div className="form-group">
-                  <label>Current Password</label>
-                  <input type="password" name="currentPassword" onChange={e => setCurrentPassword(e.target.value)} />
-                </div>
-                <div className="form-group">
-                  <label>New Password</label>
-                  <input type="password" name="newPassword" onChange={e => setNewPassword(e.target.value)} />
-                </div>
-                <div className="form-group">
-                  <label>Confirm New Password</label>
-                  <input type="password" name="confirmNewPassword" onChange={e => setConfirmNewPassword(e.target.value)} />
-                </div>
-                <button onClick={handleUserChange} type="submit">Submit</button>
-              </form>
-            )}
-            <br />
-            <br />
-            <button className="loginButtons" style={{backgroundColor: 'red'}} onClick={logoutHandler}>Logout</button>
             {userData.role === "admin" && (
               <div>
-                <br/>
-                <button onClick={() => navigate('/admin')}>Admin Page</button>
+                  <br/>
+                  <button onClick={() => navigate('/admin')}>Admin Page</button>
               </div>
             )}
+            <button className="loginButtons" onClick={logoutHandler}>Logout</button>
           </div>
-          <div id="userRes">
-            Your current reservations
-          </div>
+          <div className="userData">
+            <div className="userDetails">
+              <h3>Your current Details</h3>
+              <div className="detailContainer">
+                <div className="details">
+                  E-Mail:
+                </div>
+                <div className="details">
+                  {userData.email}
+                </div>
+              </div>
+              <button className="" onClick={() => setShowChangePw(!showChangePw)}>Change Password</button>
+
+
+              {showChangePw && (
+                <form>
+                  <div className="form-group">
+                    <label>Current Password</label>
+                    <input type="password" name="currentPassword" onChange={e => setCurrentPassword(e.target.value)} />
+                  </div>
+                  <div className="form-group">
+                    <label>New Password</label>
+                    <input type="password" name="newPassword" onChange={e => setNewPassword(e.target.value)} />
+                  </div>
+                  <div className="form-group">
+                    <label>Confirm New Password</label>
+                    <input type="password" name="confirmNewPassword" onChange={e => setConfirmNewPassword(e.target.value)} />
+                  </div>
+                  <button onClick={handleUserChange} type="submit">Submit</button>
+                  <button onClick={() => setShowChangePw(false)}>Cancel</button>
+                </form>
+              )}
+            </div>
           <div id="userResList">
+            Your current reservations
             {upcommingbookingsList}
           </div>
           <div id="userPrevRes">
             Your previous reservations
             {previousBookingsList}
+          </div>
           </div>
         </>
       )}

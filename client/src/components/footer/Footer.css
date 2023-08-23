@@ -1,13 +1,15 @@
+@import "../../index.css";
 /* Add modern looking styles for Footer component */
 .footer-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(29, 29, 29);
+  background-color: var(--footer-BgColor);
   padding: 20px 0;
   left: 0;
   bottom: 0;
   width: 100%;
+  color: var(--main-light);
 }
 
 .footer-links {
@@ -16,7 +18,7 @@
 }
 
 .footer-links a {
-  color: #fff;
+  color: var(--main-light);
   text-decoration: none;
 }
 
@@ -26,7 +28,6 @@
 
 .footer-copyright {
   font-size: 14px;
-  color: #fff;
 }
 
 .footer-padding {

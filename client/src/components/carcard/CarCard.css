@@ -1,49 +1,88 @@
+@import "../../index.css";
+
 .carCard {
-    width: 50%;
-    height: 500px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    width: 35%;
+    height: clamp(300px, 350px, 500px);
+    display: grid;
+    grid-template-rows: 50% 15% 20% 15%;
+    justify-items: center;
     margin: 0 20px 0 20px;
-    background-color: rgb(255, 255, 255);
+    background-color: var(--main-light);
+    box-shadow: 0 0 5px 1px var(--half-dark);
+    border-radius: 5px;
     text-align: center;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-    color: black;
+    color: var(--main-dark);
   }
 
-  .carCard img {
+  .carCard > img {
     width: 80%;
-    height: 50%;
+    height: 100%;
     object-fit: contain;
-    border-bottom: 1px solid rgba(73, 73, 73, 0.5);
+    border-bottom: 1px solid var(--half-dark);
   }
-  
+
+  .carHeader {
+    width: 100%;
+    padding: 10px 0 10px 0;
+    display: flex;
+  }
+
+  .carName {
+    width: 50%;
+    padding-left: 5%;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .carPrice {
+    width: 50%;
+    padding-right: 5%;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+  }
+
   .carDetails {
     width: 80%;
-    height: auto;
-    padding: 10px 0 10px 0;
-    display: grid;
-    grid-template-columns: auto auto;
-    justify-items: start;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    column-gap: 20px;
+  }
+
+  .carDetails > div {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
   }
 
   .carDetails > p {
-    width: 100%;
-    margin: 2px;
-    padding-left: 5px;
-    justify-self: center;
-    border: 1px solid #fff;
+    width: auto;
+    padding-right: 15px;
     text-align: left;
+  }
+
+  .carDetails > div > svg {
+    width: 1.5rem;
+    height: 1.5rem;
   }
   
   .showDetails {
     width: 100%;
     height: auto;
     padding: 20px;
-    background-color: rgb(97, 97, 97);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-dark);;
     border: none;
-    font-size: 20px;
+    border-radius: 0 0 5px 5px;
+    color: var(--main-light);
+    font-size: 16px;
     font-weight: normal;
     cursor: pointer;
   }

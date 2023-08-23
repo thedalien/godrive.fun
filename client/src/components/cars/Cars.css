@@ -1,5 +1,8 @@
+@import "../../index.css";
+
 #cars {
     width: 100%;
-    margin: 40px 0 40px 0;
+    padding: 40px 0 40px 0;
     overflow: hidden;
+    background-color: var(--main-blue);
 }
