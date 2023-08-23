@@ -25,6 +25,7 @@ const adminAuth = async (req, res, next) => {
     }
 
     const user = await User.findOne({ where: { id: id } });
+    console.log('user', user);
 
     if (!user) {
       throw new Error('User not found');
