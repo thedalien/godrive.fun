@@ -81,12 +81,12 @@ const Header = () => {
                                 Contact
                             </button>
                         </li>
+                        <li></li>
                         {!loggedOut && !user && <li>
                             <button onClick={() => navLinkClickHandler("/register")} className="register-btn">
                                 Register
                             </button>
                         </li>}
-
                         {loggedOut && <li>
                             <button onClick={() => navLinkClickHandler("/login")} className="login-btn">
                                 Login
@@ -95,12 +95,11 @@ const Header = () => {
                         {user && <li>
                             <button onClick={() => navLinkClickHandler("/profile")} className="logout-btn">
                                 <div className="user-btn">
-                                    {user.name}
+                                    <p>{user.name}</p>
                                     <FontAwesomeIcon icon="fa-solid fa-user" />
                                 </div>
                             </button>
                         </li>}
-
                     </ul>
                 </nav>
                 <div className={classes.header__content__toggle}>

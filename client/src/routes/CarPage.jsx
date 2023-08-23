@@ -33,9 +33,6 @@ export default function CarPage() {
         setCarData(res.data);
       }
       ).catch((err) => { console.log(err) });
-      
-
-
   };
 
   const carCards = carData.map((car) => (

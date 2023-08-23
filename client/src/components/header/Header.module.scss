@@ -116,13 +116,26 @@
                         border: 1px solid $light;
                     }
                 }
+                li:nth-child(4) {
+                    width: 1px;
+                    height: 50%;
+                    background-color: $light;
+                    margin: 0 50px 0 50px;
+                }
                 div {
                     width: 100%;
                     display: flex;
                     justify-content: space-evenly;
                 }
+                p {
+                    padding: 0;
+                    margin: 0;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
                 svg {
-                    margin-top: 4px;
+                    margin-top: 3px;
                 }
             }
 
