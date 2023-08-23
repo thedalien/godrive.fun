@@ -2,9 +2,13 @@ import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import api from "../api";
 import { useSelector } from "react-redux";
-import { DatePicker, Space } from 'antd';
-const { RangePicker } = DatePicker;
 import { useNavigate } from "react-router-dom";
+
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { ConfigProvider, DatePicker, Space } from 'antd';
+dayjs.extend(customParseFormat);
+const { RangePicker } = DatePicker;
 
 import ImageSlider from "../components/imageslider/ImageSlider";
 
@@ -52,6 +56,10 @@ export default function CarDetailPage() {
       })
   };
 
+  const disabledDate = (current) => {
+    return current && current < dayjs().startOf('minute');
+  };
+
   return (
     <div className="">
       {carData && (
@@ -71,15 +79,50 @@ export default function CarDetailPage() {
           </div>
             {user && (
               <form onSubmit={handleBooking}>
-                <Space direction="vertical" size={10}>
-                  <RangePicker
-                    showTime={{ format: 'HH:mm' }}
-                    format="DD-MM-YYYY HH:mm"
-                    onChange={(e) => setBooking( {startDate: e[0].$d, endDate: e[1].$d} )}
-                    required
-                    name="datePicker"
-                  />
-                </Space>
+                <ConfigProvider
+                  theme={{
+                    components: {
+                      DatePicker: {
+                        colorPrimary: 'rgb(122, 165, 210);',
+                        colorSecondary: 'rgb(122, 165, 210);',
+                        borderRadius: '5px;',
+                        colorText: 'rgb(48, 56, 65);',
+                      },
+                      TimePicker: {
+                        colorPrimary: 'rgb(122, 165, 210);',
+                        colorText: 'rgb(48, 56, 65);',
+                        colorPrimaryBg: 'rgb(122, 165, 210);',
+                        algorithm: true,
+
+                      },
+                      Input: {
+                        colorPrimaryText: 'rgb(48, 56, 65);',
+                        colorSecondaryText: 'rgb(48, 56, 65);',
+
+                        algorithm: true,
+
+                      },
+                      Button: {
+                        colorPrimary: 'rgb(122, 165, 210);',
+                        algorithm: true,
+
+                      },
+                    },
+                  }}
+                >
+                  <Space direction="vertical" size={10}>
+                    <RangePicker
+                      showTime={{ format: 'HH:mm' }}
+                      format="DD.MM.YYYY / HH:mm"
+                      disabledDate={disabledDate}
+                      size='large'
+                      changeOnBlur
+                      onChange={(e) => setBooking( {startDate: e[0].$d, endDate: e[1].$d} )}
+                      name="datePicker"
+                      required
+                    />
+                  </Space>
+                </ConfigProvider>
                 <button type="submit">Book Now</button>
               </form>
             )}

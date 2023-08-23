@@ -13,55 +13,137 @@
   justify-content: end;
   align-items: center;
   column-gap: 50px;
-  border-bottom: 1px solid var(--main-dark);
+}
+
+.userHeader > button:last-child {
+  width: auto;
+  margin-right: 25px;
+  background-color: rgb(216, 25, 25);
+  cursor: pointer;
+}
+.userHeader > button:last-child:hover {
+  background-color: rgb(168, 5, 5);
 }
 
 .userHeader > button {
-  width: 100px;
-  margin-right: 25px;
-  background-color: rgb(216, 25, 25);
+  width: auto;
+  background-color: var(--main-blue);
   cursor: pointer;
 }
-
 .userHeader > button:hover {
-  width: 100px;
-  margin-right: 25px;
-  background-color: rgb(216, 25, 25);
-  cursor: pointer;
+  background-color: var(--main-dark);
 }
 
 .userData {
   width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  background-color: var(--main-blue);
+}
+
+.userDetails {
+  width: 500px;
+  height: 0;
+  margin: 30px;
+  padding: 10px 20px 0 20px;
+  display: flex;
+  column-gap: 10px;
+  border: 1px solid var(--main-light);
+  border-radius: 5px;
+}
+
+.userResList, .userPrevRes {
+  width: 500px;
+  margin: 30px;
+  padding: 10px 20px 0px 20px;
   display: grid;
-  grid-template-columns: auto auto auto;
-  grid-template-rows: auto;
+  grid-template-columns: auto auto;
+  column-gap: 10px;
+  border: 1px solid var(--main-light);
+  border-radius: 5px;
 }
 
+.userDetails, .userResList, .userPrevRes > legend {
+  padding: 0 10px 0 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--main-light);
+}
 
-.userDetail {
+.detailContainer {
+  width: 50%;
+  padding: 20px;
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--main-cream);
+  border-radius: 5px;
+  color: var(--main-dark);
 }
 
-.details {
-  font-weight: bold;
+.detailContainer > form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-#userEdit button {
-  background-color: #555;
-  color: #fff;
-  padding: 5px 10px;
-  border: none;
-  cursor: pointer;
+.changeContainer {
+  width: 100%;
+  display: none;
+}
+
+.changeContainer:last-child {
   margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-#userEdit button:hover {
-  background-color: #777;
+.changePwLabel {
+  width: 100%;
+  display: block;
+  font-size: 14px;
+  margin-bottom: 2px;
 }
 
-#userRes {
-  margin-top: 20px;
-  font-weight: bold;
+.changePwInput {
+  width: auto;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+}
+
+.changeCancel, .changeSubmit {
+  width: 45%;
+  height: 30px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--main-blue);
+  font-size: 14px;
+}
+
+.changeCancel:hover, .changeSubmit:hover {
+  background-color: var(--main-dark);
+}
+
+.details:first-child {
+  font-weight: 600;
+}
+
+.changePw {
+  width: auto;
+  background-color: var(--main-blue);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.changePw:hover {
+  background-color: var(--main-dark);
 }
 
 .booking {
