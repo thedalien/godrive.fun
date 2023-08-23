@@ -200,41 +200,57 @@ export default function UserPage() {
                   <button onClick={() => navigate('/admin')}>Admin Page</button>
               </div>
             )}
-            <button className="loginButtons" onClick={logoutHandler}>Logout</button>
+            <button className="mainButtons" onClick={logoutHandler}>Logout</button>
           </div>
           <div className="userData">
-            <div className="userDetails">
-              <h3>Your current Details</h3>
+            <fieldset className="userDetails">
+              <legend>Your current Details</legend>
               <div className="detailContainer">
-                <div className="details">
-                  E-Mail:
+                <div>
+                  <div className="details">
+                    E-Mail
+                  </div>
+                  <div className="details">
+                    {userData.email}
+                  </div>
                 </div>
-                <div className="details">
-                  {userData.email}
-                </div>
+                <button className="mainButtons changePw" onClick={() => setShowChangePw(!showChangePw)}>Change E-Mail</button>
               </div>
-              <button className="" onClick={() => setShowChangePw(!showChangePw)}>Change Password</button>
-
-
-              {showChangePw && (
-                <form>
-                  <div className="form-group">
-                    <label>Current Password</label>
-                    <input type="password" name="currentPassword" onChange={e => setCurrentPassword(e.target.value)} />
+              {!showChangePw ? (
+                <div className="detailContainer">
+                  <div>
+                    <div className="details">
+                      Password
+                    </div>
+                    <div className="details">
+                      **********
+                    </div>
                   </div>
-                  <div className="form-group">
-                    <label>New Password</label>
-                    <input type="password" name="newPassword" onChange={e => setNewPassword(e.target.value)} />
-                  </div>
-                  <div className="form-group">
-                    <label>Confirm New Password</label>
-                    <input type="password" name="confirmNewPassword" onChange={e => setConfirmNewPassword(e.target.value)} />
-                  </div>
-                  <button onClick={handleUserChange} type="submit">Submit</button>
-                  <button onClick={() => setShowChangePw(false)}>Cancel</button>
-                </form>
+                  <button className="mainButtons changePw" onClick={() => setShowChangePw(true)}>Change Password</button>
+                </div>
+              ) : (
+                <div className="detailContainer">
+                  <form>
+                    <div className="changeContainer">
+                      <label className="changePwLabel">Current Password</label>
+                      <input className="changePwInput" type="password" name="currentPassword" onChange={e => setCurrentPassword(e.target.value)} />
+                    </div>
+                    <div className="changeContainer">
+                      <label className="changePwLabel">New Password</label>
+                      <input className="changePwInput" type="password" name="newPassword" onChange={e => setNewPassword(e.target.value)} />
+                    </div>
+                    <div className="changeContainer">
+                      <label className="changePwLabel">Confirm New Password</label>
+                      <input className="changePwInput" type="password" name="confirmNewPassword" onChange={e => setConfirmNewPassword(e.target.value)} />
+                    </div>
+                    <div className="changeContainer">
+                      <button className="mainButtons changeCancel" onClick={handleUserChange} type="submit">Submit</button>
+                      <button className="mainButtons changeSubmit" onClick={() => setShowChangePw(false)}>Cancel</button>
+                    </div>
+                  </form>
+                </div>
               )}
-            </div>
+            </fieldset>
           <div id="userResList">
             Your current reservations
             {upcommingbookingsList}

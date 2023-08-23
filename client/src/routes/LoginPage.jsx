@@ -71,12 +71,12 @@ const LoginPage = () => {
                     <label>Password</label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                 </div>
-                <button className="loginButtons" type="submit">Login</button>
+                <button className="mainButtons" type="submit">Login</button>
             </form>
 
             <div className="register">
                 <p>Don't have an account?</p>
-                <button className="loginButtons" onClick={() => navigate('/register')}>Register</button>
+                <button className="mainButtons" onClick={() => navigate('/register')}>Register</button>
             </div>
         </div>
     );
