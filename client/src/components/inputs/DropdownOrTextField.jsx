@@ -55,6 +55,7 @@ const DropdownOrTextField = (props) => {
       ) : (
         <>
           {isOtherSelected ? (
+            <>
             <input
               name={props.data}
               className="adminInput"
@@ -62,6 +63,8 @@ const DropdownOrTextField = (props) => {
               placeholder="Enter other option"
               onChange={handleOtherChange}
             />
+            <button style={{ display: 'inline' }} onClick={() => setIsOtherSelected(false)}>Back</button>
+            </>
           ) : (
             <select className="adminInput" name={props.data} value={selectedItem} onChange={handleChange}>
               {items.map((item, index) => (
