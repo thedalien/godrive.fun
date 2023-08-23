@@ -23,8 +23,18 @@ export default function CarPage() {
       })
   }, [])
 
-  const checkAvailable = () => {
-    // check if the car is available at this Dat & Time
+  const checkAvailable = (e) => {
+    console.log(e);
+    // {startDate: e[0].$d, endDate: e[1].$d}
+    const startDate = e[0].$d;
+    const endDate = e[1].$d;
+    api.post('/api/book/getAvailableCars', { startDate, endDate })
+      .then((res) => {
+        setCarData(res.data);
+      }
+      ).catch((err) => { console.log(err) });
+      
+
 
   };
 
@@ -88,6 +98,7 @@ export default function CarPage() {
             disabledDate={disabledDate}
             size='large'
             changeOnBlur
+            onChange={checkAvailable}
           />
         </Space>
       </ConfigProvider>
