@@ -19,6 +19,13 @@
     height: 100%;
     object-fit: contain;
     border-bottom: 1px solid var(--half-dark);
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+  }
+
+  .carCard > img:hover {
+    width: 100%;
+    border-bottom: 3px solid var(--main-blue);
   }
 
   .carHeader {
@@ -85,4 +92,9 @@
     font-size: 16px;
     font-weight: normal;
     cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+
+  .showDetails:hover {
+    background-color: var(--half-dark);
   }

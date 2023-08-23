@@ -18,8 +18,6 @@ export default function UserPage() {
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [bookins, setBookings] = useState([]);
 
-  const [detailHeight, setDetailHeight] = useState("180px");
-
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -112,38 +110,33 @@ export default function UserPage() {
     if (new Date(booking.endDate) < new Date()) return;
     return (
       <div className="booking" key={booking.id}>
-        <div className="bookingDetail">
-          <div className="bookingDetailTitle">
-            {booking.car.brand} {booking.car.model}
-          </div>
-          <div className="bookingDetail">
-            <div className="bookingDetailTitle">
-              Booking ID: {booking.id}
-            </div>
-            <div className="bookingDetail">
-              <div className="bookingDetail">
-                <div className="bookingDetailTitle">
-                  Start Date: {new Date(booking.startDate).toLocaleDateString()}
-                </div>
-                <div className="bookingDetailTitle">
-                  End Date: {new Date(booking.endDate).toLocaleDateString()}
-                </div>
-                <div className="bookingDetailTitle">
-                  Price: {booking.totalPrice} EUR
-                </div>
-                <div className="bookingDetailTitle">
-                  Status: {booking.status}
-                </div>
-                <button style={{backgroundColor: "red"}} onClick={() => handleBookingCancel(booking.id)}>Cancel</button>
-                {booking.status === "active" && (
-                  <div className="bookingWarning">
-                    <span style={{ color: "red" }}>WARNING:</span> This booking is still active.
-                  </div>
-                )}                
-              </div>
-            </div>
-          </div>
+        <h3>{booking.car.brand} {booking.car.model}</h3>
+        <div className="bookingDetails">
+          <p>Booking ID:</p>
+          <div className="bookingData">{booking.id}</div>
         </div>
+        <div className="bookingDetails">
+          <p>Start Date:</p>
+          <div className="bookingData">{new Date(booking.startDate).toLocaleDateString()}</div>
+        </div>
+        <div className="bookingDetails">
+          <p>End Date:</p>
+          <div className="bookingData">{new Date(booking.endDate).toLocaleDateString()}</div>
+        </div>
+        <div className="bookingDetails">
+          <p>Price:</p>
+          <div className="bookingData">{booking.totalPrice} EUR</div>
+        </div>
+        <div className="bookingDetails">
+          <p>Status:</p>
+          <div className="bookingData">{booking.status}</div>
+        </div>
+        <button className="mainButtons" onClick={() => handleBookingCancel(booking.id)}>Cancel</button>
+        {booking.status === "active" && (
+          <div className="bookingWarning">
+            <span style={{ color: "red" }}>WARNING:</span> This booking is still active.
+          </div>
+        )}                
       </div>
     )
   });
@@ -153,42 +146,35 @@ export default function UserPage() {
     if (booking.status !== "cancelled" && new Date(booking.endDate) > new Date()) return;
     return (
       <div className="booking" key={booking.id}>
-      <div className="bookingDetail">
-        <div className="bookingDetailTitle">
-          {booking.car.brand} {booking.car.model}
+        <h3>{booking.car.brand} {booking.car.model}</h3>
+        <div className="bookingDetails">
+          <p>Booking ID:</p>
+          <div className="bookingData">{booking.id}</div>
         </div>
-        <div className="bookingDetail">
-          <div className="bookingDetailTitle">
-            Booking ID: {booking.id}
-          </div>
-          <div className="bookingDetail">
-            <div className="bookingDetail">
-              <div className="bookingDetailTitle">
-                Start Date: {new Date(booking.startDate).toLocaleDateString()}
-              </div>
-              <div className="bookingDetailTitle">
-                End Date: {new Date(booking.endDate).toLocaleDateString()}
-              </div>
-              <div className="bookingDetailTitle">
-                Price: {booking.totalPrice} EUR
-              </div>
-              <div className="bookingDetailTitle">
-                Status: {booking.status}
-              </div>
-              <button style={{backgroundColor: "red"}} onClick={() => handleBookingCancel(booking.id)}>Cancel</button>
-              {booking.status === "active" && (
-                <div className="bookingWarning">
-                  <span style={{ color: "red" }}>WARNING:</span> This booking is still active.
-                </div>
-              )}                
-            </div>
-          </div>
+        <div className="bookingDetails">
+          <p>Start Date:</p>
+          <div className="bookingData">{new Date(booking.startDate).toLocaleDateString()}</div>
         </div>
+        <div className="bookingDetails">
+          <p>End Date:</p>
+          <div className="bookingData">{new Date(booking.endDate).toLocaleDateString()}</div>
+        </div>
+        <div className="bookingDetails">
+          <p>Price:</p>
+          <div className="bookingData">{booking.totalPrice} EUR</div>
+        </div>
+        <div className="bookingDetails">
+          <p>Status:</p>
+          <div className="bookingData">{booking.status}</div>
+        </div>
+        {booking.status === "active" && (
+          <div className="bookingWarning">
+            <span style={{ color: "red" }}>WARNING:</span> This booking is still active.
+          </div>
+        )}                
       </div>
-    </div>
     )
   });
-
 
   return (
     <div id="user">
@@ -202,7 +188,7 @@ export default function UserPage() {
             <button className="mainButtons" onClick={logoutHandler}>Logout</button>
           </div>
           <div className="userData">
-            <fieldset className="userDetails" style={{height: detailHeight}}>
+            <fieldset className="userDetails">
               <legend>Your current Details</legend>
               <div className="detailContainer">
                 <div>
@@ -213,7 +199,7 @@ export default function UserPage() {
                     {userData.email}
                   </div>
                 </div>
-                <button className="mainButtons changePw" onClick={() => {setShowChangePw(!showChangePw); setDetailHeight("500px")}}>Change E-Mail</button>
+                <button className="mainButtons changePw" onClick={() => setShowChangePw(!showChangePw)}>Change E-Mail</button>
               </div>
               {!showChangePw ? (
                 <div className="detailContainer">
@@ -228,7 +214,7 @@ export default function UserPage() {
                   <button className="mainButtons changePw" onClick={() => setShowChangePw(true)}>Change Password</button>
                 </div>
               ) : (
-                <div className="detailContainer">
+                <div className="detailContainer show">
                   <form>
                     <div className="changeContainer">
                       <label className="changePwLabel">Current Password</label>
@@ -254,7 +240,7 @@ export default function UserPage() {
               <legend>Your current reservations</legend>
               {upcommingbookingsList}
             </fieldset>
-            <fieldset clas="userPrevRes">
+            <fieldset className="userPrevRes">
               <legend>Your previous reservations</legend>
               {previousBookingsList}
             </fieldset>

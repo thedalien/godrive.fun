@@ -1,6 +1,15 @@
 @import "../../index.css";
 /* Add modern looking styles for Footer component */
 .footer-container {
+/*   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--footer-BgColor);
+  padding: 20px 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: var(--main-light); */
   display: flex;
   justify-content: space-between;
   align-items: center;

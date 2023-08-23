@@ -1,10 +1,9 @@
-/* Dark mode styles for UserPage */
-
 #user {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1 0 auto;
 }
 
 .userHeader {
@@ -36,16 +35,17 @@
 
 .userData {
   width: 100%;
+  padding: 20px 0 20px 0;
   display: flex;
   justify-content: space-evenly;
+  align-items: flex-start;
   background-color: var(--main-blue);
 }
 
 .userDetails {
   width: 500px;
-  height: 0;
-  margin: 30px;
-  padding: 10px 20px 0 20px;
+  margin: 10px;
+  padding: 10px 20px 10px 20px;
   display: flex;
   column-gap: 10px;
   border: 1px solid var(--main-light);
@@ -54,8 +54,8 @@
 
 .userResList, .userPrevRes {
   width: 500px;
-  margin: 30px;
-  padding: 10px 20px 0px 20px;
+  margin: 10px;
+  padding: 10px 20px 10px 20px;
   display: grid;
   grid-template-columns: auto auto;
   column-gap: 10px;
@@ -63,7 +63,9 @@
   border-radius: 5px;
 }
 
-.userDetails, .userResList, .userPrevRes > legend {
+.userDetails > legend,
+.userResList > legend,
+.userPrevRes > legend {
   padding: 0 10px 0 10px;
   font-size: 16px;
   font-weight: 600;
@@ -72,6 +74,7 @@
 
 .detailContainer {
   width: 50%;
+  height: 100px;
   padding: 20px;
   margin-bottom: 10px;
   display: flex;
@@ -80,6 +83,10 @@
   background-color: var(--main-cream);
   border-radius: 5px;
   color: var(--main-dark);
+}
+
+.show {
+  height:  250px;
 }
 
 .detailContainer > form {
@@ -92,7 +99,6 @@
 
 .changeContainer {
   width: 100%;
-  display: none;
 }
 
 .changeContainer:last-child {
@@ -147,22 +153,46 @@
 }
 
 .booking {
-  background-color: #444;
-  padding: 30px;
+  padding: 0 20px 20px 20px;
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  background-color: var(--main-cream);
+  border-radius: 5px;
+  color: var(--main-dark);
+  font-size: 14px;
 }
 
-.bookingDetail {
-  margin-top: 10px;
+.booking > h3 {
+  line-height: 15px;
+  text-decoration: underline;
 }
 
-.bookingDetailTitle {
-  font-weight: bold;
-  margin: 10px 0;
+.bookingDetails {
+  width: 100%;
+  margin: 2px;
+  display: flex;
+  justify-content: space-between;
 }
 
-#userPrevRes {
+.bookingDetails > p {
+  padding: 0;
+  margin: 0;
+}
+
+.bookingData {
+  font-weight: 600;
+}
+
+.booking > button {
+  width: 100%;
   margin-top: 20px;
-  font-weight: bold;
+  background-color: var(--main-blue);
+  font-size: 14px;
+  cursor: pointer;
 }
-
+.booking > button:hover {
+  background-color: var(--main-dark);
+}

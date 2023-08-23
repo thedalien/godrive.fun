@@ -5,9 +5,11 @@
     justify-content: center;
     align-items: center;
     background-color: var(--main-cream);
+    flex: 1 0 auto;
 }
 
 .carSearch {
+    margin-bottom: 20px;
     border-radius: 5px;
     box-shadow:  0 0 3px 0.5px var(--main-blue);
 }
@@ -28,6 +30,14 @@
     height: clamp(350px, 400px, 600px);
     margin: 0;
     grid-template-rows: auto auto auto 60px;
+}
+
+#carGrid > .carCard > img {
+    transition: 0.2s ease-in-out;
+}
+#carGrid > .carCard > img:hover {
+    width: 90%;
+    border-bottom: 3px solid var(--main-blue);
 }
 
 #carGrid .carHeader {

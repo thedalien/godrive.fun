@@ -58,7 +58,7 @@ export default function CarPage() {
 
   return (
   <div id="car">
-    <h1>Car Page</h1>
+    <h1>Checkout our Cars</h1>
     <div className="carSearch">
       <ConfigProvider
         theme={{
