@@ -4,6 +4,7 @@ import api from "../api";
 import { useSelector } from "react-redux";
 import { DatePicker, Space } from 'antd';
 const { RangePicker } = DatePicker;
+import { useNavigate } from "react-router-dom";
 
 import ImageSlider from "../components/imageslider/ImageSlider";
 
@@ -12,6 +13,7 @@ export default function CarDetailPage() {
   const { id } = useParams();
   const [carData, setCarData] = useState([]);
   const [booking, setBooking] = useState(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     api.get(`/api/car/getcar/${id}`)
@@ -20,6 +22,7 @@ export default function CarDetailPage() {
       })
       .catch((err) => {
         console.log(err);
+        navigate('/cars');
       })
   }, [id]);
   console.log(carData);
@@ -39,6 +42,10 @@ export default function CarDetailPage() {
     api.post(`/api/book/create`, { ...booking, userId: user.id, carId: id })
       .then((res) => {
         console.log('Booking successful:', res.data);
+        if (res.data) {
+          alert('Booking successful');
+          navigate('/profile');
+        }
       })
       .catch((err) => {
         console.log('Booking failed:', err);

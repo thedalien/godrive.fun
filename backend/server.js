@@ -11,40 +11,31 @@ require('dotenv').config();
 const enviroment = process.env.ENV || 'development';
 console.log(enviroment);
 
-
-
-// Certificate is saved at: /etc/letsencrypt/live/dalien.online/fullchain.pem
-// Key is saved at:         /etc/letsencrypt/live/dalien.online/privkey.pem
-
-
 const carsRoutes = require('./router/carsRoutes');
 const userRoutes = require('./router/userRoutes');
-const adminRoutes = require('./router/adminRoutes');
 const bookRoutes = require('./router/bookRoutes');
-
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-const server = http.createServer(app); 
-const port = 8000;
+
+app.use('/api/car', carsRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/book', bookRoutes);
 
 const db = require('./models');
 // db.sequelize.sync({ force: true });
 db.sequelize.sync();
 testConnection();
 
-
-app.use(cors());
-app.use('/api/car', carsRoutes);
-app.use('/api/user', userRoutes);
-app.use('/api/book', bookRoutes);
-// app.use('/api/admin', adminRoutes);
-
-server.listen(port,'0.0.0.0', () => { 
-    console.log(`Server is running on port ${port} and Local IP is ${server.address().address}`);
-}); 
+if (enviroment === 'localhost') {
+    const server = http.createServer(app); 
+    const port = 8000;
+    server.listen(port, '0.0.0.0', () => { 
+        console.log(`Server is running on port ${port} and Local IP is ${server.address().address}`);
+    });
+}
 
 if (enviroment == 'development') {
 

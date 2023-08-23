@@ -1,7 +1,8 @@
 const models = require('../models/index');
 const Book = models.bookings;
 const Car = models.cars;
-
+const { Op } = require('sequelize');
+const Images = models.images;
 
 const create = async (req, res) => {
   const { carId, startDate, endDate } = req.body;
@@ -57,7 +58,7 @@ const getBookingByUser = async (req, res) => {
 
 const getBookingByCar = async (req, res) => {
   const { carId } = req.params;
-  
+
   try {
     const carBookings = await Book.findAll({
       where: {
@@ -102,7 +103,8 @@ const getAvailableCars = async (req, res) => {
         id: {
           [Op.notIn]: bookedCarIds
         }
-      }
+      },
+      include: [Images] 
     });
 
     res.status(200).json(availableCars);
