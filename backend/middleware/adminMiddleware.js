@@ -5,35 +5,44 @@ const User = models.users;
 const adminAuth = async (req, res, next) => {
   console.log('adminAuth middleware');
 
-  const token = req.headers.authorization;
-  const bearerToken = token.split(' ')[1];
-  let decodedToken;
+  const authorizationHeader = req.headers.authorization || '';
+  const tokenArray = authorizationHeader.split(' ');
+  const tokenFromBody = req.body.token;
+  const token = tokenFromBody || (tokenArray.length === 2 && tokenArray[0] === 'Bearer' ? tokenArray[1] : null);
+
+  if (!token) {
+    return res.status(401).send({ message: 'No token provided' });
+  }
+
   try {
-    decodedToken = jwt.verify(bearerToken, process.env.JWT_SECRET);
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     console.log('decodedToken', decodedToken);
+
+    const id = decodedToken.id;
+
+    if (!id) {
+      throw new Error('No user id provided');
+    }
+
+    const user = await User.findOne({ where: { id: id } });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    if (user.role !== 'admin') {
+      throw new Error('User is not an admin');
+    }
+
+    req.userId = id;
+    req.token = decodedToken;
+    next();
   } catch (error) {
-    console.error('Token verification failed:', error);
+    console.error('Token verification failed:', error.message);
     return res.status(401).send({ message: 'Invalid token' });
   }
-  const id = decodedToken.id;
-  
-
-  if (!id) {
-    return res.status(401).send({ message: 'No user id provided' });
-  }
-
-  const user = await User.findOne({ where: { id: id } });
-  if (!user) {
-    return res.status(404).send({ message: 'User not found' });
-  }
-
-  if (user.role !== 'admin') {
-    return res.status(403).send({ message: 'User is not an admin' });
-  }
-
-  next();
 }
 
 module.exports = {
-    adminAuth
+  adminAuth
 }
