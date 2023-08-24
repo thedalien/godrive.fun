@@ -1,14 +1,134 @@
 #carDetail {
     width: 100%;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: var(--main-cream);
+    background-color: var(--main-blue);
     flex: 1 0 auto;
 }
 
+.backToCars {
+    width: auto;
+    margin: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--main-light);
+    color: var(--main-dark);
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+.backToCars:hover {
+    background-color: var(--half-dark);
+    color: var(--main-light);
+}
+
 .carDetailContainer {
+    width: 50%;
+    margin: 40px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-light);
+    border-radius: 5px;
+}
+
+.carDetailContainer > h1 {
     width: 100%;
-    flex: 1 0 auto;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.carDetailContainer > h1 > div {
+    width: auto;
+    margin: 20px 20px 0 20px;
+}
+
+.carDetailContainer > h1 > div:first-child {
+    margin-top: 10px;
+    padding-bottom: 2px;
+    border-bottom: 2px solid var(--main-dark);
+}
+
+.carDetailContainer > h1 > div > div {
+    height: 20px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--main-green);
+    border-radius: 5px;
+    color: var(--main-cream);
+    font-size: 18px;
+}
+
+.detailPrice {
+    display: flex;
+    column-gap: 10px;
+}
+
+.detailText {
+    width: 80%;
+    margin: 0;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.carDetailContainer > form {
+    width: 80%;
+    padding: 10px 0 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--main-blue);
+    border-radius: 5px;
+}
+
+.carDetailContainer > form > h3 {
+    align-self: flex-start;
+    padding: 0 0 10px 20px;
+    margin: 0;
+    color: var(--main-dark);
+}
+
+.detailBooking {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.bookNow {
+    width: auto;
+    background-color: var(--main-light);
+    color: var(--half-dark);
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+.bookNow:hover {
+    background-color: var(--half-dark);
+    color: var(--main-light);
+}
+
+.logInToBookBtn {
+    width: auto;
+    margin: 0;
+    background-color: var(--main-dark);
+    color: var(--main-cream);
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+.logInToBookBtn:hover {
+    background-color: var(--half-dark);
+    color: var(--main-light);
+}
+
+.logInToBook {
+    padding: 0;
+    font-size: 18px;
+    font-weight: 600;
 }

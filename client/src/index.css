@@ -2,8 +2,9 @@
 :root {
   --main-light: rgb(255, 255, 255);
   --main-dark: rgb(48, 56, 65);
-  --main-blue: rgb(122, 165, 210);
   --main-cream: rgb(238, 238, 238);
+  --main-blue: rgb(122, 165, 210);
+  --main-green: rgb(49, 177, 77);
   
   --half-dark: rgba(48, 56, 65,0.5);
   --hero-BgColor: rgba(48, 56, 65, 0.3);

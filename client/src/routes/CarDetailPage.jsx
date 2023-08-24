@@ -9,6 +9,9 @@ import { ConfigProvider, DatePicker, Space } from 'antd';
 dayjs.extend(customParseFormat);
 const { RangePicker } = DatePicker;
 
+import Icon from '@mdi/react';
+import { mdiCarDoor, mdiCarSeat, mdiCarBack, mdiGasStation, mdiFactory } from '@mdi/js';
+
 import "./css/CarDetail.css";
 import ImageSlider from "../components/imageslider/ImageSlider";
 
@@ -64,73 +67,113 @@ export default function CarDetailPage() {
     navigate('/login'); 
   }
 
+  const goToCars = () => {
+    navigate('/cars'); 
+  }
+
   return (
     <div id="carDetail">
+      <button className="mainButtons backToCars" onClick={goToCars}>Back to Cars</button>
       {carData && (
         <div className="carDetailContainer">
-          <h1>{carData.brand} {carData.model}</h1>
+          <h1>
+            <div>
+              {carData.brand} {carData.model}
+            </div>
+            <div className="detailPrice">
+              <div>
+                &euro;{carData.hourPrice} / hour
+              </div>
+              <div>
+                &euro;{carData.dayPrice} / day
+              </div>
+            </div>
+          </h1>
           <ImageSlider images={carData.images} />
           <div className="carDetails">
-            <p>{carData.year}</p>
-            <p>{carData.dayPrice}</p>
-            <p>{carData.licensePlate}</p>
+            <div>
+              <Icon path={mdiCarSeat} />
+              <p>{carData.seats}</p>
+            </div>
+            <div>
+              <Icon path={mdiCarDoor} />
+              <p>{carData.door}</p>
+            </div>
+            <div>
+              <Icon path={mdiCarBack} />
+              <p>{carData.trunkVolume}l</p>
+            </div>
+            <div>
+              <Icon path={mdiGasStation} />
+              <p>{carData.poweredBy}</p>
+            </div>
+            <div>
+              <Icon path={mdiFactory} />
+              <p>{carData.year}</p>
+            </div>
           </div>
-          <div>
-            <h2>Reservations</h2>
+          <p className="detailText">{/* carData.description here */}Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam beatae soluta eveniet sunt iste architecto aut dicta dolore perferendis at possimus eius iure, animi repudiandae perspiciatis doloremque, temporibus nesciunt! Error?</p>
           {!user && 
-            <button onClick={logIn}>Log in to make a reservation</button>
+            <>
+              <p className="logInToBook">Please log in to make a reservation.</p>
+              <button className="mainButtons logInToBookBtn" onClick={logIn}>Login</button>
+            </>
           }
-          </div>
-            {user && (
+          {user && (
+            <>
               <form onSubmit={handleBooking}>
-                <ConfigProvider
-                  theme={{
-                    components: {
-                      DatePicker: {
-                        colorPrimary: 'rgb(122, 165, 210);',
-                        colorSecondary: 'rgb(122, 165, 210);',
-                        borderRadius: '5px;',
-                        colorText: 'rgb(48, 56, 65);',
-                      },
-                      TimePicker: {
-                        colorPrimary: 'rgb(122, 165, 210);',
-                        colorText: 'rgb(48, 56, 65);',
-                        colorPrimaryBg: 'rgb(122, 165, 210);',
-                        algorithm: true,
+                <h3>Choose your date</h3>
+                <div className="detailBooking">
+                  <ConfigProvider
+                    theme={{
+                      components: {
+                        DatePicker: {
+                          colorPrimary: 'rgb(122, 165, 210);',
+                          colorSecondary: 'rgb(122, 165, 210);',
+                          borderRadius: '5px;',
+                          colorText: 'rgb(48, 56, 65);',
+                          width: '50%',
+                        },
+                        TimePicker: {
+                          colorPrimary: 'rgb(122, 165, 210);',
+                          colorText: 'rgb(48, 56, 65);',
+                          colorPrimaryBg: 'rgb(122, 165, 210);',
+                          algorithm: true,
 
-                      },
-                      Input: {
-                        colorPrimaryText: 'rgb(48, 56, 65);',
-                        colorSecondaryText: 'rgb(48, 56, 65);',
+                        },
+                        Input: {
+                          colorPrimaryText: 'rgb(48, 56, 65);',
+                          colorSecondaryText: 'rgb(48, 56, 65);',
 
-                        algorithm: true,
+                          algorithm: true,
 
-                      },
-                      Button: {
-                        colorPrimary: 'rgb(122, 165, 210);',
-                        algorithm: true,
+                        },
+                        Button: {
+                          colorPrimary: 'rgb(122, 165, 210);',
+                          algorithm: true,
 
+                        },
                       },
-                    },
-                  }}
-                >
-                  <Space direction="vertical" size={10}>
-                    <RangePicker
-                      showTime={{ format: 'HH:mm' }}
-                      format="DD.MM.YYYY / HH:mm"
-                      disabledDate={disabledDate}
-                      size='large'
-                      changeOnBlur
-                      onChange={(e) => setBooking( {startDate: e[0].$d, endDate: e[1].$d} )}
-                      name="datePicker"
-                      required
-                    />
-                  </Space>
-                </ConfigProvider>
-                <button type="submit">Book Now</button>
+                    }}
+                  >
+                    <Space direction="vertical" size={10}>
+                      <RangePicker
+                        showTime={{ format: 'HH:mm' }}
+                        format="DD.MM.YYYY / HH:mm"
+                        disabledDate={disabledDate}
+                        size='large'
+                        changeOnBlur
+                        onChange={(e) => setBooking( {startDate: e[0].$d, endDate: e[1].$d} )}
+                        name="datePicker"
+                        required
+                      />
+                    </Space>
+                  </ConfigProvider>
+                  <button className="mainButtons bookNow" type="submit">Book Now</button>
+                </div>
               </form>
-            )}
-            {!user && <p>Please log in to make a reservation.</p>}          
+            </>
+          )}
         </div>
       )}
     </div>

@@ -68,7 +68,7 @@
 .userResList > legend,
 .userPrevRes > legend {
   padding: 0 10px 0 10px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   color: var(--main-light);
 }
@@ -84,6 +84,7 @@
   background-color: var(--main-cream);
   border-radius: 5px;
   color: var(--main-dark);
+  transition: 0.2s ease-in-out;
 }
 
 .show {

@@ -1,4 +1,14 @@
 .imgSlider {
+    width: 80%;
+    border-bottom: 1px solid var(--half-dark);
+}
+
+.imgSlider .flickity-button-icon {
+    color: var(--main-dark);
+}
+
+.imgSlider img {
     width: 100%;
-    height: auto;
+    height: 200px;
+    object-fit: contain;
 }
