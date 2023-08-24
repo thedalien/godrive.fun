@@ -3,111 +3,248 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     flex: 1 0 auto;
+    overflow-x: hidden;
 }
 
-#addCar {
-    width: 80%;
+#admin > h1 {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 20px;
+    padding: 20px;
+    text-align: center;
+    background-color: var(--main-blue);
+    color: var(--main-cream);
+}
+
+.adminFunctions {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.adminCars,
+.adminUsers {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    margin: 10px 40px 40px 40px;
+    border: 1px solid var(--main-dark);
+    border-radius: 5px;
+    transition: 0.2s ease-in-out;
+}
+
+.adminCars > legend,
+.adminUsers > legend {
+    padding: 0 10px 0 10px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.adminButtons {
+    width: 150px;
+    margin: 0 10px 10px 10px;
+    background-color: var(--main-dark);
+    cursor: pointer;
+}
+.adminButtons:hover {
+    background-color: var(--half-dark);
+}
+
+#addCar, #editCar {
+    width: 100%;
     margin-bottom: 50px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: var(--main-blue);
     border: 1px solid #fff;
     border-radius: 5px;
 }
 
-#addCar > legend {
-    font-size: 20px;
+#addCar > legend,
+#editCar > legend {
+    padding: 0 10px 0 10px;
+    border-radius: 5px 5px 0 0;
+    font-size: 16px;
     font-weight: bold;
+    background-color: var(--main-blue);
 }
 
-#addCarForm {
+#addCar form {
+    width: 100%;
     padding: 0 20px 0 20px;
     display: grid;
     grid-template-columns: auto auto;
     column-gap: 20px;
+    color: var(--main-dark);
+    font-weight: 600;
 }
 
 .adminLabel {
     width: 100%;
+    padding-bottom: 5px;
+    display: block;
+}
+
+#carImage + i {
+    width: 100%;
+    margin: 2px;
+    padding: 0;
+    display: block;
+    font-size: 12px;
 }
 
 .adminInput {
     width: 100%;
-    max-width: 100%;
-    margin-bottom: 7px;
+    margin-bottom: 5px;
     padding: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    background-color: var(--main-cream);
+    border: 2px solid transparent;
     border-radius: 5px;
 }
-
-.adminInput:focus {
+.adminInput:hover {
     outline: none;
     width: 100%;
-    border: 1px solid #fff;
-
+    border: 2px solid var(--main-green);
 }
+
 .adminInputOther {
-    width: 80%;
-    margin-bottom: 3px;
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 5px;
     padding: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    display: block;
+    background-color: var(--main-cream);
+    border: 2px solid transparent;
     border-radius: 5px;
 }
-
-#addCarButton {
-    margin: 30px auto 0 auto;
-    padding: 10px;
-    cursor: pointer;
+.adminInputOther:hover {
+    outline: none;
+    width: 100%;
+    border: 2px solid var(--main-green);
 }
 
-#editCar {
-    width: 80%;
-    margin-bottom: 50px;
-    padding: 20px;
+.backFromOther {
+    margin-bottom: 10px;
+    padding: 8px;
+    background-color: var(--main-red);
+    font-size: 14px;
+    cursor: pointer;
+}
+.backFromOther:hover {
+    background-color: var(--half-dark);
+}
+
+.adminInputFile {
+    box-sizing: border-box;
+    width: 100%;
+    height: 35px;
+    padding-left: 8px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    border: 1px solid #fff;
+    background-color: var(--main-cream);
+    border: 2px solid transparent;
     border-radius: 5px;
-}
-
-#editCar > legend {
-    font-size: 20px;
-    font-weight: bold;
-}
-
-#editCar > button {
+    color: var(--half-dark);
+    font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
 }
+.adminInputFile:hover {
+    outline: none;
+    width: 100%;
+    border: 2px solid var(--main-green);
+}
 
-#carGridEdit {
-    width: 80%;
-    height: 100%;
-    margin-bottom: 50px;
-    padding: 20px;
+.adminCarButtons {
+    width: 100%;
+    margin-top: 40px;
+    background-color: var(--main-dark);
+    color: var(--main-cream);
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    font-size: 16px;
+}
+.adminCarButtons:hover {
+    background-color: var(--half-dark);
+}
+
+.adminCarButtons:last-child {
+    width: 100%;
+    margin-top: 40px;
+    background-color: var(--main-red);
+    color: var(--main-cream);
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    font-size: 16px;
+}
+.adminCarButtons:last-child:hover {
+    background-color: var(--half-dark);
+}
+
+.adminCarGrid {
+    width: 100%;
+    margin-bottom: 20px;
     display: grid;
-    grid-template-columns: auto auto auto auto;
-    grid-template-rows: auto;
-    gap: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    grid-template-columns: repeat(5, auto);
+    border: 3px solid var(--main-dark);
+    border-bottom: 2px solid var(--main-dark);
+    border-radius: 5px 5px 0 0;
 }
 
-.editThisCar {
-    width: 100%;
+.adminCarHeader {
+    display: contents;
 }
 
-.editThisCar > button {
+.adminCarHeader > div {
+    padding: 10px;
+    background-color: var(--main-dark);
+    color: var(--main-cream);
+}
+.adminCarHeader > div:last-child {
+    text-align: center;
+}
+
+.adminCarGridRow {
+    display: contents;
+}
+
+.adminCarGridRow > div {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    background-color: var(--main-cream);
+    border-bottom: 1px solid var(--main-dark);
+}
+
+.adminCarGridRow > div > button {
     width: 100%;
-    margin: 0;
-    border-radius: 0 0 5px 5px;
+    margin-right: 5px;
+    padding: 5px;
+    background-color: var(--main-red);
+    border: none;
+    font-size: 14px;
     cursor: pointer;
 }
+
+.adminCarGridClose {
+    width: 200px;
+    background-color: var(--main-dark);
+    color: var(--main-cream);
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    font-size: 16px;
+}
+.adminCarGridClose:hover {
+    background-color: var(--half-dark);
+}
+
 
 .editThisCar > .carCard {
     width: 100%;
@@ -115,6 +252,21 @@
     padding: 0;
     border: none;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #deleteCar {
     width: 80%;

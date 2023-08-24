@@ -23,10 +23,19 @@ export default function AdminPage() {
 
   return (
     <div id="admin">
-        <h1>Admin Page</h1>
-        {showAddCar ? <AddCar setShowAddCar={setShowAddCar} /> : <button onClick={() => setShowAddCar(true)}>Add Car</button>}
-        <br />
-        {showAllCars ? <AllCars setShowAllCars={setShowAllCars} /> : <button onClick={() => setShowAllCars(true)}>All Cars</button>}
+        <h1>Admin Panel</h1>
+        <div className="adminFunctions">
+          <fieldset className="adminCars">
+            <legend>Cars</legend>
+            {showAddCar ? <AddCar setShowAddCar={setShowAddCar} /> : !showAllCars && <button className="mainButtons adminButtons" onClick={() => {setShowAddCar(true); setShowAllCars(false);}}>add</button>}
+            {showAllCars ? <AllCars setShowAllCars={setShowAllCars} /> : !showAddCar && <button className="mainButtons adminButtons" onClick={() => {setShowAllCars(true); setShowAddCar(false);}}>edit & delete</button>}
+          </fieldset>
+          <fieldset className="adminUsers">
+            <legend>Users</legend>
+            <button className="mainButtons adminButtons">blah</button>
+            <button className="mainButtons adminButtons">blah</button>
+          </fieldset>
+        </div>
     </div>
   )
 }

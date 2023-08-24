@@ -98,8 +98,6 @@ export default function AdminPageEdit() {
           </tbody>
         </table>
         <button onClick={handleSubmit}>Save</button>
-        
-
     </div>
   )
 }

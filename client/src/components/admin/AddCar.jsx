@@ -8,9 +8,6 @@ import { getFirestore, collection, query, where, getDocs } from "firebase/firest
 const db = getFirestore();
 
 
-
-
-
 export default function AddCar({setShowAddCar}) {
     const [uploadProgress, setUploadProgress] = useState(0);
     const [selectedFiles, setSelectedFiles] = useState(null);
@@ -64,8 +61,6 @@ export default function AddCar({setShowAddCar}) {
         return localDownloadURLs;
     };
     
-    
-    
     async function getTransformedImageURL(originalName) {
         const q = query(collection(db, 'transformedImages'), where('originalName', '==', originalName));
         const querySnapshot = await getDocs(q);
@@ -77,9 +72,6 @@ export default function AddCar({setShowAddCar}) {
         }
     }
     
-
-
-
     const [carData, setCarData] = useState({
         "brand": "Skoda",
         "model": "Fabia",
@@ -93,7 +85,6 @@ export default function AddCar({setShowAddCar}) {
         "door": 4,
         "licensePlate": "XYZ-1234"
     });
-
 
     const formatLicensePlate = (value) => {
         value = value.replace(/\s+/g, '').toUpperCase();
@@ -122,55 +113,54 @@ export default function AddCar({setShowAddCar}) {
 
     const submitCarData = async (e) => {
         e.preventDefault();
-      
         const uploadedURLs = await uploadImageToFirebase();
         
-      
         const carInfo = {
           ...carData,
           carImages: uploadedURLs,
         };
-        console.log(carInfo); 
       
         api.post(`/api/car/addCar`, carInfo)
         .then((res) => {
-            console.log(res);
-            setShowAddCar(false);
+            setInterval(() => {
+                setShowAddCar(false);
+            }, 5000);
+            return <div>Car added successfully</div>
         }).catch((err) => {
             console.log(err);
         });
-      };
+    };
       
-
   return (
     <>
         <fieldset id="addCar">
             <legend>Add Car</legend>
             <form id="addCarForm">
-            <div>
-                <DropdownOrTextField data='brand' name='Car Brand' onChange={getCarData}/>
-                <DropdownOrTextField data='model' name='Car Model' onChange={getCarData}/>
-                <DropdownOrTextField data='year' name='Build Year' onChange={getCarData}/>
-                <DropdownOrTextField data='color' name='Car Color' onChange={getCarData}/>
-                <DropdownOrTextField data='seats' name='Car Seats' onChange={getCarData}/>
-                <label className='adminLabel' htmlFor='licensePlate'>License Plate</label>
-                <input name='licensePlate' className='adminInput' maxLength="8" placeholder='License Plate' onChange={getCarData}/>
-            </div>
-            <div>
-                <DropdownOrTextField data='trunkVolume' name='Trunk Volume' onChange={getCarData}/>
-                <DropdownOrTextField data='poweredBy' name='Car powered by' onChange={getCarData}/>
-                <DropdownOrTextField data='door' name='Car Doors' onChange={getCarData}/>
-                <DropdownOrTextField data='dayPrice' name='Price per Day' onChange={getCarData}/>
-                <DropdownOrTextField data='hourPrice' name='Price per Hour' onChange={getCarData}/>
-                <label className='adminLabel' htmlFor='carImage'>Car Image</label>
-                <input type='file' name='carImage' className='adminInput' multiple onChange={handleFileChange} accept="image/*"/>
-            </div>
+                <div>
+                    <DropdownOrTextField data='brand' name='Car Brand' onChange={getCarData}/>
+                    <DropdownOrTextField data='model' name='Car Model' onChange={getCarData}/>
+                    <DropdownOrTextField data='year' name='Build Year' onChange={getCarData}/>
+                    <DropdownOrTextField data='color' name='Car Color' onChange={getCarData}/>
+                    <DropdownOrTextField data='seats' name='Car Seats' onChange={getCarData}/>
+                    <DropdownOrTextField maxLength="8" data='licensePlate' name='Car License Plate' onChange={getCarData}/>
+                </div>
+                <div>
+                    <DropdownOrTextField data='trunkVolume' name='Trunk Volume' onChange={getCarData}/>
+                    <DropdownOrTextField data='poweredBy' name='Car powered by' onChange={getCarData}/>
+                    <DropdownOrTextField data='door' name='Car Doors' onChange={getCarData}/>
+                    <DropdownOrTextField data='dayPrice' name='Price per Day' onChange={getCarData}/>
+                    <DropdownOrTextField data='hourPrice' name='Price per Hour' onChange={getCarData}/>
+                    <label className='adminLabel' htmlFor='carImage'>Car Images:</label>
+                    <label htmlFor="carImage" className="adminInputFile">
+                        Choose images...
+                    </label>
+                    <input type='file' id='carImage' className='' style={{display: 'none'}} multiple onChange={handleFileChange} accept="image/*"/>
+                    <i>(multiple image's possible)</i>
+                </div>
+                <button className="mainButtons adminCarButtons" name='submit' onClick={submitCarData}>Add Car to garage</button>
+                {uploadProgress > 0 && uploadProgress < 100 && <progress value={uploadProgress} max="100" />}
+                <button className="mainButtons adminCarButtons" onClick={() => setShowAddCar(false)}>Cancel</button>
             </form>
-            <button id="addCarButton" type='button' name='submit' onClick={submitCarData}>Add Car to garage</button>
-            {uploadProgress > 0 && uploadProgress < 100 && <progress value={uploadProgress} max="100" />}
-            <br/>
-            <button type='button' onClick={() => setShowAddCar(false)} style={{backgroundColor: 'red'}}>Cancel</button>
-            
         </fieldset>
     </>
   )

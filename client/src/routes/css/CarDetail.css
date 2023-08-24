@@ -39,7 +39,7 @@
 
 .carDetailContainer > h1 {
     width: 100%;
-    margin: 0;
+    margin: 0 0 20px 0;
     padding: 0;
     display: flex;
     justify-content: space-between;
@@ -93,7 +93,7 @@
     align-self: flex-start;
     padding: 0 0 10px 20px;
     margin: 0;
-    color: var(--main-dark);
+    color: var(--main-cream);
 }
 
 .detailBooking {

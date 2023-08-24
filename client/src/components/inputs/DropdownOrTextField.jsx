@@ -29,7 +29,6 @@ const DropdownOrTextField = (props) => {
     fetchData();
   }, []);
 
-
   const handleChange = (event) => {
     const value = event.target.value;
     props.onChange(event);
@@ -41,6 +40,7 @@ const DropdownOrTextField = (props) => {
     }
     setSelectedItem(value);
   };
+
   const handleOtherChange = (event) => {
     const value = event.target.value;
     setOtherValue(value);
@@ -56,14 +56,14 @@ const DropdownOrTextField = (props) => {
         <>
           {isOtherSelected ? (
             <>
-            <input
-              name={props.data}
-              className="adminInput"
-              type="text"
-              placeholder="Enter other option"
-              onChange={handleOtherChange}
-            />
-            <button style={{ display: 'inline' }} onClick={() => setIsOtherSelected(false)}>Back</button>
+              <input
+                name={props.data}
+                className="adminInputOther"
+                type="text"
+                placeholder="Enter other option"
+                onChange={handleOtherChange}
+              />
+              <button className="mainButtons backFromOther" onClick={() => {setIsOtherSelected(false); setSelectedItem('');}}>Cancel</button>
             </>
           ) : (
             <select className="adminInput" name={props.data} value={selectedItem} onChange={handleChange}>

@@ -26,19 +26,21 @@
 #goToCars {
     width: clamp(80px, 100px, 120px);
     height: clamp(80px, 100px, 120px);
+    padding: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: var(--main-blue);
-    border: 3px solid transparent;
+    border: 5px solid transparent;
     border-radius: 100%;
     color: var(--main-light);
     text-decoration: none;
+    transition: 0.2s ease-in;
 }
-
 #goToCars:hover {
-    border: 3px solid rgba(255, 255, 255, 1);
+    border: 5px solid rgba(255, 255, 255, 1);
+    font-size: 18px;
 }
 
 #goToCars > p {
@@ -47,8 +49,4 @@
     flex-direction: column;
     row-gap: 5px;
     font-weight: 600;
-}
-
-#goToCars:hover .svg-inline--fa  {
-    height: 1.5em;
 }

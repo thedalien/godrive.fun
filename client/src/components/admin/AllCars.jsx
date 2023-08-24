@@ -35,37 +35,31 @@ export default function AllCars({setShowAllCars}) {
         navigate(`/admin/edit/${id}`);
     };
 
-
-
   return (
-    <>
-        <button onClick={() => setShowAllCars(false)} className="back-button">Hide All Cars</button>
-
-        <table className="car-table">
-            <thead>
-                <tr>
-                    <th>Brand</th>
-                    <th>Model</th>
-                    <th>Year</th>
-                    <th>License Plate</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {cars.map((car) => (
-                    console.log(car),
-                    <tr key={car.id}>
-                        <td>{car.brand}</td>
-                        <td>{car.model}</td>
-                        <td>{car.year}</td>
-                        <td>{car.licensePlate}</td>
-                        <td><button onClick={() => handleEdit(car.id)}>Edit</button></td>
-                        <td><button onClick={() => handleDelete(car.id)}>Delete</button></td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-
-    </>
+    <fieldset id="editCar">
+        <legend>Edit / Delete Cars</legend>
+        <div className="adminCarGrid">
+            <div className="adminCarHeader">
+                <div>Brand</div>
+                <div>Model</div>
+                <div>Year</div>
+                <div>L. Plate</div>
+                <div>Actions</div>
+            </div>
+            {cars.map((car) => (
+                <div className="adminCarGridRow" key={car.id}>
+                    <div>{car.brand}</div>
+                    <div>{car.model}</div>
+                    <div>{car.year}</div>
+                    <div>{car.licensePlate}</div>
+                    <div>
+                        <button className="mainButtons" onClick={() => handleEdit(car.id)}>Edit</button>
+                        <button className="mainButtons" onClick={() => handleDelete(car.id)}>Delete</button>
+                    </div>
+                </div>
+            ))}
+        </div>
+        <button className="mainButtons adminCarGridClose" onClick={() => setShowAllCars(false)}>Close List</button>
+    </fieldset>
   )
 }
