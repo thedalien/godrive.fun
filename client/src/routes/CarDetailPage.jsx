@@ -55,6 +55,9 @@ export default function CarDetailPage() {
         }
       })
       .catch((err) => {
+        if (err.response.status === 409) {
+          alert('Booking already exists');
+        }
         console.log('Booking failed:', err);
       })
   };
