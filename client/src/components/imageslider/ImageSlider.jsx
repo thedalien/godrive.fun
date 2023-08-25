@@ -25,7 +25,7 @@ export default function ImageSlider({images}) {
             disableImagesLoaded={false}
         >
             {images.map((image) => (
-                <img src={image.url} alt="car" key={image.id} />
+                <img draggable="false" src={image.url} alt="car" key={image.id} />
             ))}
         </Flickity>
     )

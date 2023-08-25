@@ -14,7 +14,7 @@ export default function CarCard({ car }) {
     <div className="carCard">
       {car && (
         <>
-          <img onClick={showDetails} src={car.images && car.images.length > 0 ? car.images[0].url : "No source found"} alt={car.brand+" "+car.model} />
+          <img draggable="false" onClick={showDetails} src={car.images && car.images.length > 0 ? car.images[0].url : "No source found"} alt={car.brand+" "+car.model} />
           <div className="carHeader">
             <div className="carName">
               {car.brand} {car.model}

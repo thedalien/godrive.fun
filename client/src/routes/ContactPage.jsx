@@ -11,10 +11,10 @@ export default function ContactPage() {
       <div id="contactForm">
         <form className="contact-form">
           <div>
-            <input type="text" placeholder="Your Name" required />
-            <input type="text" placeholder="Your Lastname" required />
-            <input type="email" placeholder="Your Email" required />
-            <input type="tel" placeholder="Your Phonenumber" required />
+            <input type="text" placeholder="Name" required />
+            <input type="text" placeholder="Lastname" required />
+            <input type="email" placeholder="Email" required />
+            <input type="tel" placeholder="Phonenumber" required />
           </div>
           <div>
             <input type="text" placeholder="Subject" required />

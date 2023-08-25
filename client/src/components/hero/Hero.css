@@ -2,7 +2,7 @@
 
 #hero {
     width: 100%;
-    height: 700px;
+    height: 100vh;
     position: relative;
     background-image: url(https://www.hdcarwallpapers.com/walls/2018_skoda_fabia_4k-HD.jpg);
     background-position: center;
@@ -23,30 +23,84 @@
     color: var(--main-light);
 }
 
+#heroText > h1 {
+    margin: 0;
+    font-size: 40px;
+}
+
+#heroText > p {
+    margin: 10px 0 0 0;
+    padding: 0;
+    font-size: 20px;
+}
+
 #goToCars {
-    width: clamp(80px, 100px, 120px);
-    height: clamp(80px, 100px, 120px);
+    width: 150px;
+    height: 40px;
     padding: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: var(--main-blue);
-    border: 5px solid transparent;
-    border-radius: 100%;
-    color: var(--main-light);
+    background-color: var(--main-cream);
+    border-radius: 5px;
+    box-shadow: 0px 0px 15px 8px var(--main-blue);
+    color: var(--main-dark);
     text-decoration: none;
     transition: 0.2s ease-in;
 }
 #goToCars:hover {
-    border: 5px solid rgba(255, 255, 255, 1);
-    font-size: 18px;
+    background-color: var(--main-blue);
+    box-shadow: none;
+    color: var(--main-cream);
 }
 
 #goToCars > p {
-    padding-top: 15px;
     display: flex;
     flex-direction: column;
-    row-gap: 5px;
     font-weight: 600;
+}
+
+@media (max-width: 48em) {
+    #hero {
+        height: 100dvh;
+    }
+
+    #heroBg {
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    #heroText > h1 {
+        margin: 0;
+        font-size: 30px;
+    }
+    
+    #heroText > p {
+        margin: 10px 0 0 0;
+        padding: 0;
+        font-size: 15px;
+    }
+
+    #goToCars {
+        width: 100px;
+        height: 30px;
+        padding: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--main-cream);
+        border-radius: 5px;
+        box-shadow: 0px 0px 15px 8px var(--main-blue);
+        color: var(--main-dark);
+        font-size: 12px;
+        text-decoration: none;
+        transition: 0.2s ease-in;
+    }
+    #goToCars:hover {
+        background-color: var(--main-cream);
+        box-shadow: 0px 0px 15px 8px var(--main-blue);
+        color: var(--main-dark);
+    }
 }

@@ -1,3 +1,23 @@
-.flickity-viewport {
+.carousel .flickity-viewport {
     padding: 5px;
+}
+
+.carousel .flickity-button-icon {
+    color: var(--main-dark);
+}
+
+.carousel .flickity-prev-next-button.previous {
+    left: 5px;
+  }
+.carousel .flickity-prev-next-button.next {
+    right: 5px;
+}
+
+@media (max-width: 48em) {
+    .carousel .flickity-prev-next-button.previous {
+        left: -5px;
+    }
+    .carousel .flickity-prev-next-button.next {
+        right: -5px;
+    }
 }

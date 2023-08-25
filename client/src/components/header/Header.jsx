@@ -81,19 +81,18 @@ const Header = () => {
                                 Contact
                             </button>
                         </li>
-                        <li></li>
                         {!loggedOut && !user && <li>
-                            <button onClick={() => navLinkClickHandler("/register")} className="register-btn">
+                            <button id="userButton" onClick={() => navLinkClickHandler("/register")} className="register-btn">
                                 Register
                             </button>
                         </li>}
                         {loggedOut && <li>
-                            <button onClick={() => navLinkClickHandler("/login")} className="login-btn">
+                            <button id="userButton" onClick={() => navLinkClickHandler("/login")} className="login-btn">
                                 Login
                             </button>
                         </li>}
                         {user && <li>
-                            <button onClick={() => navLinkClickHandler("/profile")} className="logout-btn">
+                            <button id="userButton" onClick={() => navLinkClickHandler("/profile")} className="logout-btn">
                                 <div className="user-btn">
                                     <p>{user.name}</p>
                                     <FontAwesomeIcon icon="fa-solid fa-user" />

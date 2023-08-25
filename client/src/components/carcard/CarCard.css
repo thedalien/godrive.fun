@@ -12,89 +12,143 @@
     border-radius: 5px;
     text-align: center;
     color: var(--main-dark);
+    flex: 1 0 auto;
+}
+
+.carCard > img {
+  width: 80%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  border-bottom: 1px solid var(--half-dark);
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.carCard > img:hover {
+  width: 100%;
+  border-bottom: 3px solid var(--main-blue);
+}
+
+.carHeader {
+  width: 80%;
+  padding: 10px 0 10px 0;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.carName, .carPrice {
+  padding: 0 5% 0 5%;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.carDetails {
+  width: 80%;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  column-gap: 20px;
+}
+
+.carDetails > div {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.carDetails > div > p {
+  width: auto;
+  text-align: left;
+}
+
+.carDetails > div > svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.showDetails {
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--main-dark);
+  border: none;
+  border-radius: 0 0 5px 5px;
+  color: var(--main-light);
+  font-size: 16px;
+  font-weight: normal;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.showDetails:hover {
+  background-color: var(--half-dark);
+}
+
+@media (max-width: 48em) {
+  .carCard {
+    width: 80%;
+    height: auto;
+    row-gap: 20px;
   }
 
   .carCard > img {
-    width: 80%;
-    height: 100%;
-    object-fit: contain;
-    border-bottom: 1px solid var(--half-dark);
-    cursor: pointer;
-    transition: 0.2s ease-in-out;
+    transition: none;
   }
-
   .carCard > img:hover {
-    width: 100%;
-    border-bottom: 3px solid var(--main-blue);
+    width: 80%;
+    border-bottom: 1px solid var(--half-dark);
   }
-
+  
   .carHeader {
-    width: 100%;
-    padding: 10px 0 10px 0;
-    display: flex;
+    margin-top: -20px;
   }
 
-  .carName {
-    width: 50%;
-    padding-left: 5%;
-    font-size: 20px;
-    font-weight: 600;
-    text-align: center;
+  .carName,.carPrice {
+    font-size: 14px;
   }
-
-  .carPrice {
-    width: 50%;
-    padding-right: 5%;
-    font-size: 20px;
-    font-weight: 600;
-    text-align: center;
-  }
-
+  
   .carDetails {
     width: 80%;
-    height: 100%;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    column-gap: 20px;
+    flex-wrap: wrap;
+    column-gap: 5px;
   }
 
   .carDetails > div {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 5px;
+    width: 50px;
+    height: 25px;
+    flex: 1 0 auto;
+    flex-wrap: nowrap;
+    gap: 0px;
   }
-
-  .carDetails > p {
-    width: auto;
-    padding-right: 15px;
-    text-align: left;
+  
+  .carDetails > div > p {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .carDetails > div > svg {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1rem;
+    height: 1rem;
   }
   
   .showDetails {
     width: 100%;
-    height: auto;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--main-dark);;
-    border: none;
-    border-radius: 0 0 5px 5px;
-    color: var(--main-light);
-    font-size: 16px;
-    font-weight: normal;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
+    font-size: 14px;
   }
-
   .showDetails:hover {
-    background-color: var(--half-dark);
+    background-color: var(--main-dark);
   }
+}
