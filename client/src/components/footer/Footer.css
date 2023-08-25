@@ -1,23 +1,12 @@
 @import "../../index.css";
-/* Add modern looking styles for Footer component */
+
 .footer-container {
-/*   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--footer-BgColor);
-  padding: 20px 0;
-  left: 0;
-  bottom: 0;
   width: 100%;
-  color: var(--main-light); */
+  padding: 20px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: var(--footer-BgColor);
-  padding: 20px 0;
-  left: 0;
-  bottom: 0;
-  width: 100%;
   color: var(--main-light);
 }
 
@@ -40,9 +29,31 @@
 }
 
 .footer-padding {
+    width: 100%;
+    padding: 0 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+@media (max-width: 48em) {
+  .footer-container {
+    padding: 0;
+  }
+
+  .footer-padding {
+      padding: 20px 0 10px 0;
+      flex-wrap: wrap;
+      justify-content: center;
+  }
+
+  .footer-links {
     width: 100%;
-    padding: 0 20px;
+    justify-content: space-evenly;
+    gap: 0;
+  }
+
+  .footer-links a:hover {
+    text-decoration: none;
+  }
 }
