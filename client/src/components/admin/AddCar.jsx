@@ -42,8 +42,10 @@ export default function AddCar({setShowAddCar}) {
                     }, 
                     async () => {
                         try {
-                            // Fetch the transformed image URL from Firestore
-                            const transformedURL = await getTransformedImageURL(selectedFile.name);
+                            const originalURL = await getDownloadURL(uploadTask.snapshot.ref);
+                            const baseNameWithoutExtension = originalURL.split('/').pop().split('?')[0];
+                            const newFileName = baseNameWithoutExtension.replace(/(\.\w+)$/, "_300x300.webp");
+                            const transformedURL = originalURL.replace(baseNameWithoutExtension, newFileName);
                             localDownloadURLs.push(transformedURL);
                             resolve();
                         } catch (error) {
@@ -61,16 +63,8 @@ export default function AddCar({setShowAddCar}) {
         return localDownloadURLs;
     };
     
-    async function getTransformedImageURL(originalName) {
-        const q = query(collection(db, 'transformedImages'), where('originalName', '==', originalName));
-        const querySnapshot = await getDocs(q);
-        if (!querySnapshot.empty) {
-            const doc = querySnapshot.docs[0];
-            return doc.data().transformedURL;
-        } else {
-            throw new Error('Transformed image not found');
-        }
-    }
+    
+    
     
     const [carData, setCarData] = useState({
         "brand": "Skoda",

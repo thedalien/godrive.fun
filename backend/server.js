@@ -14,6 +14,7 @@ console.log(enviroment);
 const carsRoutes = require('./router/carsRoutes');
 const userRoutes = require('./router/userRoutes');
 const bookRoutes = require('./router/bookRoutes');
+const adminRoutes = require('./router/adminRoutes');
 
 const app = express();
 app.use(cors());
@@ -23,6 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/car', carsRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/book', bookRoutes);
+app.use('/api/admin', adminRoutes);
 
 const db = require('./models');
 // db.sequelize.sync({ force: true });

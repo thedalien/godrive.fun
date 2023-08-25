@@ -16,7 +16,7 @@ module.exports = (sequelize, Sequelize) => {
         role: {
             type: Sequelize.STRING,
             defaultValue: 'user',
-            alowedValues: ['user', 'admin', 'moderator']
+            alowedValues: ['user', 'admin', 'moderator', 'blocked']
             },
         verified: { //MAG: specify which specific status and roles exist, also validate for Email 
             type: Sequelize.BOOLEAN,
