@@ -102,7 +102,12 @@ body {
   border-radius: 5px;
   border: none;
   color: var(--main-cream);
-  background-color: var(--color-blue);
+  background-color: var(--main-blue);
   width: 100%;
-  max-width: 400px; /* Matching the maximum width of the form-group */
+  max-width: 400px;
+  cursor: pointer;
+}
+
+.mainButtons:hover {
+  background-color: var(--half-dark);
 }
