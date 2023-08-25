@@ -69,14 +69,14 @@
 }
 
 #contactForm div > button {
-    width: 50%;
+    width: 100px;
     height: 20px;
     margin-top: 20px;
     padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--main-light);;
+    background-color: var(--main-light);
     border: none;
     border-radius: 5px;
     font-size: 16px;
@@ -157,54 +157,17 @@
     }
 
     #contactForm div > button {
-        width: 100%;
+        width: 80%;
         margin-top: 40px;
-        padding: 20px;
-        border: none;
-        border-radius: 5px;
         font-size: 14px;
-        font-weight: normal;
-        cursor: pointer;
-        transition: 0.2s ease-in;
     }
-
     #contactForm div > button:hover {
-        background-color: var(--main-dark);
-        color: var(--main-light);
-    }
-
-    #contactInfo {
-        width: 100%;
-        height: auto;
-        padding: 50px 0 50px 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    #buttons {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    } 
-
-    .contactButton {
-        width: 50px;
-        height: 50px;
-        margin: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: var(--half-dark);
-        border: none;
-        border-radius: 5px;
-        color: var(--main-light);
-        cursor: pointer;
-        transition: background-color 0.3s;
+        background-color: var(--main-light);
+        color: var(--main-dark);
     }
 
     .contactButton:hover {
-        background-color: var(--main-blue);
+        background-color: var(--half-dark);
+        color: var(--main-light);
     }
 }
