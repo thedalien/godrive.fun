@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
 import './css/Admin.css';
-import AddCar from '../components/admin/AddCar';
-import AllCars from '../components/admin/AllCars';
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 
+import AddCar from '../components/admin/AddCar';
+import AllCars from '../components/admin/AllCars';
+import AllUsers from '../components/admin/AllUsers';
 
 export default function AdminPage() {
     const [showAddCar, setShowAddCar] = useState(false);
     const [showAllCars, setShowAllCars] = useState(false);
+    const [showAllUsers, setShowAllUsers] = useState(false);
     const user = useSelector((state) => state.app.user);
     const navigate = useNavigate();
-
     
     useEffect(() => {
         if (!user || user.role !== 'admin') {
@@ -32,8 +33,12 @@ export default function AdminPage() {
           </fieldset>
           <fieldset className="adminUsers">
             <legend>Users</legend>
-            <button className="mainButtons adminButtons">blah</button>
-            <button className="mainButtons adminButtons">blah</button>
+            {showAllUsers ? 
+            <>
+            <AllUsers setShowAllUsers={setShowAllUsers} /> 
+            <button className="mainButtons adminButtons" onClick={() => {setShowAllUsers(false);}}>Hide All users</button>
+            </>
+            : <button className="mainButtons adminButtons" onClick={() => {setShowAllUsers(true);}}>Show All users</button>}
           </fieldset>
         </div>
     </div>
