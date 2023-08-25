@@ -24,6 +24,28 @@ const create = async (req, res) => {
     
     const totalPrice = days * car.dayPrice;
 
+    const existingBookings = await Book.findAll({
+      where: {
+        carId: carId,
+        startDate: {
+          [Op.lte]: endDate,
+        },
+        endDate: {
+          [Op.gte]: startDate,
+        },
+        status: {
+          [Op.notIn]: ['cancelled', 'returned'],
+        },
+      },
+    });
+
+    if (existingBookings.length > 0) {
+      console.log('existingBookings', existingBookings);
+      return res.status(409).json({ message: 'Reservation already exists', bookings: existingBookings });
+    }
+
+    
+
     const booking = await Book.create({
       carId,
       userId: req.userId,
