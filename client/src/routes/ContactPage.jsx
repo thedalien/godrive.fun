@@ -9,7 +9,7 @@ export default function ContactPage() {
         <p>Do you have questions regarding our services? We&apos;re happy to answer them under the following Phonenumber XXXX or E-Mail XXXX. Else you can send a request with the following Contactform.</p>
       </div>
       <div id="contactForm">
-        <form className="contact-form">
+        <form>
           <div>
             <input type="text" placeholder="Name" required />
             <input type="text" placeholder="Lastname" required />

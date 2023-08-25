@@ -197,3 +197,185 @@
 .booking > button:hover {
   background-color: var(--half-dark);
 }
+
+@media (max-width: 48em) {
+ 
+  .userHeader {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .userHeader > button {
+    width: 130px;
+    background-color: var(--main-blue);
+    cursor: pointer;
+  }
+  .userHeader > button:hover {
+    background-color: var(--main-blue);
+  }
+
+  .userHeader > button:last-child {
+    width: 130px;
+    margin: 10px 0px 20px 0px;
+  }
+  .userHeader > button:last-child:hover {
+    background-color: var(--main-red);
+  }
+  
+  .userData {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .userDetails {
+    width: auto;
+    margin: 0 20px 20px 20px;
+    flex-direction: column;
+  }
+
+  .userResList, .userPrevRes {
+    width: 100%;
+    margin: 10px;
+    padding: 10px 20px 10px 20px;
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 10px;
+    border: 1px solid var(--main-light);
+    border-radius: 5px;
+  }
+/* 
+  .userDetails > legend,
+  .userResList > legend,
+  .userPrevRes > legend {
+    padding: 0 10px 0 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--main-light);
+  }
+
+  .detailContainer {
+    width: 50%;
+    height: 100px;
+    padding: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--main-cream);
+    border-radius: 5px;
+    color: var(--main-dark);
+    transition: 0.2s ease-in-out;
+  }
+
+  .show {
+    height:  250px;
+  }
+
+  .detailContainer > form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .changeContainer {
+    width: 100%;
+  }
+
+  .changeContainer:last-child {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .changePwLabel {
+    width: 100%;
+    display: block;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  .changePwInput {
+    width: auto;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .changeCancel, .changeSubmit {
+    width: 45%;
+    height: 30px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-dark);
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .changeCancel:hover, .changeSubmit:hover {
+    background-color: var(--half-dark);
+  }
+
+  .details:first-child {
+    font-weight: 600;
+  }
+
+  .changePw {
+    width: auto;
+    background-color: var(--main-dark);
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .changePw:hover {
+    background-color: var(--half-dark);
+  }
+
+  .booking {
+    padding: 0 20px 20px 20px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    background-color: var(--main-cream);
+    border-radius: 5px;
+    color: var(--main-dark);
+    font-size: 14px;
+  }
+
+  .booking > h3 {
+    line-height: 15px;
+    text-decoration: underline;
+  }
+
+  .bookingDetails {
+    width: 100%;
+    margin: 2px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .bookingDetails > p {
+    padding: 0;
+    margin: 0;
+  }
+
+  .bookingData {
+    font-weight: 600;
+  }
+
+  .booking > button {
+    width: 100%;
+    margin-top: 20px;
+    background-color: var(--main-dark);
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .booking > button:hover {
+    background-color: var(--half-dark);
+  } */
+}
