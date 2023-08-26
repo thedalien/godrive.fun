@@ -3,9 +3,14 @@ import { useState } from 'react';
 import api from '../api';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import uploadImageToFirebase from '../firebase/uploadImages';
+
 
 
 export default function AdminPageEdit() {
+    const [selectedFiles, setSelectedFiles] = useState(null);
+    const [uploadProgress, setUploadProgress] = useState(0);
     const navigate = useNavigate();
     const [car, setCar] = useState({
         brand: '',
@@ -20,6 +25,7 @@ export default function AdminPageEdit() {
         hourPrice: 0,
         licensePlate: ''
       });
+    const [images, setImages] = useState([]);
       
       const { id } = useParams();
 
@@ -28,6 +34,10 @@ export default function AdminPageEdit() {
             try {
                 const response = await api.get(`/api/car/getcar/${id}`);
                 setCar(response.data);
+                // map images to array of urls
+                const images = response.data.images.map(image => image.url);
+                setImages(images);
+                console.log(images);
             } catch (error) {
                 console.log(error);
             }
@@ -37,14 +47,35 @@ export default function AdminPageEdit() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        const updatedCar = { ...car, images };
         try {
-            await api.put(`/api/car/update/${id}`, car);
+            await api.put(`/api/car/update/${id}`, updatedCar);
             navigate('/admin');
         } catch (error) {
             console.log(error);
         }
     };
 
+    const onDragEnd = (result) => {
+      if (!result.destination) return;
+  
+      const reorderedImages = Array.from(images);
+      const [movedItem] = reorderedImages.splice(result.source.index, 1);
+      reorderedImages.splice(result.destination.index, 0, movedItem);
+  
+      setImages(reorderedImages);
+    };
+    const handleFileChange = (e) => {
+      console.log(e.target.files);
+      setSelectedFiles(e.target.files);
+  }; 
+
+  const handleUploadImage = async () => {
+    const uploadedURLs = await uploadImageToFirebase(car, selectedFiles, setUploadProgress);
+    setImages([...images, ...uploadedURLs]);
+  };
+    
 
   return (
     <div className="car-form">
@@ -94,9 +125,38 @@ export default function AdminPageEdit() {
               <td>License Plate</td>
               <td><input type="text" value={car.licensePlate} onChange={(e) => setCar({...car, licensePlate: e.target.value})} /></td>
             </tr>
+            <tr>
+              <td>Images</td>
+              <td><input type='file' id='carImage' className='' multiple onChange={handleFileChange} accept="image/*"/>
+              <button onClick={handleUploadImage}>Upload</button>
+              {uploadProgress > 0 && uploadProgress < 100 && <progress value={uploadProgress} max="100" />}
+              </td>
+            </tr>
             
           </tbody>
         </table>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="droppable">
+              {(provided) => (
+                <div {...provided.droppableProps} ref={provided.innerRef} style={{ display: 'flex' }}>
+                  {images.map((img, index) => (
+                    <Draggable key={img} draggableId={img} index={index}>
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          <img src={img} alt="" width={100} />
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+         </DragDropContext>
         <button onClick={handleSubmit}>Save</button>
     </div>
   )

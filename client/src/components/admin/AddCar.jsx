@@ -2,10 +2,8 @@ import { useState } from 'react';
 import '../../routes/css/Admin.css';
 import DropdownOrTextField from '../inputs/DropdownOrTextField';
 import api from '../../api';
-import { storage } from '../../firebase/config';
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
-const db = getFirestore();
+import formatLicensePlate from '../functions/formatLicensePlate';
+import uploadImageToFirebase from '../../firebase/uploadImages';
 
 
 export default function AddCar({setShowAddCar}) {
@@ -15,57 +13,7 @@ export default function AddCar({setShowAddCar}) {
     const handleFileChange = (e) => {
         console.log(e.target.files);
         setSelectedFiles(e.target.files);
-    };
-
-    const uploadImageToFirebase = async () => {
-        if (!selectedFiles) {
-            return;
-        }
-    
-        let localDownloadURLs = [];
-    
-        const uploadPromises = Array.from(selectedFiles).map(async selectedFile => {
-            const storageRef = ref(storage, `carImages/${carData.licensePlate}/` + selectedFile.name);
-            const uploadTask = uploadBytesResumable(storageRef, selectedFile, {
-                contentType: selectedFile.type,
-            });
-    
-            await new Promise((resolve, reject) => {
-                uploadTask.on('state_changed',
-                    (snapshot) => {
-                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                        setUploadProgress(progress);
-                    }, 
-                    (error) => {
-                        console.error(error);
-                        reject(error);
-                    }, 
-                    async () => {
-                        try {
-                            const originalURL = await getDownloadURL(uploadTask.snapshot.ref);
-                            const baseNameWithoutExtension = originalURL.split('/').pop().split('?')[0];
-                            const newFileName = baseNameWithoutExtension.replace(/(\.\w+)$/, "_300x300.webp");
-                            const transformedURL = originalURL.replace(baseNameWithoutExtension, newFileName);
-                            localDownloadURLs.push(transformedURL);
-                            resolve();
-                        } catch (error) {
-                            console.error(error);
-                            reject(error);
-                        }
-                    }
-                );
-            });
-        });
-    
-        // Wait for all uploads to complete
-        await Promise.all(uploadPromises);
-    
-        return localDownloadURLs;
-    };
-    
-    
-    
-    
+    }; 
     const [carData, setCarData] = useState({
         "brand": "Skoda",
         "model": "Fabia",
@@ -80,20 +28,6 @@ export default function AddCar({setShowAddCar}) {
         "licensePlate": "XYZ-1234"
     });
 
-    const formatLicensePlate = (value) => {
-        value = value.replace(/\s+/g, '').toUpperCase();
-
-        if (value.length > 3) {
-            value = value.slice(0, 3) + ' ' + value.slice(3);
-        }
-    
-        if (value.length > 8) {
-            value = value.slice(0, 8);
-        }
-    
-        return value;
-    }
-
     const getCarData = (e) => {
         if (e.target.name === 'licensePlate') {
             e.target.value = formatLicensePlate(e.target.value);
@@ -107,7 +41,7 @@ export default function AddCar({setShowAddCar}) {
 
     const submitCarData = async (e) => {
         e.preventDefault();
-        const uploadedURLs = await uploadImageToFirebase();
+        const uploadedURLs = await uploadImageToFirebase(carData, selectedFiles, setUploadProgress );
         
         const carInfo = {
           ...carData,

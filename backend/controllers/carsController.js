@@ -112,28 +112,53 @@ const getList = (req, res) => {
     });
 };
 
-const updateCar = (req, res) => {
+const updateCar = async (req, res) => {
   const id = req.params.id;
 
-  Car.update(req.body, {
-    where: { id: id }
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: 'Car was updated successfully.'
-        });
-      } else {
-        res.send({
-          message: `Cannot update Car with id=${id}. Maybe Car was not found or req.body is empty!`
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: `Error updating Car with id=${id}`
+  try {
+    // Find the car
+    const car = await Car.findOne({ where: { id: id }, include: [Images] });
+
+    if (!car) {
+      return res.status(404).send({
+        message: `Cannot update Car with id=${id}. Maybe Car was not found or req.body is empty!`
       });
+    }
+
+    // Update car details
+    car.brand = req.body.brand;
+    car.model = req.body.model;
+    car.year = req.body.year;
+    car.color = req.body.color;
+    car.seats = req.body.seats;
+    car.trunkVolume = req.body.trunkVolume;
+    car.poweredBy = req.body.poweredBy;
+    car.dayPrice = req.body.dayPrice;
+    car.hourPrice = req.body.hourPrice;
+    car.door = req.body.door;
+    car.licensePlate = req.body.licensePlate;
+    car.description = req.body.description;
+
+    // Update image order
+    for (let i = 0; i < req.body.images.length; i++) {
+      const image = car.images.find(img => img.url === req.body.images[i].image);
+      if (image) {
+        image.index = req.body.images[i].index;
+        await image.save();
+      }
+    }
+
+    // Save updated car
+    await car.save();
+
+    res.send({
+      message: 'Car was updated successfully.'
     });
+  } catch (err) {
+    res.status(500).send({
+      message: `Error updating Car with id=${id}`
+    });
+  }
 };
 
 const deleteCar = (req, res) => {
