@@ -115,7 +115,7 @@ export default function CarDetailPage() {
               <p>{carData.year}</p>
             </div>
           </div>
-          <p className="detailText">{/* carData.description here */}Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam beatae soluta eveniet sunt iste architecto aut dicta dolore perferendis at possimus eius iure, animi repudiandae perspiciatis doloremque, temporibus nesciunt! Error?</p>
+          <p className="detailText">{carData.description}</p>
           {!user && 
             <>
               <p className="logInToBook">Please log in to make a reservation.</p>

@@ -28,7 +28,7 @@ app.use('/api/admin', adminRoutes);
 
 const db = require('./models');
 // db.sequelize.sync({ force: true });
-db.sequelize.sync();
+db.sequelize.sync({ alter: true });
 testConnection();
 
 if (enviroment === 'localhost') {

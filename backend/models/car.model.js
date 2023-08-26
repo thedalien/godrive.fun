@@ -45,6 +45,10 @@ module.exports = (sequelize, Sequelize) => {
             required: true,
             unique: true
             },
+        description: {
+            type: Sequelize.STRING,
+            required: false
+            },
     }); 
 
     return Car;

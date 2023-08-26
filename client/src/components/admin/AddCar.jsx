@@ -151,9 +151,15 @@ export default function AddCar({setShowAddCar}) {
                     <input type='file' id='carImage' className='' style={{display: 'none'}} multiple onChange={handleFileChange} accept="image/*"/>
                     <i>(multiple image's possible)</i>
                 </div>
-                <button className="mainButtons adminCarButtons" name='submit' onClick={submitCarData}>Add Car to garage</button>
-                {uploadProgress > 0 && uploadProgress < 100 && <progress value={uploadProgress} max="100" />}
-                <button className="mainButtons adminCarButtons" onClick={() => setShowAddCar(false)}>Cancel</button>
+                <div>
+                    <label className='adminLabel' htmlFor='description'>Car Description:</label>
+                    <textarea className='adminInput' id='description' name='description' onChange={getCarData}></textarea>
+                </div>
+                <div>
+                    <button className="mainButtons adminCarButtons" name='submit' onClick={submitCarData}>Add Car to garage</button>
+                    {uploadProgress > 0 && uploadProgress < 100 && <progress value={uploadProgress} max="100" />}
+                    <button className="mainButtons adminCarButtons" onClick={() => setShowAddCar(false)}>Cancel</button>
+                </div>
             </form>
         </fieldset>
     </>

@@ -28,6 +28,7 @@ const createCar = async (req, res) => {
       hourPrice: req.body.hourPrice,
       door: req.body.door,
       licensePlate: req.body.licensePlate,
+      description: req.body.description
     };
 
     // Save Car in the database
