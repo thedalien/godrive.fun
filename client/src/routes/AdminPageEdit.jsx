@@ -6,12 +6,16 @@ import { useNavigate } from 'react-router-dom';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import uploadImageToFirebase from '../firebase/uploadImages';
 
+import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage";
 
+const storage = getStorage();
 
 export default function AdminPageEdit() {
+    const navigate = useNavigate();
+
     const [selectedFiles, setSelectedFiles] = useState(null);
     const [uploadProgress, setUploadProgress] = useState(0);
-    const navigate = useNavigate();
+    const [images, setImages] = useState([]);
     const [car, setCar] = useState({
         brand: '',
         model: '',
@@ -25,7 +29,6 @@ export default function AdminPageEdit() {
         hourPrice: 0,
         licensePlate: ''
       });
-    const [images, setImages] = useState([]);
       
       const { id } = useParams();
 
@@ -71,9 +74,20 @@ export default function AdminPageEdit() {
       setSelectedFiles(e.target.files);
   }; 
 
+  useEffect(() => {
+    console.log(images);
+  }, [images]);
+
   const handleUploadImage = async () => {
-    const uploadedURLs = await uploadImageToFirebase(car, selectedFiles, setUploadProgress);
-    setImages([...images, ...uploadedURLs]);
+    await uploadImageToFirebase(car, selectedFiles, setUploadProgress);
+    const storageRef = ref(storage, `carImages/${car.licensePlate}`);
+    const files = await listAll(storageRef);
+    const imageURLs = await Promise.all(files.items.map(async (fileRef) => {
+      const downloadURL = await getDownloadURL(fileRef);
+      return downloadURL;
+    }));
+    setImages([...imageURLs]);
+    console.log(images);
   };
     
 
@@ -140,6 +154,8 @@ export default function AdminPageEdit() {
               {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef} style={{ display: 'flex' }}>
                   {images.map((img, index) => (
+                    console.log(img),
+                    console.log(index),
                     <Draggable key={img} draggableId={img} index={index}>
                       {(provided) => (
                         <div

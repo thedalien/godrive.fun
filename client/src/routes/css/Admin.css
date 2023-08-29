@@ -355,3 +355,71 @@
     margin-right: 5px;
     cursor: pointer;
 }
+
+
+#editUser {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-blue);
+    border: 1px solid #fff;
+    border-radius: 5px;
+}
+
+#editUser > legend {
+    padding: 0 10px 0 10px;
+    border-radius: 5px 5px 0 0;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: var(--main-blue);
+}
+
+.adminUserGrid {
+    width: 100%;
+    margin-bottom: 20px;
+    /* display: grid; */
+    /* grid-template-columns: repeat(6, auto); */
+    border: 3px solid var(--main-dark);
+    border-bottom: 2px solid var(--main-dark);
+    border-radius: 5px 5px 0 0;
+}
+
+.adminUserGrid > thead > tr > th {
+    padding: 10px;
+    background-color: var(--main-dark);
+    color: var(--main-cream);
+}
+
+.adminUserGrid > tbody > tr > td {
+    height: 50px;
+    /* display: flex; */
+    align-items: center;
+    padding-left: 10px;
+    background-color: var(--main-cream);
+    border-bottom: 1px solid var(--main-dark);
+}
+
+.adminUserGrid > tbody > tr > td > button {
+    width: 100%;
+    margin-right: 5px;
+    padding: 5px;
+    background-color: var(--main-red);
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.adminUserGridClose {
+    width: 200px;
+    background-color: var(--main-dark);
+    color: var(--main-cream);
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    font-size: 16px;
+}
+.adminUserGridClose:hover {
+    background-color: var(--half-dark);
+}

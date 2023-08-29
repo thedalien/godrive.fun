@@ -31,14 +31,9 @@ export default function AdminPage() {
             {showAddCar ? <AddCar setShowAddCar={setShowAddCar} /> : !showAllCars && <button className="mainButtons adminButtons" onClick={() => {setShowAddCar(true); setShowAllCars(false);}}>add</button>}
             {showAllCars ? <AllCars setShowAllCars={setShowAllCars} /> : !showAddCar && <button className="mainButtons adminButtons" onClick={() => {setShowAllCars(true); setShowAddCar(false);}}>edit & delete</button>}
           </fieldset>
-          <fieldset className="adminUsers">
+          <fieldset className="adminCars">
             <legend>Users</legend>
-            {showAllUsers ? 
-            <>
-            <AllUsers setShowAllUsers={setShowAllUsers} /> 
-            <button className="mainButtons adminButtons" onClick={() => {setShowAllUsers(false);}}>Hide All users</button>
-            </>
-            : <button className="mainButtons adminButtons" onClick={() => {setShowAllUsers(true);}}>Show All users</button>}
+            {showAllUsers ? <AllUsers setShowAllUsers={setShowAllUsers} /> : <button className="mainButtons adminButtons" onClick={() => {setShowAllUsers(true);}}>Show All users</button>}
           </fieldset>
         </div>
     </div>

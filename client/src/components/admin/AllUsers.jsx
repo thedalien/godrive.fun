@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../api';
+import '../../routes/css/Admin.css';
 
-const AllUsers = () => {
+
+const AllUsers = ({setShowAllUsers}) => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
@@ -58,31 +60,45 @@ const AllUsers = () => {
 
 
     return (
-        <div>
-            {users.map(user => (
-                <div key={user.id}>
-                    <p>{user.name}</p>
-                    {user.verified ? 
-                    <>
-                    <p style={{ color: 'green', fontWeight: 'bold' }}>Verified</p>
-                    <button style={{ backgroundColor: 'red', color: 'white' }} onClick={() => handleVerify(user.id, false)}>Unverify</button>
-                    </>
-                    : <>
-                    <p>Not verified</p>
-                    <button style={{ backgroundColor: 'blue', color: 'white' }} onClick={() => handleVerify(user.id, true)}>Verify</button>
-                    </>
-                    }
-                    <button onClick={() => handleDelete(user.id)}>Delete</button>
-                    <button onClick={() => handleBlock(user.id)}>Block</button>
-                    <select defaultValue={user.role} onChange={(e) => handleRoleChange(user.id, e.target.value)}>
-                        <option value="user">User</option>
-                        <option value="admin">Admin</option>
-                        <option value="moderator">Moderator</option>
-                        <option value="blocked">Blocked</option>
-                    </select>
-                </div>
-            ))}
-        </div>
+        <fieldset id="editUser">
+            <legend>Edit / Delete Users</legend>
+            <table className="adminUserGrid">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Verified</th>
+                        <th colSpan={3}>Actions</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {users.map((user) => (
+                    <tr key={user.id}>
+                        <td>{user.name}</td>
+                        <td>{user.verified ? 'Verified' : 'Not Verified'}</td>
+                        <td>
+                            <button className="mainButtons" onClick={() => handleVerify(user.id, !user.verified)}>{user.verified ? 'Unverify' : 'Verify'}</button>
+                        </td>
+                        <td>
+                            <button className="mainButtons" onClick={() => handleDelete(user.id)}>Delete</button>
+                        </td>
+                        <td>
+                            <button className="mainButtons" onClick={() => handleBlock(user.id)}>Block</button>
+                        </td>
+                        <td>
+                            <select defaultValue={user.role} onChange={(e) => handleRoleChange(user.id, e.target.value)}>
+                                <option value="user">User</option>
+                                <option value="admin">Admin</option>
+                                <option value="moderator">Moderator</option>
+                                <option value="blocked">Blocked</option>
+                            </select>
+                        </td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+            <button className="mainButtons adminUserGridClose" onClick={() => setShowAllUsers(false)}>Close List</button>
+        </fieldset>
     );
 };
 
