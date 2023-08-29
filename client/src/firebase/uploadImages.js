@@ -1,5 +1,6 @@
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "./config";
+import getImages from "./getImages";
 
 
 const uploadImageToFirebase = async (carData, selectedFiles, setUploadProgress) => {
@@ -44,8 +45,9 @@ const uploadImageToFirebase = async (carData, selectedFiles, setUploadProgress) 
 
     // Wait for all uploads to complete
     await Promise.all(uploadPromises);
-
-    return localDownloadURLs;
+    // return localDownloadURLs;
+    let imageURLs = await getImages(`carImages/${carData.licensePlate}`);
+    return imageURLs;
 };
 
 export default uploadImageToFirebase;

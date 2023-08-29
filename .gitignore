@@ -26,3 +26,5 @@ dist-ssr
 *.sw?
 *.env
 *.jam
+hosting.*.cache
+.firebase/

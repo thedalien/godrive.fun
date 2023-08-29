@@ -114,6 +114,7 @@ const getList = (req, res) => {
 
 const updateCar = async (req, res) => {
   const id = req.params.id;
+  const images = req.body.images;
 
   try {
     // Find the car
@@ -139,13 +140,17 @@ const updateCar = async (req, res) => {
     car.licensePlate = req.body.licensePlate;
     car.description = req.body.description;
 
-    // Update image order
-    for (let i = 0; i < req.body.images.length; i++) {
-      const image = car.images.find(img => img.url === req.body.images[i].image);
-      if (image) {
-        image.index = req.body.images[i].index;
-        await image.save();
-      }
+    // Delete old images
+    await Images.destroy({ where: { carId: car.id } });
+    console.log('Deleted old images');
+
+    // Update images with the new ones
+    for (const image of images) {
+      await Images.create({
+        url: image,
+        alt: `${car.brand} ${car.model} Image`,
+        carId: car.id
+      });
     }
 
     // Save updated car

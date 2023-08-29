@@ -5,13 +5,11 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import uploadImageToFirebase from '../firebase/uploadImages';
-
-import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage";
-
-const storage = getStorage();
+import getImages from '../firebase/getImages';
 
 export default function AdminPageEdit() {
     const navigate = useNavigate();
+    const { id } = useParams();
 
     const [selectedFiles, setSelectedFiles] = useState(null);
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -29,8 +27,6 @@ export default function AdminPageEdit() {
         hourPrice: 0,
         licensePlate: ''
       });
-      
-      const { id } = useParams();
 
     useEffect(() => {
         const fetchCar = async () => {
@@ -38,9 +34,7 @@ export default function AdminPageEdit() {
                 const response = await api.get(`/api/car/getcar/${id}`);
                 setCar(response.data);
                 // map images to array of urls
-                const images = response.data.images.map(image => image.url);
-                setImages(images);
-                console.log(images);
+                // const images = response.data.images.map(image => image.url);
             } catch (error) {
                 console.log(error);
             }
@@ -48,10 +42,22 @@ export default function AdminPageEdit() {
         fetchCar();
     }, []);
 
+    useEffect(() => {
+      const fetchImages = async () => {
+        if (!car.licensePlate) return;
+        if (images.length > 0) return;
+        const path = `carImages/${car.licensePlate}`;
+        const img = await getImages(path);
+        console.log(img);
+        setImages([...img]);
+      };
+      fetchImages();
+    }, [car]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        const updatedCar = { ...car, images };
+        const updatedCar = { ...car, images: images };
         try {
             await api.put(`/api/car/update/${id}`, updatedCar);
             navigate('/admin');
@@ -59,7 +65,6 @@ export default function AdminPageEdit() {
             console.log(error);
         }
     };
-
     const onDragEnd = (result) => {
       if (!result.destination) return;
   
@@ -74,20 +79,11 @@ export default function AdminPageEdit() {
       setSelectedFiles(e.target.files);
   }; 
 
-  useEffect(() => {
-    console.log(images);
-  }, [images]);
-
   const handleUploadImage = async () => {
     await uploadImageToFirebase(car, selectedFiles, setUploadProgress);
-    const storageRef = ref(storage, `carImages/${car.licensePlate}`);
-    const files = await listAll(storageRef);
-    const imageURLs = await Promise.all(files.items.map(async (fileRef) => {
-      const downloadURL = await getDownloadURL(fileRef);
-      return downloadURL;
-    }));
+    const path = `carImages/${car.licensePlate}`;
+    const imageURLs = await getImages(path);
     setImages([...imageURLs]);
-    console.log(images);
   };
     
 
@@ -150,12 +146,10 @@ export default function AdminPageEdit() {
           </tbody>
         </table>
           <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId="droppable">
+            <Droppable droppableId="droppable" direction="horizontal">
               {(provided) => (
-                <div {...provided.droppableProps} ref={provided.innerRef} style={{ display: 'flex' }}>
+                <div {...provided.droppableProps} ref={provided.innerRef} style={{ display: 'flex', flexDirection: 'row' }}>
                   {images.map((img, index) => (
-                    console.log(img),
-                    console.log(index),
                     <Draggable key={img} draggableId={img} index={index}>
                       {(provided) => (
                         <div
