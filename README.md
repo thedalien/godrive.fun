@@ -32,3 +32,13 @@ While the application is fully functional, there are several areas for potential
 - Improve the mobile responsiveness of the application.
 ## Conclusion
 GoDriveFun is a comprehensive car rental web application that showcases the skills and knowledge gained during the Full Stack Development Bootcamp at W3Schools. The project demonstrates proficiency in full-stack development, including frontend and backend programming, database management, and user interface design.
+
+## Collaborators
+
+### Tim Eberhard - Full Stack Developer (Frontend, Database)
+- Github: [@WebtoTim](https://github.com/WebtoTim)
+- LinkedIn: [Tim Eberhard](https://www.linkedin.com/in/timeberhard/)
+
+### Dalien Prema - Full Stack Developer (Backend, Database)
+- Github: [@theDalien](https://github.con/theDalien)
+- LinkedIn: [Dalien Prema](https://www.linkedin.com/in/dalienprema/)
