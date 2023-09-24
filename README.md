@@ -10,7 +10,7 @@ The project is built using the following technologies:
 
 - Frontend: React.js
 - Backend: Node.js, Express.js
-- Database: Sequelize ORM with MySQL
+- Database: Sequelize ORM with PostgreSQL
 - Styling: CSS
 - Other Libraries: react-beautiful-dnd, react-router-dom, antd, dayjs
 ## Key Features
