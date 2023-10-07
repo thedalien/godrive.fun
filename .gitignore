@@ -9,6 +9,7 @@ lerna-debug.log*
 
 client/node_modules
 backend/config/config.js
+config.js
 backend/node_modules
 dist
 dist-ssr
